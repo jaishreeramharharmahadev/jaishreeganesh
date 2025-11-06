@@ -156,7 +156,7 @@ export default function Hero() {
           </div>
 
           {/* Right Content - Rotating Globe with Static Users */}
-          <div className="p-8">
+          {/* <div className="p-8">
             <div className="text-center mb-12">
               <div className="flex items-center justify-center gap-2 mb-2">
                 <Globe className="w-6 h-6 text-blue-600" />
@@ -168,29 +168,22 @@ export default function Hero() {
               </p>
             </div>
 
-            {/* Globe Container */}
             <div className="relative w-full h-80 flex items-center justify-center">
-              {/* Rotating Globe */}
               <div 
                 className="relative w-56 h-56 transition-transform duration-100"
                 style={{ transform: `rotate(${rotation}deg)` }}
               >
-                {/* Enhanced Globe Core */}
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-green-400 to-cyan-400 rounded-full shadow-2xl border-4 border-sky-300">
-                  {/* Tech-themed globe details */}
                   <div className="absolute top-1/4 left-1/4 w-10 h-10 bg-green-300/40 rounded-full blur-sm"></div>
                   <div className="absolute bottom-1/3 right-1/3 w-8 h-8 bg-blue-300/50 rounded-full blur-sm"></div>
                   <div className="absolute top-1/3 right-1/4 w-12 h-6 bg-cyan-200/60 rounded-full blur-sm"></div>
                   
-                  {/* Enhanced Center Hub */}
                   <div className="absolute top-1/2 left-1/2 w-8 h-8 rounded-full transform -translate-x-1/2 -translate-y-1/2 shadow-xl border-2 border-blue-300">
                     <div className="absolute inset-1 bg-gradient-to-r from-green-400 to-blue-400 rounded-full animate-pulse"></div>
                   </div>
                 </div>
 
-                {/* Connection Lines - Increased thickness */}
                 <svg className="absolute inset-0 w-full h-full pointer-events-none">
-                  {/* Lines from center to users - Increased thickness */}
                   {users.map((_, index) => {
                     const angle = (index * (360 / users.length)) * Math.PI / 180;
                     const radius = 160;
@@ -205,12 +198,11 @@ export default function Hero() {
                         x2={`${50 + (x / 3)}%`}
                         y2={`${50 + (y / 3)}%`}
                         stroke="rgba(34, 197, 94, 0.3)"
-                        strokeWidth="2" // Increased from 1.5 to 3
+                        strokeWidth="2"
                       />
                     );
                   })}
 
-                  {/* User-to-user connection lines - All connections with increased thickness */}
                   {users.map((_, i) => {
                     const angle1 = (i * (360 / users.length)) * Math.PI / 180;
                     const radius = 160;
@@ -232,14 +224,13 @@ export default function Hero() {
                           x2={`${50 + (x2 / 3)}%`}
                           y2={`${50 + (y2 / 3)}%`}
                           stroke="rgba(59, 130, 246, 0.25)"
-                          strokeWidth="1" // Increased from 1 to 2.5
+                          strokeWidth="1"
                         />
                       );
                     });
                   })}
                 </svg>
 
-                {/* Static Users - positioned around the rotating globe */}
                 {users.map((user, index) => {
                   const angle = (index * (360 / users.length)) * Math.PI / 180;
                   const radius = 160;
@@ -265,11 +256,10 @@ export default function Hero() {
                 })}
               </div>
 
-              {/* Background Elements */}
               <div className="absolute -top-6 -right-6 w-24 h-24 bg-blue-100 rounded-full opacity-30 blur-lg"></div>
               <div className="absolute -bottom-8 -left-8 w-28 h-28 bg-green-100 rounded-full opacity-40 blur-lg"></div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>
