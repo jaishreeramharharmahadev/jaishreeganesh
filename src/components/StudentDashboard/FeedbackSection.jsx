@@ -16,6 +16,7 @@ import {
   ThumbsUp,
   ThumbsDown
 } from "lucide-react";
+import { apiUrl } from "../../utils/api";
 
 export default function FeedbackSection({
   applicant,
@@ -53,7 +54,7 @@ export default function FeedbackSection({
     setSuccessMsg("");
     try {
       const idForApi = applicant._id || applicant.uniqueId;
-      const res = await axios.get(`${apiBase}/api/feedback/available/${idForApi}`, {
+      const res = await axios.get(apiUrl(`/feedback/available/${idForApi}`), {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
       setAvailable(Boolean(res.data.available));
@@ -188,7 +189,7 @@ export default function FeedbackSection({
     setSubmitting(true);
     try {
       const idForApi = applicant._id || applicant.uniqueId;
-      const res = await axios.post(`${apiBase}/api/feedback/${idForApi}`, form, {
+      const res = await axios.post(apiUrl(`/feedback/${idForApi}`), form, {
         headers: {
           Authorization: token ? `Bearer ${token}` : undefined,
           "Content-Type": "multipart/form-data",
