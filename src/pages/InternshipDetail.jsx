@@ -21,6 +21,7 @@ import {
   Zap,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { apiUrl } from "../utils/api";
 
 export default function InternshipDetail() {
   const { subDomain } = useParams();
@@ -38,7 +39,7 @@ export default function InternshipDetail() {
 
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/internships/${subDomain}`
+          apiUrl(`/internships/${subDomain}`)
         );
 
         if (res.data.success && res.data.data) {

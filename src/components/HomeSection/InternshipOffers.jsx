@@ -82,7 +82,7 @@ export default function InternshipOffers() {
     const fetchInternships = async () => {
       setLoading(true);
       try {
-        const res = await axios.get('https://b-n-jai-mata-di-har-har-mahadev-jai.onrender.com/api/internships');
+        const res = await axios.get(apiUrl('/internships'));
         if (res.data) {
           // adapt to your backend shape; here assumes res.data.data
           const serverList = Array.isArray(res.data.data) ? res.data.data : (res.data || []);

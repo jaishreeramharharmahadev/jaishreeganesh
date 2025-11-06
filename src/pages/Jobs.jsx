@@ -38,37 +38,6 @@ export default function Jobs() {
     }
   ];
 
-  const internshipRoles = [
-    {
-      title: "Web Development Intern",
-      duration: "3 months",
-      stipend: "Performance Based",
-      skills: ["HTML/CSS", "JavaScript", "React Basics"],
-      status: "Coming Soon"
-    },
-    {
-      title: "Data Science Intern",
-      duration: "4 months",
-      stipend: "Performance Based",
-      skills: ["Python", "Pandas", "Data Visualization"],
-      status: "Coming Soon"
-    },
-    {
-      title: "Mobile App Intern",
-      duration: "3 months",
-      stipend: "Performance Based",
-      skills: ["React Native", "Firebase", "UI Design"],
-      status: "Coming Soon"
-    },
-    {
-      title: "Digital Marketing Intern",
-      duration: "2 months",
-      stipend: "Performance Based",
-      skills: ["SEO", "Social Media", "Content Writing"],
-      status: "Coming Soon"
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
