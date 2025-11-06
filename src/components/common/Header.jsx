@@ -16,7 +16,7 @@ import {
   BookOpen,
   Video,
 } from "lucide-react";
-import Logo from "../../assets/GTTechnoRemovebg.png";
+import Logo from "../../assets/GTT1.png";
 
 export default function Header() {
   const [isMoreOpen, setIsMoreOpen] = useState(false);

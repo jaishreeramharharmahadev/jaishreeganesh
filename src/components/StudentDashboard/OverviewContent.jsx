@@ -23,12 +23,17 @@ import {
   Search,
   ExternalLink,
   FileCode,
+  ArrowRight,
 } from "lucide-react";
 
-function OverviewContent({ applicant, progressPercent }) {
+function OverviewContent({ applicant, progressPercent, submittedAssignmentsCount, weeksWithSubmissions, onWeekNavigate }) {
   const { learningPath = [] } = applicant;
   const completedWeeks = learningPath.filter((w) => w.completed).length;
   const totalWeeks = learningPath.length || 1;
+
+  // Calculate assignment statistics
+  const totalAssignmentsSubmitted = submittedAssignmentsCount || 0;
+  const weeksWithAssignments = weeksWithSubmissions || 0;
 
   return (
     <div className="space-y-5">
@@ -67,7 +72,7 @@ function OverviewContent({ applicant, progressPercent }) {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <div className="bg-white rounded-md p-4 shadow-sm border">
           <div className="flex items-center justify-between">
             <div>
@@ -116,6 +121,25 @@ function OverviewContent({ applicant, progressPercent }) {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">
+                Assignments Submitted
+              </p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">
+                {totalAssignmentsSubmitted}
+              </p>
+            </div>
+            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+              <FileText className="w-6 h-6 text-purple-600" />
+            </div>
+          </div>
+          <p className="text-xs text-gray-500 mt-2">
+            {weeksWithAssignments} weeks with submissions
+          </p>
+        </div>
+
+        <div className="bg-white rounded-md p-4 shadow-sm border">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-600">
                 Time Remaining
               </p>
               <p className="text-2xl font-bold text-gray-900 mt-1">
@@ -128,8 +152,8 @@ function OverviewContent({ applicant, progressPercent }) {
                 days
               </p>
             </div>
-            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-              <Clock className="w-6 h-6 text-purple-600" />
+            <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+              <Clock className="w-6 h-6 text-orange-600" />
             </div>
           </div>
           <p className="text-xs text-gray-500 mt-2">
@@ -178,9 +202,14 @@ function OverviewContent({ applicant, progressPercent }) {
                       Week {week.weekNumber}: {week.title}
                     </h4>
                     <p className="text-sm text-gray-600">{week.content}</p>
+                    {week.assignmentSubmissions && week.assignmentSubmissions.length > 0 && (
+                      <p className="text-xs text-purple-600 mt-1">
+                        {week.assignmentSubmissions.length} assignment(s) submitted
+                      </p>
+                    )}
                   </div>
                 </div>
-                <div>
+                <div className="flex items-center space-x-2">
                   {week.completed && (
                     <span className="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full font-medium">
                       Completed
@@ -192,9 +221,13 @@ function OverviewContent({ applicant, progressPercent }) {
                     </span>
                   )}
                   {!week.completed && !week.locked && (
-                    <span className="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full font-medium">
-                      In Progress
-                    </span>
+                    <button
+                      onClick={() => onWeekNavigate && onWeekNavigate(week.weekNumber)}
+                      className="flex items-center space-x-1 px-3 py-1 bg-blue-600 text-white text-sm rounded-full font-medium hover:bg-blue-700 transition-colors"
+                    >
+                      <span>Go</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </button>
                   )}
                 </div>
               </div>

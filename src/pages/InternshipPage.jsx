@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
   Calendar,
-  DollarSign,
+  IndianRupee,
   ArrowRight,
   BookOpen,
   Zap,
@@ -35,6 +35,7 @@ import {
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { apiUrl } from "../utils/api";
 
 // Icon mapping for domains
 const iconMap = {
@@ -69,30 +70,6 @@ const domainColors = {
 // Default icon for unknown domains
 const defaultIcon = <Code className="w-6 h-6" />;
 
-// Mock data for featured companies (in real app, this would come from API)
-const featuredCompanies = [
-  {
-    name: "Google",
-    logo: "https://via.placeholder.com/60x30/4285F4/FFFFFF?text=G",
-  },
-  {
-    name: "Microsoft",
-    logo: "https://via.placeholder.com/60x30/737373/FFFFFF?text=MS",
-  },
-  {
-    name: "Amazon",
-    logo: "https://via.placeholder.com/60x30/FF9900/000000?text=AMZ",
-  },
-  {
-    name: "Meta",
-    logo: "https://via.placeholder.com/60x30/1877F2/FFFFFF?text=META",
-  },
-  {
-    name: "Netflix",
-    logo: "https://via.placeholder.com/60x30/E50914/FFFFFF?text=NFLX",
-  },
-];
-
 export default function InternshipPage() {
   const [internships, setInternships] = useState([]);
   const [filteredInternships, setFilteredInternships] = useState([]);
@@ -110,7 +87,7 @@ export default function InternshipPage() {
   useEffect(() => {
     const fetchInternships = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/internships");
+        const res = await axios.get(apiUrl("/internships"));
         if (res.data) {
           const internshipsData = res.data.data.map((internship) => ({
             ...internship,
@@ -310,11 +287,11 @@ export default function InternshipPage() {
           {/* Stats */}
           <div className="flex flex-wrap justify-center gap-6 mb-12">
             <div className="text-center">
-              <div className="text-3xl font-bold text-gray-900">5,000+</div>
+              <div className="text-3xl font-bold text-gray-900">500+</div>
               <div className="text-gray-600 text-sm">Successful Interns</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-gray-900">200+</div>
+              <div className="text-3xl font-bold text-gray-900">50+</div>
               <div className="text-gray-600 text-sm">Partner Companies</div>
             </div>
             <div className="text-center">
@@ -322,7 +299,7 @@ export default function InternshipPage() {
               <div className="text-gray-600 text-sm">Placement Rate</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-gray-900">4.8/5</div>
+              <div className="text-3xl font-bold text-gray-900">4.6/5</div>
               <div className="text-gray-600 text-sm">Student Rating</div>
             </div>
           </div>
@@ -436,7 +413,7 @@ export default function InternshipPage() {
                   {/* Stipend */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 text-sm">
-                      <DollarSign className="w-4 h-4 text-green-600" />
+                      <IndianRupee className="w-4 h-4 text-green-600" />
                       <span className="text-gray-700">Stipend:</span>
                     </div>
                     <span className="font-semibold text-green-600 text-sm">
@@ -521,42 +498,6 @@ export default function InternshipPage() {
             </button>
           </div>
         )}
-
-        {/* CTA Section */}
-        <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-center text-white mb-8">
-          <h3 className="text-2xl md:text-3xl font-bold mb-4">
-            Ready to Start Your Tech Journey?
-          </h3>
-          <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
-            Join thousands of students who have transformed their careers
-            through our internship programs. Get real-world experience,
-            mentorship, and a chance to work with top companies.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-blue-600 px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors flex items-center justify-center gap-2">
-              <Users className="w-5 h-5" />
-              Schedule a Consultation
-            </button>
-            <button className="border-2 border-white text-white px-6 py-3 rounded-xl font-semibold hover:bg-white/10 transition-colors">
-              Download Brochure
-            </button>
-          </div>
-        </div>
-
-        {/* Trust Indicators */}
-        <div className="text-center">
-          <p className="text-gray-500 text-sm mb-4">Trusted by students from</p>
-          <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
-            {featuredCompanies.map((company, index) => (
-              <img
-                key={index}
-                src={company.logo}
-                alt={company.name}
-                className="h-8 grayscale hover:grayscale-0 transition-all duration-300"
-              />
-            ))}
-          </div>
-        </div>
       </div>
 
       {/* Add custom CSS for animations */}

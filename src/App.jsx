@@ -16,13 +16,11 @@ import { AppProvider } from "./context/AppContext";
 import PreLoader from "./components/common/PreLoader";
 import NotificationHandler from "./components/common/NotificationHandler";
 
-// import the refresh helper that tries to get accessToken from httpOnly refresh cookie
-
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import ShippingAndDelivery from "./pages/ShippingAndDelivery";
-import TermsAndConditions from "./pages/TermsAndConditions";
-import CancellationAndRefund from "./pages/CancellationAndRefund";
-import ContactUs from "./pages/ContactUs";
+import PrivacyPolicy from "./components/policy/PrivacyPolicy";
+import ShippingAndDelivery from "./components/policy/ShippingAndDelivery";
+import TermsAndConditions from "./components/policy/TermsAndConditions";
+import CancellationAndRefund from "./components/policy/CancellationAndRefund";
+import ContactUs from "./components/policy/ContactUs";
 import Courses from "./pages/Courses";
 import Jobs from "./pages/Jobs";
 import AboutUs from "./pages/AboutUs";

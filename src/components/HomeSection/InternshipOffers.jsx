@@ -30,10 +30,12 @@ import {
   Sparkles,
   Target,
   CheckCircle,
-  Play
+  Play,
+  IndianRupee
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios'
+import { apiUrl } from "../../utils/api";
 
 // Icon mapping and domainColors remain unchanged
 const iconMap = {
@@ -80,16 +82,13 @@ export default function InternshipOffers() {
     const fetchInternships = async () => {
       setLoading(true);
       try {
-        const res = await axios.get('http://localhost:5000/api/internships');
+        const res = await axios.get('https://b-n-jai-mata-di-har-har-mahadev-jai.onrender.com/api/internships');
         if (res.data) {
           // adapt to your backend shape; here assumes res.data.data
           const serverList = Array.isArray(res.data.data) ? res.data.data : (res.data || []);
           const internshipsData = serverList.map(internship => ({
             ...internship,
-            views: Math.floor(Math.random() * 1000) + 100,
-            isBookmarked: false,
             isFeatured: Math.random() > 0.7,
-            location: ["Remote", "Hybrid", "On-site"][Math.floor(Math.random() * 3)],
             postedDate: new Date(Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
             applicants: Math.floor(Math.random() * 500) + 50,
             rating: (Math.random() * 1 + 4).toFixed(1),
@@ -146,7 +145,7 @@ export default function InternshipOffers() {
 
   if (loading) {
     return (
-      <section className="py-10 bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
+      <section className="py-10 bg-gradient-to-br from-gray-50 to-blue-50 ">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <div className="inline-flex items-center px-4 py-2 rounded-full bg-red-100 text-gray-700 text-sm font-semibold mb-4 animate-pulse">
@@ -173,7 +172,7 @@ export default function InternshipOffers() {
 
   if (error) {
     return (
-      <section className="py-10 bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen flex items-center justify-center">
+      <section className="py-10 bg-gradient-to-br from-gray-50 to-blue-50  flex items-center justify-center">
         <div className="text-center max-w-md mx-auto px-6">
           <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-8">
             <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -194,7 +193,7 @@ export default function InternshipOffers() {
   }
 
   return (
-    <section className="py-10 bg-gradient-to-br from-gray-50 to-blue-50 relative overflow-hidden min-h-screen">
+    <section className="py-10 bg-gradient-to-br from-gray-50 to-blue-50 relative overflow-hidden ">
       <div className="absolute top-0 left-0 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
       <div className="absolute top-0 right-0 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
       <div className="absolute bottom-0 left-1/2 w-72 h-72 bg-amber-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
@@ -265,7 +264,7 @@ export default function InternshipOffers() {
                 <div className="space-y-3 mb-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 text-sm">
-                      <DollarSign className="w-4 h-4 text-green-600" />
+                      <IndianRupee className="w-4 h-4 text-green-600" />
                       <span className="text-gray-700">Stipend:</span>
                     </div>
                     <span className="font-semibold text-green-600 text-sm">
@@ -339,7 +338,7 @@ export default function InternshipOffers() {
             </button>
           </div>
         )}
-      </div>
+      </div>  
     </section>
   );
 }

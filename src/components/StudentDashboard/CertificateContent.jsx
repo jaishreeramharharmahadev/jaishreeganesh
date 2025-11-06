@@ -8,7 +8,7 @@ import {
   ExternalLink,
   MessageSquare,
 } from "lucide-react";
-import FeedbackSection from "./FeedbackSection"; // Adjust import path as needed
+import FeedbackSection from "./FeedbackSection";
 
 function CertificateContent({
   applicant,

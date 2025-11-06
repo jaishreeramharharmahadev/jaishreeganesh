@@ -1,94 +1,100 @@
-import React from "react";
+
+// File: components/WhyChooseUs.jsx
+import React, { useEffect, useState } from 'react';
 import {
   Users,
   Briefcase,
   Projector,
-  Brain,
-  Target,
-  Zap,
-  Shield,
   Award,
-  Clock,
   TrendingUp,
+  Clock,
   CheckCircle,
-  Star,
-  ArrowRight
-} from "lucide-react";
-import Wave3 from "../../others/wave/Wave3";
+} from 'lucide-react';
+import Wave3 from '../../others/wave/Wave3';
+import { apiUrl } from '../../utils/api';
+import axios from 'axios';
+
+// map iconName from API to actual lucide component
+const ICON_MAP = {
+  Users: Users,
+  Briefcase: Briefcase,
+  Projector: Projector,
+  Award: Award,
+  TrendingUp: TrendingUp,
+  Clock: Clock,
+  CheckCircle: CheckCircle,
+};
 
 export default function WhyChooseUs() {
-  const reasons = [
-    {
-      icon: <Users className="w-8 h-8" />,
-      title: "Live Learning with Industry Experts",
-      desc: "Personalized mentorship and real-time guidance from professionals actively working in top tech companies.",
-      features: ["1:1 Mentorship Sessions", "Live Q&A Workshops", "Career Guidance"],
-      stat: "50+ Industry Mentors",
-      gradient: "from-purple-500 to-pink-500",
-      delay: "0"
-    },
-    {
-      icon: <Projector className="w-8 h-8" />,
-      title: "Real-World Projects",
-      desc: "Hands-on experience building production-ready applications that you can proudly showcase in your portfolio.",
-      features: ["10+ Capstone Projects", "GitHub Portfolio", "Deployment Support"],
-      stat: "100+ Projects Completed",
-      gradient: "from-blue-500 to-cyan-500",
-      delay: "100"
-    },
-    {
-      icon: <Briefcase className="w-8 h-8" />,
-      title: "Job Placements & Career Support",
-      desc: "Direct placement into top tech roles with comprehensive interview preparation and career guidance support.",
-      features: ["Interview Preparation", "Resume Building", "Salary Negotiation"],
-      stat: "85% Placement Rate",
-      gradient: "from-green-500 to-emerald-500",
-      delay: "200"
-    },
-  ];
+  const [reasons, setReasons] = useState([]);
+  const [stats, setStats] = useState([]); // optional: can be seeded separately
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const stats = [
-    { number: "10,000+", label: "Students Trained", icon: <Users className="w-6 h-6" /> },
-    { number: "500+", label: "Partner Companies", icon: <Briefcase className="w-6 h-6" /> },
-    { number: "95%", label: "Success Rate", icon: <TrendingUp className="w-6 h-6" /> },
-    { number: "50+", label: "Industry Experts", icon: <Award className="w-6 h-6" /> },
-  ];
+  useEffect(() => {
+    let mounted = true;
+    const fetchReasons = async () => {
+      setLoading(true);
+      try {
+        const res = await axios.get(apiUrl('/whychooseus'), { timeout: 10000 });
+        if (!mounted) return;
+        const data = Array.isArray(res.data) ? res.data : [];
+
+        // transform to include actual Icon component and defaults
+        const mapped = data.map((r, idx) => ({
+          ...r,
+          icon: ICON_MAP[r.iconName] ? React.createElement(ICON_MAP[r.iconName], { className: 'w-8 h-8' }) : React.createElement(Users, { className: 'w-8 h-8' }),
+        }));
+
+        setReasons(mapped);
+
+        // build simple stats from reasons (optional). You may prefer to fetch stats separately from an API.
+        setStats([
+          { number: '1,000+', label: 'Students Trained', icon: React.createElement(Users, { className: 'w-6 h-6' }) },
+          { number: '50+', label: 'Partner Companies', icon: React.createElement(Briefcase, { className: 'w-6 h-6' }) },
+          { number: '94%', label: 'Success Rate', icon: React.createElement(TrendingUp, { className: 'w-6 h-6' }) },
+          { number: '30+', label: 'Industry Experts', icon: React.createElement(Award, { className: 'w-6 h-6' }) },
+        ]);
+      } catch (err) {
+        console.error('Failed to load WhyChooseUs data', err);
+        if (mounted) setError('Failed to load content.');
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    };
+
+    fetchReasons();
+    return () => (mounted = false);
+  }, []);
+
+  if (loading) return <div className="p-6 text-center">Loading...</div>;
+  if (error) return <div className="p-6 text-center text-red-600">{error}</div>;
 
   return (
     <section className="pt-10 bg-gradient-to-r from-gray-50 to-blue-50 relative overflow-hidden">
       <Wave3 />
       <div className="absolute top-0 right-0 w-72 h-72 bg-orange-400 rounded-full blur-3xl opacity-20 -translate-y-1/2 translate-x-1/2"></div>
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-400 rounded-full blur-3xl opacity-20 -translate-x-1/2 translate-y-1/2"></div>
-      
+
       <div className="container mx-auto px-4 relative z-10">
-        {/* Header Section */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">
-            Why Choose Us
-          </h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">Why Choose Us</h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
             We're not just another learning platform - we're your career growth partner with proven results
           </p>
         </div>
 
-        {/* Stats Section */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
           {stats.map((stat, index) => (
-            <div 
+            <div
               key={index}
-              className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 text-center shadow-lg border border-orange-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 text-center shadow-md border border-orange-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
             >
               <div className="flex justify-center mb-3">
-                <div className="p-2 bg-orange-100 text-orange-600 rounded-lg">
-                  {stat.icon}
-                </div>
+                <div className="p-2 bg-orange-100 text-orange-600 rounded-lg">{stat.icon}</div>
               </div>
-              <div className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">
-                {stat.number}
-              </div>
-              <div className="text-sm text-gray-600 font-medium">
-                {stat.label}
-              </div>
+              <div className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">{stat.number}</div>
+              <div className="text-sm text-gray-600 font-medium">{stat.label}</div>
             </div>
           ))}
         </div>
@@ -97,20 +103,16 @@ export default function WhyChooseUs() {
           {reasons.map((reason, index) => (
             <div
               key={index}
-              className="group relative bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden"
+              className="group relative bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden"
               style={{ animationDelay: `${reason.delay}ms` }}
             >
               <div className={`absolute inset-0 bg-gradient-to-r opacity-0`}></div>
-              
+
               <div className="relative p-8">
                 <div className="flex items-start gap-4 mb-4">
-                  <div className={`p-3 rounded-xl bg-gradient-to-r ${reason.gradient} text-white`}>
-                    {reason.icon}
-                  </div>
+                  <div className={`p-3 rounded-xl bg-gradient-to-r ${reason.gradient} text-white`}>{reason.icon}</div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">
-                      {reason.title}
-                    </h3>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">{reason.title}</h3>
                     <div className="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-sm font-medium">
                       <Clock className="w-3 h-3 mr-1" />
                       {reason.stat}
@@ -118,9 +120,7 @@ export default function WhyChooseUs() {
                   </div>
                 </div>
 
-                <p className="text-gray-600 leading-relaxed mb-4 text-md">
-                  {reason.desc}
-                </p>
+                <p className="text-gray-600 leading-relaxed mb-4 text-md">{reason.desc}</p>
 
                 <div className="space-y-2">
                   {reason.features.map((feature, idx) => (

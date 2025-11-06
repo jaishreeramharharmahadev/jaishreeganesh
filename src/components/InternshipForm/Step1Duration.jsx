@@ -1,6 +1,5 @@
 // components/InternshipForm/Step1Duration.jsx
 import React from 'react';
-import Button from "@/utils/Button";
 
 const Step1Duration = ({ formData, errors, handleChange, handleNext, internshipFee }) => {
   return (
@@ -61,9 +60,6 @@ const Step1Duration = ({ formData, errors, handleChange, handleNext, internshipF
         >
           Continue to Personal Details →
         </button>
-        {/* <Button variant="outline" onClick={handleNext}
-          disabled={!formData.duration}>Continue to Personal Details →
-          </Button> */}
       </div>
     </div>
   );

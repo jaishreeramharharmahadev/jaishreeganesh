@@ -10,7 +10,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import Logo from "../../assets/GTTechno.png";
+import Logo from "../../assets/GTT1.png";
 
 export default function Footer() {
   const linkSections = [

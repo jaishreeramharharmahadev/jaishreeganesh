@@ -25,10 +25,10 @@ import {
   ExternalLink,
   FileCode,
   FolderOpen,
-  // Assignment,
+  ArrowRight,
 } from "lucide-react";
 
-function ProgressContent({ applicant, progressPercent }) {
+function ProgressContent({ applicant, progressPercent, submittedAssignmentsCount, weeksWithSubmissions, onWeekNavigate }) {
   const { learningPath = [], startDate, endDate, projects = [] } = applicant;
   
   // Calculate days left (don't show negative days)
@@ -37,7 +37,7 @@ function ProgressContent({ applicant, progressPercent }) {
   ));
   
   // Calculate completed assignments (weeks completed)
-  const completedAssignments = learningPath.filter((w) => w.completed).length;
+  const completedWeeks = learningPath.filter((w) => w.completed).length;
   
   // Calculate total days and timeline progress
   const totalDays = Math.ceil(
@@ -50,6 +50,10 @@ function ProgressContent({ applicant, progressPercent }) {
     100,
     Math.max(0, (daysPassed / totalDays) * 100)
   );
+
+  // Calculate assignment statistics
+  const totalAssignmentsSubmitted = submittedAssignmentsCount || 0;
+  const weeksWithAssignments = weeksWithSubmissions || 0;
 
   return (
     <div className="space-y-5">
@@ -79,10 +83,10 @@ function ProgressContent({ applicant, progressPercent }) {
           </div>
           <div className="text-center p-4 bg-purple-50 rounded-md border border-purple-100">
             <div className="text-2xl font-bold text-purple-600">
-              {completedAssignments}
+              {totalAssignmentsSubmitted}
             </div>
             <div className="text-sm font-medium text-purple-800 mt-1">
-              Assignments Completed
+              Assignments Submitted
             </div>
           </div>
           <div className="text-center p-4 bg-orange-50 rounded-md border border-orange-100">
@@ -168,7 +172,7 @@ function ProgressContent({ applicant, progressPercent }) {
         {/* Assignments Summary */}
         <div className="bg-white rounded-md shadow-sm border p-6">
           <div className="flex items-center space-x-3 mb-6">
-            {/* <Assignment className="w-6 h-6 text-purple-600" /> */}
+            <FileText className="w-6 h-6 text-purple-600" />
             <h3 className="text-lg font-semibold text-gray-900">
               Assignments Summary
             </h3>
@@ -176,25 +180,25 @@ function ProgressContent({ applicant, progressPercent }) {
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="text-center p-3 bg-purple-50 rounded-lg">
-                <div className="text-xl font-bold text-purple-600">{completedAssignments}</div>
-                <div className="text-xs font-medium text-purple-800">Completed</div>
+                <div className="text-xl font-bold text-purple-600">{totalAssignmentsSubmitted}</div>
+                <div className="text-xs font-medium text-purple-800">Total Submissions</div>
               </div>
-              <div className="text-center p-3 bg-gray-50 rounded-lg">
-                <div className="text-xl font-bold text-gray-600">{learningPath.length - completedAssignments}</div>
-                <div className="text-xs font-medium text-gray-800">Pending</div>
+              <div className="text-center p-3 bg-blue-50 rounded-lg">
+                <div className="text-xl font-bold text-blue-600">{weeksWithAssignments}</div>
+                <div className="text-xs font-medium text-blue-800">Weeks with Submissions</div>
               </div>
             </div>
             <div className="space-y-2">
-              <p className="text-sm font-medium text-gray-700">Completion Rate:</p>
+              <p className="text-sm font-medium text-gray-700">Weekly Completion Rate:</p>
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div
                   className="bg-purple-600 h-2 rounded-full transition-all duration-500"
-                  style={{ width: `${progressPercent}%` }}
+                  style={{ width: `${(completedWeeks / learningPath.length) * 100}%` }}
                 ></div>
               </div>
               <div className="flex justify-between text-xs text-gray-600">
-                <span>{completedAssignments}/{learningPath.length} weeks</span>
-                <span>{progressPercent}%</span>
+                <span>{completedWeeks}/{learningPath.length} weeks completed</span>
+                <span>{Math.round((completedWeeks / learningPath.length) * 100)}%</span>
               </div>
             </div>
           </div>
@@ -235,28 +239,44 @@ function ProgressContent({ applicant, progressPercent }) {
                     Week {week.weekNumber}
                   </h4>
                   <p className="text-sm text-gray-600">{week.title}</p>
-                  {week.completed && week.completionDate && (
+                  {week.assignmentSubmissions && week.assignmentSubmissions.length > 0 && (
+                    <p className="text-xs text-purple-600 mt-1">
+                      {week.assignmentSubmissions.length} assignment(s) submitted
+                    </p>
+                  )}
+                  {week.completed && week.completedAt && (
                     <p className="text-xs text-green-600">
-                      Completed on {new Date(week.completionDate).toLocaleDateString()}
+                      Completed on {new Date(week.completedAt).toLocaleDateString()}
                     </p>
                   )}
                 </div>
               </div>
               <div className="text-right">
-                <div
-                  className={`px-3 py-1 rounded-full text-sm font-medium ${
-                    week.completed
-                      ? "bg-green-100 text-green-800"
+                <div className="flex items-center space-x-2">
+                  <div
+                    className={`px-3 py-1 rounded-full text-sm font-medium ${
+                      week.completed
+                        ? "bg-green-100 text-green-800"
+                        : week.locked
+                        ? "bg-gray-100 text-gray-600"
+                        : "bg-blue-100 text-blue-800"
+                    }`}
+                  >
+                    {week.completed
+                      ? "Completed"
                       : week.locked
-                      ? "bg-gray-100 text-gray-600"
-                      : "bg-blue-100 text-blue-800"
-                  }`}
-                >
-                  {week.completed
-                    ? "Completed"
-                    : week.locked
-                    ? "Locked"
-                    : "Available"}
+                      ? "Locked"
+                      : "Available"}
+                  </div>
+                  {!week.completed && !week.locked && (
+                    <button
+                      onClick={() => onWeekNavigate && onWeekNavigate(week.weekNumber)}
+                      className="flex items-center space-x-1 px-3 py-1 bg-blue-600 text-white text-sm rounded-full font-medium hover:bg-blue-700 transition-colors"
+                    >
+                      <span>Go</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </button>
+                  )}
                 </div>
                 {week.unlockDate && !week.completed && (
                   <p className="text-xs text-gray-500 mt-1">

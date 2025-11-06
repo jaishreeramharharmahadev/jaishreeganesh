@@ -17,7 +17,7 @@ export default function Offerings() {
     "Internship",
     "About Us",
     "Courses",
-    "Know Your CTC",
+    "Policy",
     "Create Resume",
   ];
 
@@ -27,14 +27,14 @@ export default function Offerings() {
       title: "Internship",
       description: "Apply to hands-on internships and live projects.",
       Icon: Briefcase,
-      href: "/internship",
+      href: "/internships",
     },
     {
       id: "about",
       title: "About Us",
       description: "Learn what TechnoPhile stands for and our mission.",
       Icon: Info,
-      href: "/about",
+      href: "/about-us",
     },
     {
       id: "courses",
@@ -54,7 +54,6 @@ export default function Offerings() {
 
   const handleClick = (href, id) => {
     if (typeof onNavigate === "function") return onNavigate(href, id);
-    // default behaviour: use location change (works in simple apps)
     if (typeof window !== "undefined") window.location.href = href;
   };
 

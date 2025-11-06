@@ -10,15 +10,16 @@ import Step2PersonalDetails from "../components/InternshipForm/Step2PersonalDeta
 import Step3AccountSetup from "../components/InternshipForm/Step3AccountSetup";
 import Step4Payment from "../components/InternshipForm/Step4Payment";
 import SuccessModal from "../components/InternshipForm/SuccessModal";
+import { apiUrl } from "../utils/api";
 
 // Password hashing function using Web Crypto API
 const hashPassword = async (password) => {
   const encoder = new TextEncoder();
   const data = encoder.encode(password);
-  const hash = await crypto.subtle.digest('SHA-256', data);
+  const hash = await crypto.subtle.digest("SHA-256", data);
   return Array.from(new Uint8Array(hash))
-    .map(b => b.toString(16).padStart(2, '0'))
-    .join('');
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
 };
 
 const InternshipApplicationFormPage = () => {
@@ -28,6 +29,12 @@ const InternshipApplicationFormPage = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [uniqueId, setUniqueId] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // NEW: fees state & loading
+  const [internshipFee, setInternshipFee] = useState([]);
+  const [feeLoading, setFeeLoading] = useState(true);
+  const [feeError, setFeeError] = useState(null);
+
   const [formData, setFormData] = useState({
     duration: "",
     fullName: "",
@@ -57,6 +64,42 @@ const InternshipApplicationFormPage = () => {
       }));
     }
   }, [location.state]);
+
+  // NEW: Fetch fees from backend on mount
+  useEffect(() => {
+    let mounted = true;
+    const fetchFees = async () => {
+      setFeeLoading(true);
+      setFeeError(null);
+      try {
+        const res = await axios.get(apiUrl("/internship-fees"), {
+          timeout: 10000,
+        });
+        // Backend returns objects like { duration, price (Number), currency, popular }
+        // Map to include a display string for price so your components can show "₹199"
+        const mapped = Array.isArray(res.data)
+          ? res.data.map((f) => ({
+              ...f,
+              priceDisplay:
+                typeof f.price === "number"
+                  ? (f.currency === "INR" ? `₹${f.price}` : `${f.currency} ${f.price}`)
+                  : f.price,
+            }))
+          : [];
+        if (mounted) setInternshipFee(mapped);
+      } catch (err) {
+        console.error("Failed to load internship fees:", err);
+        if (mounted) setFeeError("Failed to load fees. Please try again later.");
+      } finally {
+        if (mounted) setFeeLoading(false);
+      }
+    };
+
+    fetchFees();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -117,7 +160,8 @@ const InternshipApplicationFormPage = () => {
       } else if (formData.password.length < 8) {
         newErrors.password = "Password must be at least 8 characters";
       } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.password)) {
-        newErrors.password = "Password must contain uppercase, lowercase letters and numbers";
+        newErrors.password =
+          "Password must contain uppercase, lowercase letters and numbers";
       }
       if (!formData.confirmPassword) {
         newErrors.confirmPassword = "Please confirm your password";
@@ -146,6 +190,8 @@ const InternshipApplicationFormPage = () => {
   };
 
   const handleNext = () => {
+    // prevent moving forward from step 1 if fees still loading or failed
+    if (step === 1 && feeLoading) return;
     if (validateStep(step) && step < 4) {
       setStep(step + 1);
     }
@@ -155,146 +201,65 @@ const InternshipApplicationFormPage = () => {
     if (step > 1) setStep(step - 1);
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setIsSubmitting(true);
-
-  //   if (!validateStep(4)) {
-  //     setIsSubmitting(false);
-  //     return;
-  //   }
-
-  //   try {
-  //     // Hash the password before sending
-  //     const hashedPassword = await hashPassword(formData.password);
-
-  //     // Prepare payload according to backend JSON schema
-  //     const payload = {
-  //       duration: formData.duration,
-  //       fullName: formData.fullName,
-  //       email: formData.email.toLowerCase().trim(), // Normalize email
-  //       phone: formData.phone.replace(/\D/g, ""), // Normalize phone number
-  //       dob: formData.dob,
-  //       college: formData.college,
-  //       address: formData.address,
-  //       domain: formData.domain,
-  //       linkedin: formData.linkedin,
-  //       github: formData.github,
-  //       password: hashedPassword, // Send hashed password
-  //       agree: formData.agree,
-  //     };
-
-  //     // Send data to backend API
-  //     const response = await axios.post(
-  //       "http://localhost:5000/api/applicants/register",
-  //       payload,
-  //       {
-  //         timeout: 120000, // 120 second timeout
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //         }
-  //       }
-  //     );
-
-  //     // Handle success response
-  //     if (response.status === 201) {
-  //       setUniqueId(response.data.uniqueId);
-  //       setShowSuccess(true);
-  //       console.log("Application submitted successfully:", response.data);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error submitting form:", error);
-
-  //     if (error.response?.status === 409) {
-  //       alert("⚠️ This email is already registered for an internship.");
-  //     } else if (error.response?.data?.message) {
-  //       alert(`❌ ${error.response.data.message}`);
-  //     } else if (error.code === 'ECONNABORTED') {
-  //       alert("⏰ Request timeout. Please check your connection and try again.");
-  //     } else {
-  //       alert("❌ Something went wrong while submitting your application. Please try again.");
-  //     }
-  //   } finally {
-  //     setIsSubmitting(false);
-  //   }
-  // };
-
-
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setIsSubmitting(true);
+    e.preventDefault();
+    setIsSubmitting(true);
 
-  if (!validateStep(4)) {
-    setIsSubmitting(false);
-    return;
-  }
+    if (!validateStep(4)) {
+      setIsSubmitting(false);
+      return;
+    }
 
-  try {
-    const hashedPassword = await hashPassword(formData.password);
-    const applicantData = {
-      ...formData,
-      email: formData.email.toLowerCase().trim(),
-      phone: formData.phone.replace(/\D/g, ""),
-      password: hashedPassword,
-    };
+    try {
+      // Hash the password before sending
+      const hashedPassword = await hashPassword(formData.password);
 
-    // 1️⃣ Create Razorpay Order from Backend
-    const orderRes = await axios.post("http://localhost:5000/api/payment/order", {
-      amount: 199, // example amount in INR
-    });
+      // Prepare payload according to backend JSON schema
+      const payload = {
+        duration: formData.duration,
+        fullName: formData.fullName,
+        email: formData.email.toLowerCase().trim(), // Normalize email
+        phone: formData.phone.replace(/\D/g, ""), // Normalize phone number
+        dob: formData.dob,
+        college: formData.college,
+        address: formData.address,
+        domain: formData.domain,
+        linkedin: formData.linkedin,
+        github: formData.github,
+        password: hashedPassword, // Send hashed password
+        agree: formData.agree,
+      };
 
-    const { order } = orderRes.data;
+      // Send data to backend API
+      const response = await axios.post(apiUrl("/applicants/register"), payload, {
+        timeout: 120000, // 120 second timeout
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    // 2️⃣ Open Razorpay Payment Popup
-    const options = {
-      key: "rzp_test_xxxxxxxxx", // replace with your test key ID
-      amount: order.amount,
-      currency: order.currency,
-      name: "GT Technovation", // your company name
-      description: "Internship Registration Fee",
-      order_id: order.id,
-      handler: async function (response) {
-        // 3️⃣ Verify payment and register applicant
-        const verifyRes = await axios.post("http://localhost:5000/api/payment/verify", {
-          ...response,
-          applicantData,
-        });
+      // Handle success response
+      if (response.status === 201) {
+        setUniqueId(response.data.uniqueId);
+        setShowSuccess(true);
+        console.log("Application submitted successfully:", response.data);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
 
-        if (verifyRes.data.success) {
-          alert("✅ Payment successful and registration completed!");
-          setUniqueId(verifyRes.data.applicant.uniqueId);
-          setShowSuccess(true);
-        } else {
-          alert("❌ Payment verification failed!");
-        }
-      },
-      prefill: {
-        name: formData.fullName,
-        email: formData.email,
-        contact: formData.phone,
-      },
-      notes: {
-        internship_domain: formData.domain,
-      },
-      theme: {
-        color: "#3399cc",
-      },
-    };
-
-    const rzp1 = new window.Razorpay(options);
-    rzp1.open();
-
-    rzp1.on("payment.failed", function () {
-      alert("❌ Payment failed or cancelled. Please try again.");
-    });
-  } catch (error) {
-    console.error("Error in payment or registration:", error);
-    alert("Something went wrong during payment.");
-  } finally {
-    setIsSubmitting(false);
-  }
-};
-
+      if (error.response?.status === 409) {
+        alert("⚠️ This email is already registered for an internship.");
+      } else if (error.response?.data?.message) {
+        alert(`❌ ${error.response.data.message}`);
+      } else if (error.code === "ECONNABORTED") {
+        alert("⏰ Request timeout. Please check your connection and try again.");
+      } else {
+        alert("❌ Something went wrong while submitting your application. Please try again.");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const handleLoginRedirect = () => {
     navigate("/login");
@@ -312,17 +277,9 @@ const InternshipApplicationFormPage = () => {
     { number: 4, title: "Final" },
   ];
 
-  const internshipFee = [
-    { duration: "1 Month", price: "₹199", popular: false },
-    { duration: "2 Months", price: "₹299", popular: false },
-    { duration: "3 Months", price: "₹399", popular: true },
-    { duration: "6 Months", price: "₹599", popular: false },
-  ];
-
   return (
-    <div className="min-h-screen bg-gradient-to-r from-gray-50 to-blue-50 py-2 px-2 sm:px-4">
-      {/* Success Modal */}
-      <SuccessModal 
+    <div className="min-h-screen bg-gradient-to-r from-gray-50 to-blue-50 py-2 px-2 sm:px-4 mt-3">
+      <SuccessModal
         showSuccess={showSuccess}
         uniqueId={uniqueId}
         handleCloseSuccess={handleCloseSuccess}
@@ -330,30 +287,35 @@ const InternshipApplicationFormPage = () => {
       />
 
       <div className="max-w-6xl mx-auto overflow-hidden">
-        {/* Header with Back Button */}
         <div className="p-1 relative">
-          <h1 className="text-2xl md:text-3xl font-bold text-left m-2 ml-4 md:ml-16">
+          <h1 className="text-2xl md:text-3xl font-bold text-center m-2 ml-4 md:ml-16">
             Internship Application
           </h1>
         </div>
 
-        {/* Progress Steps */}
         <ProgressSteps step={step} steps={steps} />
 
-        {/* Form Content */}
         <div className="px-4 md:px-8 pb-6 md:pb-8">
-          {/* STEP 1: Duration Selection */}
           {step === 1 && (
-            <Step1Duration
-              formData={formData}
-              errors={errors}
-              handleChange={handleChange}
-              handleNext={handleNext}
-              internshipFee={internshipFee}
-            />
+            <>
+              {feeLoading ? (
+                <div className="p-6 bg-white rounded shadow text-center">Loading internship fees...</div>
+              ) : feeError ? (
+                <div className="p-6 bg-red-50 rounded shadow text-center text-red-700">
+                  {feeError}
+                </div>
+              ) : (
+                <Step1Duration
+                  formData={formData}
+                  errors={errors}
+                  handleChange={handleChange}
+                  handleNext={handleNext}
+                  internshipFee={internshipFee}
+                />
+              )}
+            </>
           )}
 
-          {/* STEP 2: Personal Details */}
           {step === 2 && (
             <Step2PersonalDetails
               formData={formData}
@@ -364,7 +326,6 @@ const InternshipApplicationFormPage = () => {
             />
           )}
 
-          {/* STEP 3: Password & Terms */}
           {step === 3 && (
             <Step3AccountSetup
               formData={formData}
@@ -375,7 +336,6 @@ const InternshipApplicationFormPage = () => {
             />
           )}
 
-          {/* STEP 4: Payment */}
           {step === 4 && (
             <Step4Payment
               formData={formData}
@@ -392,8 +352,7 @@ const InternshipApplicationFormPage = () => {
         {/* Footer */}
         <div className="border-t border-gray-500 py-3">
           <div className="text-center text-gray-600 text-xs md:text-sm">
-            Need help? Contact us at support@technophile.com or call
-            +91-9876543210
+            Need help? Contact us at support@gttechnovation.com or call +91-7891922459
           </div>
         </div>
       </div>

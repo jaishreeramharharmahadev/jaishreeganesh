@@ -22,6 +22,7 @@ import ProjectsContent from "../components/StudentDashboard/ProjectsContent";
 import CertificateContent from "../components/StudentDashboard/CertificateContent";
 import ProfileContent from "../components/StudentDashboard/ProfileContent";
 import WeekContent from "../components/StudentDashboard/WeekContent";
+import { apiUrl } from "../utils/api";
 
 export default function StudentDashboard() {
   const [applicant, setApplicant] = useState(null);
@@ -46,8 +47,9 @@ export default function StudentDashboard() {
   async function fetchMe() {
     setLoading(true);
     setError("");
+    
     try {
-      const res = await axios.get(`${API}/api/applicants/me`, {
+      const res = await axios.get(apiUrl(`/applicants/me`), {
         headers: { Authorization: `Bearer ${token}` },
       });
       setApplicant(res.data);
@@ -65,7 +67,7 @@ export default function StudentDashboard() {
     setActiveNav("week-content");
     setError("");
     try {
-      const res = await axios.get(`${API}/api/applicants/week/${weekNumber}`, {
+      const res = await axios.get(apiUrl(`/applicants/week/${weekNumber}`), {
         headers: { Authorization: `Bearer ${token}` },
       });
       setWeekData(res.data.week);
@@ -82,7 +84,7 @@ export default function StudentDashboard() {
   async function markComplete(weekNumber) {
     try {
       await axios.post(
-        `${API}/api/applicants/complete-week`,
+        apiUrl(`/applicants/complete-week`),
         { weekNumber },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -114,7 +116,7 @@ export default function StudentDashboard() {
 
     setUploading(true);
     try {
-      await axios.post(`${API}/api/applicants/assignment/${weekNumber}`, form, {
+      await axios.post(apiUrl(`/applicants/assignment/${weekNumber}`), form, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
@@ -162,7 +164,7 @@ export default function StudentDashboard() {
 
     setProjectUploading(true);
     try {
-      await axios.post(`${API}/api/applicants/project`, form, {
+      await axios.post(apiUrl(`/applicants/project`), form, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
@@ -187,7 +189,7 @@ export default function StudentDashboard() {
     setCertificateLoading(true);
     try {
       const res = await axios.get(
-        `${API}/api/certificates/download/${encodeURIComponent(uniqueId)}`,
+        apiUrl(`/certificates/download/${encodeURIComponent(uniqueId)}`),
         {
           responseType: "blob",
           headers: { Authorization: `Bearer ${token}` },
@@ -215,7 +217,7 @@ export default function StudentDashboard() {
     if (!applicant || !applicant.uniqueId) return;
     try {
       const res = await axios.post(
-        `${API}/api/certificates/generate/${uniqueId}`,
+        apiUrl(`/certificates/generate/${uniqueId}`),
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -229,22 +231,11 @@ export default function StudentDashboard() {
     }
   }
 
-  // Add this function to your StudentDashboard component
-  async function checkFeedbackAvailability(uniqueId) {
-    try {
-      const res = await axios.get(`${API}/api/feedback/available/${uniqueId}`);
-      return res.data.available;
-    } catch (err) {
-      console.error("checkFeedbackAvailability error", err);
-      return false;
-    }
-  }
-
   async function fetchMe() {
     setLoading(true);
     setError("");
     try {
-      const res = await axios.get(`${API}/api/applicants/me`, {
+      const res = await axios.get(apiUrl(`/applicants/me`), {
         headers: { Authorization: `Bearer ${token}` },
       });
       setApplicant(res.data);
@@ -268,7 +259,7 @@ export default function StudentDashboard() {
     setVerifyResult(null);
     try {
       const res = await axios.get(
-        `${API}/api/certificates/verify/${encodeURIComponent(certNumber)}`
+        apiUrl(`/certificates/verify/${encodeURIComponent(certNumber)}`)
       );
       setVerifyResult({ ok: true, data: res.data });
     } catch (err) {
@@ -278,6 +269,27 @@ export default function StudentDashboard() {
       });
     }
   }
+
+  // Add this function inside your StudentDashboard component, after the state declarations
+const getSubmittedAssignmentsCount = () => {
+  if (!applicant?.learningPath) return 0;
+  
+  let totalSubmissions = 0;
+  applicant.learningPath.forEach(week => {
+    if (week.assignmentSubmissions && week.assignmentSubmissions.length > 0) {
+      totalSubmissions += week.assignmentSubmissions.length;
+    }
+  });
+  return totalSubmissions;
+};
+
+const getWeeksWithSubmissions = () => {
+  if (!applicant?.learningPath) return 0;
+  
+  return applicant.learningPath.filter(week => 
+    week.assignmentSubmissions && week.assignmentSubmissions.length > 0
+  ).length;
+};
 
   const isCertificateAvailable = () => {
     if (!applicant?.endDate) return false;
@@ -344,19 +356,25 @@ export default function StudentDashboard() {
   const renderContent = () => {
     switch (activeNav) {
       case "overview":
-        return (
-          <OverviewContent
-            applicant={applicant}
-            progressPercent={progressPercent}
-          />
-        );
+  return (
+    <OverviewContent
+      applicant={applicant}
+      progressPercent={progressPercent}
+      submittedAssignmentsCount={getSubmittedAssignmentsCount()}
+      weeksWithSubmissions={getWeeksWithSubmissions()}
+      onWeekNavigate={openWeek} // Add this line
+    />
+  );
       case "progress":
-        return (
-          <ProgressContent
-            applicant={applicant}
-            progressPercent={progressPercent}
-          />
-        );
+  return (
+    <ProgressContent
+      applicant={applicant}
+      progressPercent={progressPercent}
+      submittedAssignmentsCount={getSubmittedAssignmentsCount()}
+      weeksWithSubmissions={getWeeksWithSubmissions()}
+      onWeekNavigate={openWeek} // Add this line
+    />
+  );
       case "projects":
         return (
           <ProjectsContent

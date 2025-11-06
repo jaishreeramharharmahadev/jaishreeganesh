@@ -24,6 +24,8 @@ import {
   Search,
   ExternalLink,
   FileCode,
+  Plus,
+  AlertCircle,
 } from "lucide-react";
 
 function WeekContent({
@@ -33,6 +35,141 @@ function WeekContent({
   uploadAssignment,
   markComplete,
 }) {
+  const [showAssignmentForm, setShowAssignmentForm] = useState(false);
+  const [hasSubmittedAssignment, setHasSubmittedAssignment] = useState(false);
+  const [markingComplete, setMarkingComplete] = useState(false);
+  const [fileError, setFileError] = useState("");
+
+  // File size limit (10MB in bytes)
+  const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+
+  // Allowed file types
+  const ALLOWED_FILE_TYPES = [
+    // PDF
+    'application/pdf',
+    
+    // PowerPoint
+    'application/vnd.ms-powerpoint',
+    'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    
+    // Word Documents
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    
+    // Images
+    'image/jpeg',
+    'image/jpg',
+    'image/png',
+    'image/gif',
+    'image/webp',
+    'image/svg+xml',
+    
+    // Text files (optional - included since they're small)
+    'text/plain',
+  ];
+
+  const ALLOWED_EXTENSIONS = [
+    'pdf',
+    'ppt',
+    'pptx',
+    'doc',
+    'docx',
+  ];
+
+  // Reset form state when week changes
+  useEffect(() => {
+    setShowAssignmentForm(false);
+    setFileError("");
+    if (weekData?.assignmentSubmissions?.length > 0) {
+      setHasSubmittedAssignment(true);
+    } else {
+      setHasSubmittedAssignment(false);
+    }
+  }, [activeWeek, weekData]);
+
+  // Update hasSubmittedAssignment when weekData changes
+  useEffect(() => {
+    if (weekData?.assignmentSubmissions?.length > 0) {
+      setHasSubmittedAssignment(true);
+    }
+  }, [weekData]);
+
+  const validateFile = (file) => {
+    setFileError("");
+
+    // Check if file is selected
+    if (!file) {
+      setFileError("Please select a file to upload.");
+      return false;
+    }
+
+    // Check file size
+    if (file.size > MAX_FILE_SIZE) {
+      setFileError(`File size too large. Maximum size is 10MB. Your file is ${(file.size / (1024 * 1024)).toFixed(2)}MB.`);
+      return false;
+    }
+
+    // Check file type
+    const fileExtension = file.name.split('.').pop().toLowerCase();
+    const isValidType = ALLOWED_FILE_TYPES.includes(file.type) || 
+                       ALLOWED_EXTENSIONS.includes(fileExtension);
+
+    if (!isValidType) {
+      setFileError(`File type not allowed. Please upload only PDF, PPT, Word documents, or images (${ALLOWED_EXTENSIONS.join(', ')}).`);
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleAssignmentSubmit = async (e, week) => {
+    e.preventDefault();
+    const fileInput = e.target.elements.file;
+    
+    if (!fileInput || fileInput.files.length === 0) {
+      setFileError("Please select a file to upload.");
+      return;
+    }
+
+    const file = fileInput.files[0];
+    
+    // Validate file before upload
+    if (!validateFile(file)) {
+      return;
+    }
+
+    await uploadAssignment(e, week);
+    setHasSubmittedAssignment(true);
+    setShowAssignmentForm(false);
+    setFileError("");
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      validateFile(file);
+    } else {
+      setFileError("");
+    }
+  };
+
+  const handleMarkComplete = async () => {
+    setMarkingComplete(true);
+    try {
+      await markComplete(activeWeek);
+      // Success state will be reflected through the updated weekData prop
+    } catch (error) {
+      console.error("Failed to mark week as complete:", error);
+    } finally {
+      setMarkingComplete(false);
+    }
+  };
+
+  const toggleAssignmentForm = () => {
+    setShowAssignmentForm(!showAssignmentForm);
+    setFileError("");
+  };
+
   if (!weekData) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -76,14 +213,42 @@ function WeekContent({
               {weekData.title}
             </h3>
             <p className="opacity-80 mt-2">{weekData.content}</p>
+            {weekData.completed && (
+              <div className="flex items-center space-x-2 mt-3">
+                <CheckCircle className="w-5 h-5 text-green-300" />
+                <span className="text-green-200 font-medium">Completed</span>
+                {weekData.completedAt && (
+                  <span className="text-green-200 text-sm">
+                    on {new Date(weekData.completedAt).toLocaleDateString()}
+                  </span>
+                )}
+              </div>
+            )}
           </div>
-          <button
-            onClick={() => markComplete(activeWeek)}
-            className="bg-white text-indigo-600 px-6 py-2 rounded-lg font-semibold hover:bg-indigo-50 transition-colors flex items-center space-x-2"
-          >
-            <CheckCircle className="w-4 h-4" />
-            <span>Mark Complete</span>
-          </button>
+          {!weekData.completed ? (
+            <button
+              onClick={handleMarkComplete}
+              disabled={markingComplete}
+              className="bg-white text-indigo-600 px-6 py-2 rounded-lg font-semibold hover:bg-indigo-50 transition-colors flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {markingComplete ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-indigo-600"></div>
+                  <span>Marking...</span>
+                </>
+              ) : (
+                <>
+                  <CheckCircle className="w-4 h-4" />
+                  <span>Mark Complete</span>
+                </>
+              )}
+            </button>
+          ) : (
+            <div className="bg-green-100 text-green-800 px-6 py-2 rounded-lg font-semibold flex items-center space-x-2">
+              <CheckCircle className="w-4 h-4" />
+              <span>Completed</span>
+            </div>
+          )}
         </div>
       </div>
 
@@ -145,121 +310,199 @@ function WeekContent({
           {weekData.assignmentRequired ? (
             <div className="lg:col-span-1">
               <div className="sticky top-6">
-                <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
+                {/* Assignment Status Card */}
+                <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-4">
                   <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
                     <Upload className="w-5 h-5 mr-2 text-blue-600" />
-                    Submit Assignment
+                    Assignment Status
                   </h4>
 
-                  <form
-                    onSubmit={(e) => uploadAssignment(e, activeWeek)}
-                    className="space-y-4"
-                  >
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Upload File
-                      </label>
-                      <input
-                        type="file"
-                        name="file"
-                        accept=".pdf,.ppt,.pptx,.docx,.zip,.jpg,.jpeg,.png,.mp4,.mov,.avi,.py,.js,.jsx,.ts,.tsx,.html,.css,.java,.cpp,.c,.ipynb"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                        required
-                      />
-                      <p className="text-xs text-gray-500 mt-1">
-                        Supported formats: PDF, PPT, DOC, Images, Videos, Code files
+                  {/* Submission Status */}
+                  {hasSubmittedAssignment ? (
+                    <div className="text-center py-4">
+                      <div className="flex justify-center mb-3">
+                        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                          <CheckCircle className="w-8 h-8 text-green-600" />
+                        </div>
+                      </div>
+                      <h5 className="font-semibold text-green-700 mb-2">
+                        Assignment Submitted!
+                      </h5>
+                      <p className="text-sm text-gray-600 mb-4">
+                        Your assignment has been successfully submitted.
+                      </p>
+                      
+                      {/* Submit More Button */}
+                      {!showAssignmentForm && (
+                        <button
+                          onClick={toggleAssignmentForm}
+                          className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2"
+                        >
+                          <Plus className="w-4 h-4" />
+                          <span>Submit Another Assignment</span>
+                        </button>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="text-center py-4">
+                      <div className="flex justify-center mb-3">
+                        <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center">
+                          <Clock className="w-8 h-8 text-gray-400" />
+                        </div>
+                      </div>
+                      <h5 className="font-semibold text-gray-700 mb-2">
+                        Pending Submission
+                      </h5>
+                      <p className="text-sm text-gray-600 mb-4">
+                        No assignment submitted yet.
                       </p>
                     </div>
+                  )}
 
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Remarks (Optional)
-                      </label>
-                      <textarea
-                        name="remarks"
-                        placeholder="Any additional comments about your submission..."
-                        rows={3}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                      />
-                    </div>
-
-                    <div className="flex items-start space-x-3">
-                      <input
-                        type="checkbox"
-                        name="consent"
-                        id="consent"
-                        required
-                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 mt-1 flex-shrink-0"
-                      />
-                      <label htmlFor="consent" className="text-sm text-gray-700">
-                        I confirm information is accurate and I agree to the terms and
-                        conditions.
-                      </label>
-                    </div>
-
-                    <button
-                      type="submit"
-                      disabled={uploading}
-                      className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center space-x-2"
+                  {/* Assignment Form - Show based on conditions */}
+                  {(showAssignmentForm || !hasSubmittedAssignment) && (
+                    <form
+                      onSubmit={(e) => handleAssignmentSubmit(e, activeWeek)}
+                      className="space-y-4 mt-4"
                     >
-                      {uploading ? (
-                        <>
-                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                          <span>Uploading...</span>
-                        </>
-                      ) : (
-                        <>
-                          <Upload className="w-4 h-4" />
-                          <span>Submit Assignment</span>
-                        </>
-                      )}
-                    </button>
-                  </form>
-
-                  {/* Previous Submissions */}
-                  {(weekData.assignmentSubmissions || []).length > 0 && (
-                    <div className="mt-6 pt-6 border-t border-blue-200">
-                      <h5 className="font-semibold text-gray-900 mb-3 text-sm">
-                        Your Submissions
-                      </h5>
-                      <div className="space-y-3 max-h-60 overflow-y-auto">
-                        {weekData.assignmentSubmissions.map((submission, index) => (
-                          <div 
-                            key={index} 
-                            className="border border-gray-200 rounded-lg p-3 bg-white"
-                          >
-                            <div className="flex justify-between items-start mb-2">
-                              <span className="font-medium text-gray-900 text-sm truncate">
-                                {submission.originalName || submission.filename}
-                              </span>
-                              <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded whitespace-nowrap">
-                                {submission.submittedAt
-                                  ? new Date(
-                                      submission.submittedAt
-                                    ).toLocaleDateString()
-                                  : "Submitted"}
-                              </span>
-                            </div>
-                            {submission.remarks && (
-                              <p className="text-xs text-gray-600 mb-2 line-clamp-2">
-                                {submission.remarks}
-                              </p>
-                            )}
-                            {submission.filename && (
-                              <a
-                                href={`/api/uploads/assignment/${submission.filename}`}
-                                className="text-xs text-blue-600 hover:text-blue-800 flex items-center space-x-1"
-                              >
-                                <Download className="w-3 h-3" />
-                                <span>Download</span>
-                              </a>
-                            )}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Upload File
+                        </label>
+                        <input
+                          type="file"
+                          name="file"
+                          accept=".pdf,.ppt,.pptx,.doc,.docx,.jpg,.jpeg,.png,.gif,.webp,.svg,.txt"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                          required
+                          onChange={handleFileChange}
+                        />
+                        <div className="flex justify-between text-xs text-gray-500 mt-1">
+                          <span>Allowed: pdf, ppt</span>
+                          <span>Max: 10MB</span>
+                        </div>
+                        {fileError && (
+                          <div className="flex items-center space-x-2 mt-2 text-red-600 text-sm">
+                            <AlertCircle className="w-4 h-4" />
+                            <span>{fileError}</span>
                           </div>
-                        ))}
+                        )}
                       </div>
-                    </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Remarks (Optional)
+                        </label>
+                        <textarea
+                          name="remarks"
+                          placeholder="Any additional comments about your submission..."
+                          rows={3}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                        />
+                      </div>
+
+                      <div className="flex items-start space-x-3">
+                        <input
+                          type="checkbox"
+                          name="consent"
+                          id="consent"
+                          required
+                          className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 mt-1 flex-shrink-0"
+                        />
+                        <label htmlFor="consent" className="text-sm text-gray-700">
+                          I confirm information is accurate and I agree to the terms and
+                          conditions.
+                        </label>
+                      </div>
+
+                      <button
+                        type="submit"
+                        disabled={uploading || fileError}
+                        className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center space-x-2"
+                      >
+                        {uploading ? (
+                          <>
+                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                            <span>Uploading...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Upload className="w-4 h-4" />
+                            <span>
+                              {hasSubmittedAssignment ? 'Submit Additional Assignment' : 'Submit Assignment'}
+                            </span>
+                          </>
+                        )}
+                      </button>
+
+                      {/* Cancel button for additional submissions */}
+                      {hasSubmittedAssignment && showAssignmentForm && (
+                        <button
+                          type="button"
+                          onClick={toggleAssignmentForm}
+                          className="w-full bg-gray-200 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-300 transition-colors"
+                        >
+                          Cancel
+                        </button>
+                      )}
+                    </form>
                   )}
                 </div>
+
+                {/* Previous Submissions */}
+                {(weekData.assignmentSubmissions || []).length > 0 && (
+                  <div className="bg-white border border-gray-200 rounded-xl p-6">
+                    <h5 className="font-semibold text-gray-900 mb-3 text-sm flex items-center">
+                      <FileText className="w-4 h-4 mr-2 text-gray-500" />
+                      Your Submissions ({weekData.assignmentSubmissions.length})
+                    </h5>
+                    <div className="space-y-3 max-h-60 overflow-y-auto">
+                      {weekData.assignmentSubmissions.map((submission, index) => (
+                        <div 
+                          key={index} 
+                          className="border border-gray-200 rounded-lg p-3 bg-gray-50"
+                        >
+                          <div className="flex justify-between items-start mb-2">
+                            <span className="font-medium text-gray-900 text-sm truncate flex items-center">
+                              {submission.originalName || submission.filename}
+                              {index === 0 && (
+                                <span className="ml-2 bg-green-100 text-green-800 text-xs px-2 py-1 rounded">
+                                  Latest
+                                </span>
+                              )}
+                            </span>
+                            <span className="text-xs text-gray-500 bg-white px-2 py-1 rounded whitespace-nowrap">
+                              {submission.submittedAt
+                                ? new Date(
+                                    submission.submittedAt
+                                  ).toLocaleDateString()
+                                : "Submitted"}
+                            </span>
+                          </div>
+                          {submission.remarks && (
+                            <p className="text-xs text-gray-600 mb-2 line-clamp-2">
+                              {submission.remarks}
+                            </p>
+                          )}
+                          {submission.size && (
+                            <p className="text-xs text-gray-500 mb-2">
+                              Size: {(submission.size / (1024 * 1024)).toFixed(2)} MB
+                            </p>
+                          )}
+                          {submission.filename && (
+                            <a
+                              href={`/api/uploads/assignment/${submission.filename}`}
+                              className="text-xs text-blue-600 hover:text-blue-800 flex items-center space-x-1"
+                            >
+                              <Download className="w-3 h-3" />
+                              <span>Download</span>
+                            </a>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           ) : (
