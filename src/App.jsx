@@ -24,6 +24,8 @@ import ContactUs from "./components/policy/ContactUs";
 import Courses from "./pages/Courses";
 import Jobs from "./pages/Jobs";
 import AboutUs from "./pages/AboutUs";
+import VerificationPage from "./pages/VerificationPage";
+import VerifyResultPage from "./pages/VerifyResultPage";
 
 /** ScrollToTop component */
 function ScrollToTop() {
@@ -140,6 +142,24 @@ function AppRoutes() {
         element={
           <MainLayout>
             <ContactUs />
+          </MainLayout>
+        }
+      />
+
+      <Route
+        path="/verify"
+        element={
+          <MainLayout>
+            <VerificationPage />
+          </MainLayout>
+        }
+      />
+
+      <Route
+        path="/verify/:certificateNumber"
+        element={
+          <MainLayout>
+            <VerifyResultPage />
           </MainLayout>
         }
       />
