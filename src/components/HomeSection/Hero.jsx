@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { 
   Code2, 
   Cpu, 
@@ -15,20 +15,6 @@ import {
 } from "lucide-react";
 
 export default function Hero() {
-  const [rotation, setRotation] = useState(0);
-
-  // Slower rotation effect for the entire globe
-  useEffect(() => {
-    let animationFrameId;
-    
-    const animate = () => {
-      setRotation(prev => (prev + 0.1) % 720); // Much slower rotation
-      animationFrameId = requestAnimationFrame(animate);
-    };
-    
-    animate();
-    return () => cancelAnimationFrame(animationFrameId);
-  }, []);
 
   const stats = [
     { number: "500+", label: "Successful Interns", color: "text-green-600", icon: Users },
@@ -156,7 +142,7 @@ export default function Hero() {
           </div>
 
           {/* Right Content - Rotating Globe with Static Users */}
-          {/* <div className="p-8">
+          <div className="p-8">
             <div className="text-center mb-12">
               <div className="flex items-center justify-center gap-2 mb-2">
                 <Globe className="w-6 h-6 text-blue-600" />
@@ -170,9 +156,7 @@ export default function Hero() {
 
             <div className="relative w-full h-80 flex items-center justify-center">
               <div 
-                className="relative w-56 h-56 transition-transform duration-100"
-                style={{ transform: `rotate(${rotation}deg)` }}
-              >
+                className="relative w-56 h-56 transition-transform duration-100">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-green-400 to-cyan-400 rounded-full shadow-2xl border-4 border-sky-300">
                   <div className="absolute top-1/4 left-1/4 w-10 h-10 bg-green-300/40 rounded-full blur-sm"></div>
                   <div className="absolute bottom-1/3 right-1/3 w-8 h-8 bg-blue-300/50 rounded-full blur-sm"></div>
@@ -259,7 +243,7 @@ export default function Hero() {
               <div className="absolute -top-6 -right-6 w-24 h-24 bg-blue-100 rounded-full opacity-30 blur-lg"></div>
               <div className="absolute -bottom-8 -left-8 w-28 h-28 bg-green-100 rounded-full opacity-40 blur-lg"></div>
             </div>
-          </div> */}
+          </div>
         </div>
       </div>
     </section>
