@@ -224,7 +224,7 @@ export default function WhyChooseUs() {
 
               <div className="relative p-8">
                 <div className="flex items-start gap-4 mb-4">
-                  <div className={`p-3 rounded-xl bg-gradient-to-r ${reason.gradient} text-white`}>{reason.icon}</div>
+                  <div className={`p-3 rounded-xl bg-gradient-to-br from-sky-400 to-purple-500 text-white`}>{reason.icon}</div>
                   <div className="flex-1">
                     <h3 className="text-xl font-bold text-gray-900 mb-2">{reason.title}</h3>
                     <div className="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-sm font-medium">

@@ -13,29 +13,10 @@ import {
   TrendingUp,
   Clock
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function Hero() {
-  const [rotation, setRotation] = useState(0);
-
-  // Slower rotation effect for the entire globe
-  useEffect(() => {
-    let animationFrameId;
-    
-    const animate = () => {
-      setRotation(prev => (prev + 0.8) % 320); // Much slower rotation
-      animationFrameId = requestAnimationFrame(animate);
-    };
-    
-    animate();
-    return () => cancelAnimationFrame(animationFrameId);
-  }, []);
-
-  const stats = [
-    { number: "500+", label: "Successful Interns", color: "text-green-600", icon: Users },
-    { number: "100+", label: "Students Placed", color: "text-blue-600", icon: Target },
-    { number: "50+", label: "Partner Companies", color: "text-orange-600", icon: TrendingUp },
-  ];
-
+  const navigate = useNavigate();
   // Tech-focused user avatars with Lucide icons
   const users = [
     { 
