@@ -17,6 +17,12 @@ import { useNavigate } from "react-router-dom";
 
 export default function Hero() {
   const navigate = useNavigate();
+  const stats = [
+    { number: "500+", label: "Successful Interns", color: "text-green-600", icon: Users },
+    { number: "100+", label: "Students Placed", color: "text-blue-600", icon: Target },
+    { number: "50+", label: "Partner Companies", color: "text-orange-600", icon: TrendingUp },
+  ];
+
   // Tech-focused user avatars with Lucide icons
   const users = [
     { 
@@ -104,8 +110,11 @@ export default function Hero() {
             </div>
 
             {/* CTA Buttons */}
-            <div className="mt-6">
-              <button className="bg-gradient-to-r from-gray-800 to-blue-700 hover:bg-green-700 text-white font-semibold px-3 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2">
+            <div className="mt-8 flex justify-center">
+              <button
+                onClick={() => navigate("/internships")}
+                className="bg-gradient-to-r from-gray-800 to-blue-700 hover:from-blue-700 hover:to-green-700 text-white font-semibold px-5 py-3 rounded-lg transition-all duration-300 flex items-center gap-2 hover:scale-105"
+              >
                 <span>Find Internships</span>
                 <svg
                   className="w-5 h-5"
