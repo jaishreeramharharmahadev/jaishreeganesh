@@ -501,7 +501,7 @@ export default function InternshipDetail() {
           {/* Image */}
           <div className="w-full flex justify-center lg:justify-start">
             <img
-              src={internship?.image}
+              src={internship?.image2}
               alt={internship?.domain || "Internship"}
               className="w-full sm:w-4/5 lg:w-full h-auto object-cover"
               onError={(e) => {

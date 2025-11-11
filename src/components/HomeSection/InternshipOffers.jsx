@@ -578,7 +578,7 @@ export default function InternshipOffers() {
 
               <div className="relative overflow-hidden">
                 <img
-                  src={internship.images}
+                  src={internship.image}
                   alt={internship.domain}
                   className="h-52 w-full object-cover group-hover:scale-110 transition-transform duration-700"
                   onError={(e) => {
