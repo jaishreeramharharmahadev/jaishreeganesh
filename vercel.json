@@ -1,13 +1,20 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
   "redirects": [
     {
       "source": "/(.*)",
-      "has": [{ "type": "host", "value": "www.gttechnovation.com" }],
+      "has": [
+        { "type": "host", "value": "www.gttechnovation.com" }
+      ],
       "destination": "https://gttechnovation.com/:1",
       "permanent": true
     }
   ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
   ]
 }
