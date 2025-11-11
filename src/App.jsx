@@ -48,7 +48,7 @@ function AppRoutes() {
         element={
           <MainLayout>
             <Helmet>
-              <title>GT Technovation | Empowering Innovation in Technology</title>
+              <title>GT Technovation | Empowering Future Tech Leaders</title>
               <meta
                 name="description"
                 content="GT Technovation offers curated internships, real-world experience, and innovative technology solutions."
