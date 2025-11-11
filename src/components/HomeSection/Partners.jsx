@@ -19,7 +19,7 @@ const Partners = () => {
     <section className="py-12 bg-gradient-to-br from-white to-gray-50 relative overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex items-center justify-between mb-8">
-          <h3 className="text-lg font-semibold text-gray-700">Trusted by</h3>
+          <h3 className="text-lg font-semibold text-gray-700"></h3>
 
           <div className="hidden md:flex gap-2 items-center">
             <button className="bg-white/90 text-gray-700 w-10 h-10 rounded-full shadow-sm border border-gray-200 flex items-center justify-center">

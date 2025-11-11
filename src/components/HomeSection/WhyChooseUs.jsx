@@ -107,7 +107,7 @@ export default function WhyChooseUs() {
             {[1, 2, 3, 4].map((item) => (
               <div
                 key={item}
-                className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 text-center shadow-md border border-orange-100 animate-pulse"
+                className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 text-center shadow-md border border-gray-100 animate-pulse"
               >
                 <div className="flex justify-center mb-3">
                   <div className="p-2 bg-gray-300 rounded-lg w-12 h-12"></div>
@@ -185,14 +185,14 @@ export default function WhyChooseUs() {
   }
 
   return (
-    <section className="pt-10 bg-gradient-to-r from-gray-50 to-blue-50 relative overflow-hidden">
+    <section className="pt-12 bg-gradient-to-r from-gray-50 to-blue-50 relative overflow-hidden">
       <Wave3 />
-      <div className="absolute top-0 right-0 w-72 h-72 bg-orange-400 rounded-full blur-3xl opacity-20 -translate-y-1/2 translate-x-1/2"></div>
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-400 rounded-full blur-3xl opacity-20 -translate-x-1/2 translate-y-1/2"></div>
+      <div className="absolute top-40 right-40 w-32 h-32 bg-orange-400 rounded-full blur-3xl opacity-20 -translate-y-1/2 translate-x-1/2"></div>
+      {/* <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-400 rounded-full blur-3xl opacity-20 -translate-x-1/2 translate-y-1/2"></div> */}
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">Why Choose Us</h2>
+          <h2 className="text-4xl font-bold text-gray-900 mb-2">Why Choose Us</h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
             We're not just another learning platform - we're your career growth partner with proven results
           </p>
@@ -202,18 +202,18 @@ export default function WhyChooseUs() {
           {stats.map((stat, index) => (
             <div
               key={index}
-              className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 text-center shadow-md border border-orange-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              className="bg-white/85 backdrop-blur-sm rounded-xl p-4 text-center shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
             >
               <div className="flex justify-center mb-3">
-                <div className="p-2 bg-orange-100 text-orange-600 rounded-lg">{stat.icon}</div>
+                <div className="p-2 bg-gray-100 text-teal-700 rounded-lg">{stat.icon}</div>
               </div>
-              <div className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">{stat.number}</div>
-              <div className="text-sm text-gray-600 font-medium">{stat.label}</div>
+              <div className="text-2xl font-bold text-gray-900 mb-1">{stat.number}</div>
+              <div className="text-sm text-gray-700 font-medium">{stat.label}</div>
             </div>
           ))}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-6 lg:mb-10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8  mb-6 lg:mb-10">
           {reasons.map((reason, index) => (
             <div
               key={index}
@@ -222,19 +222,19 @@ export default function WhyChooseUs() {
             >
               <div className={`absolute inset-0 bg-gradient-to-r opacity-0`}></div>
 
-              <div className="relative p-8">
+              <div className="relative p-6">
                 <div className="flex items-start gap-4 mb-4">
-                  <div className={`p-3 rounded-xl bg-gradient-to-br from-sky-400 to-purple-500 text-white`}>{reason.icon}</div>
+                  <div className={`p-2 rounded-xl bg-gradient-to-br from-sky-500 to-purple-300 text-white`}>{reason.icon}</div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">{reason.title}</h3>
-                    <div className="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-sm font-medium">
+                    <h3 className="text-lg font-bold text-gray-900 mb-1">{reason.title}</h3>
+                    <div className="inline-flex items-center px-2 py-1 rounded-full bg-gray-100 text-gray-700 text-xs font-medium">
                       <Clock className="w-3 h-3 mr-1" />
                       {reason.stat}
                     </div>
                   </div>
                 </div>
 
-                <p className="text-gray-600 leading-relaxed mb-4 text-md">{reason.desc}</p>
+                <p className="text-gray-700 leading-relaxed mb-4 text-md">{reason.desc}</p>
 
                 <div className="space-y-2">
                   {reason.features && reason.features.map((feature, idx) => (

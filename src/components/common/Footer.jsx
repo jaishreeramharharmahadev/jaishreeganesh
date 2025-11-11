@@ -55,7 +55,7 @@ export default function Footer() {
   ];
 
   const contactInfo = [
-    { icon: Phone, text: "+1 (555) 123-4567", href: "tel:+15551234567" },
+    { icon: Phone, text: "+91 7891922459", href: "tel:+15551234567" },
     {
       icon: Mail,
       text: "support@gttechnovation.com",

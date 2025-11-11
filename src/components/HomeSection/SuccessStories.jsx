@@ -289,23 +289,19 @@ export default function SuccessStories() {
     );
 
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-50 to-orange-50/30 relative overflow-hidden">
+    <section className="py-10 bg-gradient-to-br from-gray-50 to-orange-50/30 relative overflow-hidden">
       <div className="absolute top-0 left-0 w-72 h-72 bg-orange-100 rounded-full blur-3xl opacity-30 -translate-x-1/2 -translate-y-1/2"></div>
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-100 rounded-full blur-3xl opacity-30 translate-x-1/2 translate-y-1/2"></div>
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-orange-100 text-orange-600 text-sm font-semibold mb-4">
-            <Award className="w-4 h-4 mr-2" />
-            Trusted by 10,000+ Students
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl md:text-4xl text-gray-900 mb-4">
             Success Stories from{" "}
-            <span className="bg-gradient-to-r from-orange-500 to-purple-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-orange-500 to-purple-600 font-semibold bg-clip-text text-transparent">
               Our Interns
             </span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
             Hear what our talented students have to say about their transformative journey with TechnoPhile
           </p>
         </div>
@@ -348,12 +344,12 @@ export default function SuccessStories() {
               return (
                 <div key={idx} className="flex-shrink-0 w-96 snap-center">
                   <div
-                    className={`relative bg-white rounded-3xl shadow transition-transform duration-300 overflow-hidden ${
+                    className={`relative bg-white rounded-xl shadow transition-transform duration-300 overflow-hidden ${
                       active ? "scale-105 z-10" : "scale-100"
                     }`}
                     aria-hidden={!active}
                   >
-                    <div className="absolute top-6 right-6 text-orange-100">
+                    <div className="absolute top-6 right-6 text-sky-100">
                       <Quote className="w-8 h-8" />
                     </div>
 
@@ -400,11 +396,6 @@ export default function SuccessStories() {
                       </div>
 
                       <blockquote className="text-gray-600 leading-relaxed mb-4 italic">"{t.feedback}"</blockquote>
-
-                      <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                        <div className="text-sm text-gray-500">Placed at</div>
-                        <div className="text-sm font-semibold text-gray-900 bg-gray-50 px-3 py-1 rounded-full">{t.company}</div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -412,14 +403,14 @@ export default function SuccessStories() {
             })}
           </div>
 
-          <div className="flex justify-center items-center gap-3 mt-8">
+          <div className="flex justify-center items-center gap-3 mt-1">
             {testimonials.map((_, idx) => {
               const active = idx === (currentIndex % testimonials.length);
               return (
                 <button
                   key={idx}
                   onClick={() => goToTestimonial(idx)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${active ? "bg-orange-500 scale-125" : "bg-gray-300"}`}
+                  className={`w-3 h-1.5 rounded-full transition-all duration-300 ${active ? "bg-green-400 scale-125" : "bg-gray-300"}`}
                   aria-label={`Go to testimonial ${idx + 1}`}
                   disabled={loading}
                 />

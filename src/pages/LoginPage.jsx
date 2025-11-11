@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-import { apiUrl } from "../utils/api";
 
 const hashPassword = async (password) => {
   const encoder = new TextEncoder();
@@ -28,7 +27,7 @@ function LoginPage() {
       if (token) {
         try {
           const response = await axios.get(
-            apiUrl('/applicants/me'),
+            "http://localhost:5000/api/applicants/me",
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -96,7 +95,7 @@ function LoginPage() {
       const hashedPassword = await hashPassword(formData.password);
 
       const response = await axios.post(
-        apiUrl('/auth/login'),
+        "http://localhost:5000/api/auth/login",
         {
           email: formData.email.toLowerCase().trim(),
           password: hashedPassword,
@@ -232,7 +231,7 @@ function LoginPage() {
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-20 xl:px-24 bg-white">
+      <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-20 xl:px-24 bg-gradient-to-r from-gray-50 to-blue-50">
         <div className="mx-auto w-full max-w-md">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-gray-900">Login</h2>

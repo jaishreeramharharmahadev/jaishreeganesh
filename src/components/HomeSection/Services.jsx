@@ -72,7 +72,7 @@ export default function Offerings() {
                 cy="150"
                 rx="160"
                 ry="160"
-                className="fill-orange-200/40"
+                className="fill-emerald-200/20"
               />
 
               {/* Ground with subtle animation */}
@@ -81,7 +81,7 @@ export default function Offerings() {
                 cy="300"
                 rx="120"
                 ry="14"
-                className="fill-amber-900"
+                className="fill-[#D3B683]"
               />
 
               {/* Trunk with hover effect */}
@@ -91,41 +91,41 @@ export default function Offerings() {
                 width="20"
                 height="100"
                 rx="5"
-                className="fill-amber-900"
+                className="fill-[#C4A484]"
               />
 
               {/* Branches with stroke animation */}
               <path
                 d="M145 200 C 120 160, 110 180, 50 130"
-                stroke="#7c4a1d"
+                stroke="#bfa26f"
                 strokeWidth="6"
                 strokeLinecap="round"
                 fill="none"
               />
               <path
                 d="M150 200 C 170 150, 320 180, 320 140"
-                stroke="#7c4a1d"
+                stroke="#bfa26f"
                 strokeWidth="6"
                 strokeLinecap="round"
                 fill="none"
               />
               <path
                 d="M148 200 C 130 140, 100 120, 90 80"
-                stroke="#7c4a1d"
+                stroke="#bfa26f"
                 strokeWidth="5"
                 strokeLinecap="round"
                 fill="none"
               />
               <path
                 d="M155 200 C 180 120, 210 100, 240 70"
-                stroke="#7c4a1d"
+                stroke="#bfa26f"
                 strokeWidth="5"
                 strokeLinecap="round"
                 fill="none"
               />
               <path
                 d="M150 200 C 150 100, 140 160, 150 70"
-                stroke="#7c4a1d"
+                stroke="#bfa26f"
                 strokeWidth="5"
                 strokeLinecap="round"
                 fill="none"
@@ -143,7 +143,7 @@ export default function Offerings() {
                     d={`M-${leaf.r * 0.8} 0 Q 0 -${leaf.r} ${
                       leaf.r * 0.8
                     } 0 Q 0 ${leaf.r * 0.7} -${leaf.r * 0.8} 0 Z`}
-                    className={`fill-green-600 drop-shadow-xl stroke-amber-800 stroke-[1]`}
+                    className={`fill-green-600 drop-shadow-xl stroke-amber-600 stroke-[1]`}
                     filter={hoveredLeaf === leaf.id ? "url(#glow)" : "none"}
                   />
 
@@ -166,24 +166,23 @@ export default function Offerings() {
           </div>
         </div>
       </div>
-      <div>
+      <div className="-mt-10">
         <div className="text-center lg:ml-10">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">
+          <h2 className="text-4xl font-bold text-gray-900 mb-3">
             Our Services
-            
           </h2>
           <p className="text-lg text-gray-700 max-w-2xl mx-auto leading-relaxed">
             Discover everything you need to accelerate your career with
             TechnoPhile's complete ecosystem
           </p>
-          <div className="lg:mt-0 lg:flex-1">
-            <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2">
+          <div className="lg:flex-1">
+            <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2">
               {services.map(({ id, title, description, Icon, href }) => (
                 <button
                   key={id}
                   onClick={() => handleClick(href, id)}
                   aria-label={title}
-                  className="group w-full text-left p-4 rounded-lg border border-gray-100 bg-white shadow-sm hover:shadow-md transition-shadow duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
+                  className="group w-full text-left p-4 rounded-xl border border-gray-100 bg-white shadow-sm hover:shadow-md transition-shadow duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
                 >
                   <div className="flex items-start gap-4">
                     <div className="p-3 rounded-lg bg-gradient-to-br from-orange-50 to-purple-50 ring-1 ring-transparent group-hover:ring-orange-100 transition-all">
@@ -191,7 +190,7 @@ export default function Offerings() {
                     </div>
 
                     <div className="flex-1">
-                      <h3 className="text-base font-semibold text-gray-900">
+                      <h3 className="text-lg font-semibold text-gray-900">
                         {title}
                       </h3>
                       <p className="mt-1 text-sm text-gray-600">

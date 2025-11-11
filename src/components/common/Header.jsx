@@ -96,10 +96,10 @@ export default function Header() {
                   <Link
                     key={item.name}
                     to={item.path}
-                    className="flex items-center px-3 py-1.5 text-sm text-gray-700 font-medium rounded-lg hover:bg-green-50 hover:text-orange-400 transition-all duration-200 group"
+                    className="flex items-center px-3 py-1 text-md text-gray-700 font-medium rounded-md hover:bg-sky-50 hover:text-sky-400 transition-all duration-200 group"
                   >
                     {Icon && (
-                      <Icon className="w-4 h-4 mr-1.5 text-slate-950 group-hover:text-orange-400 transition-colors" />
+                      <Icon className="w-4 h-4 mr-1.5 text-slate-950 group-hover:text-sky-400 transition-colors" />
                     )}
                     {item.name}
                   </Link>
@@ -112,8 +112,8 @@ export default function Header() {
                 onMouseEnter={() => setIsMoreOpen(true)}
                 onMouseLeave={() => setIsMoreOpen(false)}
               >
-                <button className="flex items-center px-3 py-1.5 text-sm text-gray-700 font-medium rounded-lg hover:bg-green-50 hover:text-orange-400 transition-all duration-200 group">
-                  <Sparkles className="w-4 h-4 mr-1.5 text-slate-950 group-hover:text-orange-400 transition-colors" />
+                <button className="flex items-center px-3 py-1.5 text-sm text-gray-700 font-medium rounded-lg hover:bg-sky-50 hover:text-sky-400 transition-all duration-200 group">
+                  <Sparkles className="w-4 h-4 mr-1.5 text-slate-950 group-hover:text-sky-400 transition-colors" />
                   More
                   <ChevronDown
                     className={`w-4 h-4 ml-1 transition-transform duration-200 ${
@@ -131,10 +131,10 @@ export default function Header() {
                           <Link
                             key={item.name}
                             to={item.path}
-                            className="flex items-center px-3 py-2.5 text-sm text-gray-700 rounded-lg hover:bg-green-50 hover:text-orange-400 transition-all duration-200 group"
+                            className="flex items-center px-3 py-2.5 text-sm text-gray-700 rounded-lg hover:bg-green-50 hover:text-sky-400 transition-all duration-200 group"
                           >
                             {Icon && (
-                              <Icon className="w-4 h-4 mr-2.5 text-slate-950 group-hover:text-orange-400 transition-colors" />
+                              <Icon className="w-4 h-4 mr-2.5 text-slate-950 group-hover:text-sky-400 transition-colors" />
                             )}
                             {item.name}
                           </Link>
@@ -174,7 +174,7 @@ export default function Header() {
               {/* Login Button */}
               <Link
                 to="/login"
-                className="hidden md:flex items-center bg-gradient-to-r from-green-800 to-green-700 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg hover:shadow-green-200 hover:from-sky-700 hover:to-sky-700 transition-all duration-200 transform hover:scale-105"
+                className="hidden md:flex items-center bg-gradient-to-r from-cyan-500 to-cyan-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg shadow-sky-200 hover:from-sky-500 hover:to-sky-600 transition-all duration-200 transform hover:scale-105"
               >
                 <User className="w-4 h-4 mr-1.5" />
                 Login
@@ -182,7 +182,7 @@ export default function Header() {
 
               {/* Mobile Menu Toggle */}
               <button
-                className="lg:hidden p-2 bg-gradient-to-br from-slate-200 to-slate-400 text-black rounded-lg transition-all duration-200"
+                className="lg:hidden p-2 bg-gradient-to-br from-slate-200 to-slate-300 text-gray-900 rounded-lg transition-all duration-200"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label="Toggle mobile menu"
               >
@@ -230,7 +230,7 @@ export default function Header() {
                     <Link
                       key={item.name}
                       to={item.path}
-                      className="flex items-center px-4 py-2 text-sm text-gray-700 rounded-lg hover:bg-green-50 hover:text-orange-400 transition-all duration-200 border border-transparent hover:border-green-100"
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 rounded-lg hover:bg-sky-50 hover:text-sky-400 transition-all duration-200 border border-transparent hover:border-green-100"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {Icon && (
@@ -254,7 +254,7 @@ export default function Header() {
                       <Link
                         key={item.name}
                         to={item.path}
-                        className="flex items-center px-4 py-2 text-sm text-gray-700 rounded-lg hover:bg-green-50 hover:text-orange-400 transition-all duration-200"
+                        className="flex items-center px-4 py-2 text-sm text-gray-700 rounded-lg hover:bg-sky-50 hover:text-sky-400 transition-all duration-200"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         {Icon && (
@@ -301,7 +301,7 @@ export default function Header() {
                 <div className="flex space-x-2">
                   <Link
                     to="/internships"
-                    className="flex-1 bg-white text-orange-400 text-xs font-semibold px-3 py-1.5 rounded-lg text-center hover:bg-gray-100 transition-colors"
+                    className="flex-1 bg-white text-sky-400 text-xs font-semibold px-3 py-1.5 rounded-lg text-center hover:bg-gray-100 transition-colors"
                     onClick={() => setOfferVisible(false)}
                   >
                     Explore

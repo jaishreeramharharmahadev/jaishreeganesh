@@ -35,7 +35,7 @@ export default function Courses() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8">
+    <div className="min-h-screen bg-gradient-to-r from-gray-50 to-blue-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero Section */}
         <div className="text-center mb-16">

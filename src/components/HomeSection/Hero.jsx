@@ -94,9 +94,9 @@ export default function Hero() {
             </div>
 
             {/* Main Heading */}
-            <div className="text-xl lg:text-2xl text-center mt-4 font-bold text-gray-900">
+            <div className="text-xl lg:text-2xl text-center mt-4 font-semibold text-gray-700">
               <div>Empowering You Through</div>
-              <span className="text-5xl lg:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600">
+              <span className="text-5xl lg:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600 font-serif font-semibold">
                 Internships <br/> &amp; <br/> Learning
               </span>
             </div>
@@ -113,7 +113,7 @@ export default function Hero() {
             <div className="mt-8 flex justify-center">
               <button
                 onClick={() => navigate("/internships")}
-                className="bg-gradient-to-r from-gray-800 to-blue-700 hover:from-blue-700 hover:to-green-700 text-white font-semibold px-5 py-3 rounded-lg transition-all duration-300 flex items-center gap-2 hover:scale-105"
+                className="bg-gradient-to-r from-sky-500 to-blue-500 hover:from-blue-500 hover:to-sky-500 text-white font-semibold px-4 py-2 rounded-lg transition-all duration-300 flex items-center gap-2 hover:scale-105"
               >
                 <span>Find Internships</span>
                 <svg
@@ -154,7 +154,7 @@ export default function Hero() {
               </div>
               <p className="text-gray-600 flex items-center justify-center gap-2">
                 <Clock className="w-4 h-4" />
-                <span>Join 1,248+ developers worldwide</span>
+                <span>Join 1,048+ developers worldwide</span>
               </p>
             </div>
 

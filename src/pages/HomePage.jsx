@@ -5,6 +5,7 @@ import WhyChooseUs from '../components/HomeSection/WhyChooseUs'
 import InternshipOffers from '../components/HomeSection/InternshipOffers'
 import Partners from '../components/HomeSection/Partners'
 import SuccessStories from '../components/HomeSection/SuccessStories'
+import FAQSection from '../components/HomeSection/FAQSection'
 
 function HomePage() {
   return (
@@ -16,6 +17,7 @@ function HomePage() {
         <InternshipOffers />
         <Partners />
         <SuccessStories />
+        <FAQSection/>
       </main>
     </div>
   )
