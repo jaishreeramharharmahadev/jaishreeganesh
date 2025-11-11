@@ -383,7 +383,6 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios'
 import { apiUrl } from "../../utils/api";
-import fswd from '../../assets/fswd_4.png'
 
 // Icon mapping and domainColors remain unchanged
 const iconMap = {

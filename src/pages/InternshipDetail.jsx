@@ -404,7 +404,6 @@ import {
   Shield,
 } from "lucide-react";
 import { apiUrl } from "../utils/api";
-import fswd_c from "../assets/good.png";
 
 export default function InternshipDetail() {
   const { subDomain } = useParams();
