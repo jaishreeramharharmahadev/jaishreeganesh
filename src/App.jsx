@@ -1,34 +1,41 @@
 // src/App.jsx
 import React, { useEffect } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
+// Layouts
 import MainLayout from "./components/MainLayout";
 import DashboardLayout from "./components/DashboardLayout";
+
+// Pages
 import HomePage from "./pages/HomePage";
 import InternshipDetail from "./pages/InternshipDetail";
 import InternshipPage from "./pages/InternshipPage";
 import LoginPage from "./pages/LoginPage";
 import StudentDashboard from "./pages/StudentDashboard";
 import InternshipApplicationFormPage from "./pages/InternshipApplicationFormPage";
-import ProtectedRoute from "./components/ProtectedRoute";
-
-import { AppProvider } from "./context/AppContext";
-import PreLoader from "./components/common/PreLoader";
-import NotificationHandler from "./components/common/NotificationHandler";
-
-import PrivacyPolicy from "./components/policy/PrivacyPolicy";
-import ShippingAndDelivery from "./components/policy/ShippingAndDelivery";
-import TermsAndConditions from "./components/policy/TermsAndConditions";
-import CancellationAndRefund from "./components/policy/CancellationAndRefund";
-import ContactUs from "./components/policy/ContactUs";
 import Courses from "./pages/Courses";
 import Jobs from "./pages/Jobs";
 import AboutUs from "./pages/AboutUs";
 import VerificationPage from "./pages/VerificationPage";
 import VerifyResultPage from "./pages/VerifyResultPage";
 
-/** ScrollToTop component */
+// Components
+import ProtectedRoute from "./components/ProtectedRoute";
+import PreLoader from "./components/common/PreLoader";
+import NotificationHandler from "./components/common/NotificationHandler";
+
+// Context
+import { AppProvider } from "./context/AppContext";
+
+// Policies
+import PrivacyPolicy from "./components/policy/PrivacyPolicy";
+import ShippingAndDelivery from "./components/policy/ShippingAndDelivery";
+import TermsAndConditions from "./components/policy/TermsAndConditions";
+import CancellationAndRefund from "./components/policy/CancellationAndRefund";
+import ContactUs from "./components/policy/ContactUs";
+
+/* Scroll to top on route change */
 function ScrollToTop() {
   const { pathname } = useLocation();
 
@@ -39,10 +46,11 @@ function ScrollToTop() {
   return null;
 }
 
-/** Routes configuration */
+/* Routes configuration */
 function AppRoutes() {
   return (
     <Routes>
+      {/* Home */}
       <Route
         path="/"
         element={
@@ -59,6 +67,7 @@ function AppRoutes() {
         }
       />
 
+      {/* Internships */}
       <Route
         path="/internships"
         element={
@@ -91,6 +100,7 @@ function AppRoutes() {
         }
       />
 
+      {/* Apply */}
       <Route
         path="/apply"
         element={
@@ -103,6 +113,7 @@ function AppRoutes() {
         }
       />
 
+      {/* About Us */}
       <Route
         path="/about-us"
         element={
@@ -119,6 +130,7 @@ function AppRoutes() {
         }
       />
 
+      {/* Courses */}
       <Route
         path="/courses"
         element={
@@ -135,6 +147,7 @@ function AppRoutes() {
         }
       />
 
+      {/* Jobs */}
       <Route
         path="/jobs"
         element={
@@ -151,6 +164,7 @@ function AppRoutes() {
         }
       />
 
+      {/* Login */}
       <Route
         path="/login"
         element={
@@ -164,6 +178,7 @@ function AppRoutes() {
         }
       />
 
+      {/* Policy Pages */}
       <Route
         path="/privacy-policy"
         element={
@@ -224,6 +239,7 @@ function AppRoutes() {
         }
       />
 
+      {/* Certificate Verification */}
       <Route
         path="/verify"
         element={
@@ -248,6 +264,7 @@ function AppRoutes() {
         }
       />
 
+      {/* Dashboard (Protected) */}
       <Route
         path="/dashboard"
         element={
@@ -262,24 +279,25 @@ function AppRoutes() {
         }
       />
 
-      {/* Redirect invalid routes */}
+      {/* Fallback */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }
 
+/* Main App */
 export default function App() {
   return (
     <AppProvider>
-      {/* Scroll to top on route change */}
-      <ScrollToTop />
-      <NotificationHandler />
+      <HelmetProvider>
+        <ScrollToTop />
+        <NotificationHandler />
 
-      {/* Optional PreLoader (uncomment if you use it) */}
-      {/* <PreLoader fullScreen /> */}
+        {/* Optional PreLoader */}
+        {/* <PreLoader fullScreen /> */}
 
-      {/* App Routes */}
-      <AppRoutes />
+        <AppRoutes />
+      </HelmetProvider>
     </AppProvider>
   );
 }
