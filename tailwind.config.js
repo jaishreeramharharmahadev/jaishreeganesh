@@ -32,9 +32,11 @@ export default {
           '50%': { transform: 'translate(-10px, 10px) scale(0.8)', opacity: '0.5' },
           '75%': { transform: 'translate(-20px, -5px) scale(1.1)', opacity: '0.9' },
         }
-      }
+      },
+      fontFamily: {
+        serif: ['"Times New Roman"', 'Times', 'serif'],
+      },
     }
   },
   plugins: [],
 }
-
