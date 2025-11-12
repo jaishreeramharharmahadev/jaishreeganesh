@@ -96,7 +96,7 @@ export default function Header() {
                   <Link
                     key={item.name}
                     to={item.path}
-                    className="flex items-center px-3 py-1 text-md text-gray-700 font-medium rounded-md hover:bg-sky-50 hover:text-sky-400 transition-all duration-200 group"
+                    className="flex items-center px-3 py-1 text-md font-semibold text-gray-700 rounded-md hover:bg-sky-50 hover:text-gray-800 transition-all duration-200 group"
                   >
                     {Icon && (
                       <Icon className="w-4 h-4 mr-1.5 text-slate-950 group-hover:text-sky-400 transition-colors" />

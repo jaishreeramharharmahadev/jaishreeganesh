@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
+import { apiUrl } from "../utils/api";
 
 const hashPassword = async (password) => {
   const encoder = new TextEncoder();
@@ -27,7 +28,7 @@ function LoginPage() {
       if (token) {
         try {
           const response = await axios.get(
-            "http://localhost:5000/api/applicants/me",
+            apiUrl("/applicants/me"),
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -95,7 +96,7 @@ function LoginPage() {
       const hashedPassword = await hashPassword(formData.password);
 
       const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        apiUrl("/auth/login"),
         {
           email: formData.email.toLowerCase().trim(),
           password: hashedPassword,
