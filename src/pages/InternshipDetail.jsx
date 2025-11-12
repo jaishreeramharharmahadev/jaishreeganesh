@@ -499,7 +499,7 @@ export default function InternshipDetail() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-8 sm:py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Image */}
-          <div className="w-full flex justify-center lg:justify-start">
+          <div className="w-full flex justify-center">
             <img
               src={internship?.image2}
               alt={internship?.domain || "Internship"}
