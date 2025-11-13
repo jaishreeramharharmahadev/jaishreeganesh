@@ -192,7 +192,7 @@ export default function WhyChooseUs() {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-2">Why Choose Us</h2>
+          <h2 className="text-4xl text-gray-900 mb-2">Why Choose Us</h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
             We're not just another learning platform - we're your career growth partner with proven results
           </p>

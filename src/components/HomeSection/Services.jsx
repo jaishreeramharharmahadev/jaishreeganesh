@@ -1,213 +1,136 @@
-import React, { useState, useEffect } from "react";
-import { Briefcase, Info, BookOpen, Calculator, FileText } from "lucide-react";
+
+
+import React, { useState } from "react";
+import {
+  Briefcase,
+  Info,
+  BookOpen,
+  FileText,
+  Code2,
+  Rocket,
+  Users,
+  Award,
+  ArrowRight,
+  Sparkles,
+} from "lucide-react";
 
 export default function Offerings() {
-  const [hoveredLeaf, setHoveredLeaf] = useState(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  const leaves = [
-    { id: 1, x: 159, y: 20, r: 70, rotate: -80 },
-    { id: 2, x: 265, y: 48, r: 58, rotate: -40 },
-    { id: 3, x: 55, y: 50, r: 66, rotate: 45 },
-    { id: 4, x: 280, y: 153, r: 60, rotate: -16 },
-    { id: 5, x: 30, y: 135, r: 64, rotate: 20 },
-  ];
-
-  const labels = [
-    "Internship",
-    "About Us",
-    "Courses",
-    "Policy",
-    "Create Resume",
-  ];
+  const [hoveredCard, setHoveredCard] = useState(null);
 
   const services = [
     {
       id: "internship",
-      title: "Internship",
-      description: "Apply to hands-on internships and live projects.",
+      title: "Internships",
+      description:
+        "Gain real-world exposure with hands-on internships and live industry projects guided by experts.",
       Icon: Briefcase,
       href: "/internships",
+      stats: "500+ Placements",
+      gradient: "from-orange-500 to-orange-600",
     },
     {
-      id: "about",
-      title: "About Us",
-      description: "Learn what TechnoPhile stands for and our mission.",
+      id: "corporateTraining",
+      title: "Corporate Training",
+      description:
+        "Empower your workforce with tailored corporate upskilling programs designed for modern business challenges.",
       Icon: Info,
-      href: "/about-us",
+      href: "/corporate-training",
+      stats: "30+ Companies",
+      gradient: "from-blue-500 to-blue-600",
     },
     {
       id: "courses",
       title: "Courses",
-      description: "Skill-up with curated courses from industry mentors.",
+      description:
+        "Level up your skills with our mentor-led courses, blending deep learning with practical applications.",
       Icon: BookOpen,
       href: "/courses",
+      stats: "10+ Courses",
+      gradient: "from-green-500 to-green-600",
     },
     {
-      id: "resume",
-      title: "Create Resume",
-      description: "Build a professional resume and download as PDF.",
+      id: "masterClass",
+      title: "Master Classes",
+      description:
+        "Join our interactive live master classes conducted by industry leaders and global experts.",
       Icon: FileText,
-      href: "/create-resume",
+      href: "/classes",
+      stats: "Industry Experts",
+      gradient: "from-purple-500 to-purple-600",
+    },
+    {
+      id: "projects",
+      title: "Live Projects",
+      description:
+        "Work on industry-grade projects that help you apply your knowledge and build strong portfolios.",
+      Icon: Code2,
+      href: "/projects",
+      stats: "50+ Projects",
+      gradient: "from-red-500 to-red-600",
+    },
+    {
+      id: "community",
+      title: "Tech Community",
+      description:
+        "Be part of a growing tech community that inspires collaboration, networking, and innovation.",
+      Icon: Users,
+      href: "/community",
+      stats: "10K+ Members",
+      gradient: "from-indigo-500 to-indigo-600",
     },
   ];
 
-  const handleClick = (href, id) => {
-    if (typeof onNavigate === "function") return onNavigate(href, id);
-    if (typeof window !== "undefined") window.location.href = href;
-  };
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
-
   return (
-    <div className="w-full flex flex-col md:flex-row p-6 items-center justify-center bg-gradient-to-r from-gray-50 to-blue-50">
-      <div className="w-full max-w-lg">
-        <div className="p-6">
-          <div className="flex justify-center">
-            <svg viewBox="-20 0 350 320" className="h-[340px] md:h-[550px]">
-              <ellipse
-                cx="150"
-                cy="150"
-                rx="160"
-                ry="160"
-                className="fill-emerald-200/20"
-              />
+    <section className="w-full py-12 px-4 bg-gradient-to-r from-gray-50 to-blue-50">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-6">
 
-              {/* Ground with subtle animation */}
-              <ellipse
-                cx="150"
-                cy="300"
-                rx="120"
-                ry="14"
-                className="fill-[#D3B683]"
-              />
-
-              {/* Trunk with hover effect */}
-              <rect
-                x="140"
-                y="200"
-                width="20"
-                height="100"
-                rx="5"
-                className="fill-[#C4A484]"
-              />
-
-              {/* Branches with stroke animation */}
-              <path
-                d="M145 200 C 120 160, 110 180, 50 130"
-                stroke="#bfa26f"
-                strokeWidth="6"
-                strokeLinecap="round"
-                fill="none"
-              />
-              <path
-                d="M150 200 C 170 150, 320 180, 320 140"
-                stroke="#bfa26f"
-                strokeWidth="6"
-                strokeLinecap="round"
-                fill="none"
-              />
-              <path
-                d="M148 200 C 130 140, 100 120, 90 80"
-                stroke="#bfa26f"
-                strokeWidth="5"
-                strokeLinecap="round"
-                fill="none"
-              />
-              <path
-                d="M155 200 C 180 120, 210 100, 240 70"
-                stroke="#bfa26f"
-                strokeWidth="5"
-                strokeLinecap="round"
-                fill="none"
-              />
-              <path
-                d="M150 200 C 150 100, 140 160, 150 70"
-                stroke="#bfa26f"
-                strokeWidth="5"
-                strokeLinecap="round"
-                fill="none"
-              />
-
-              {/* Leaves with enhanced animations */}
-              {leaves.map((leaf, index) => (
-                <g
-                  key={leaf.id}
-                  transform={`translate(${leaf.x}, ${leaf.y}) rotate(${leaf.rotate})`}
-                  className={`cursor-pointer`}
-                >
-                  {/* Leaf with gradient and hover effects */}
-                  <path
-                    d={`M-${leaf.r * 0.8} 0 Q 0 -${leaf.r} ${
-                      leaf.r * 0.8
-                    } 0 Q 0 ${leaf.r * 0.7} -${leaf.r * 0.8} 0 Z`}
-                    className={`fill-green-600 drop-shadow-xl stroke-amber-600 stroke-[1]`}
-                    filter={hoveredLeaf === leaf.id ? "url(#glow)" : "none"}
-                  />
-
-                  {/* Enhanced text with better visibility */}
-                  <text
-                    x="0"
-                    y={leaf.r * 0.02}
-                    textAnchor="middle"
-                    fontSize={Math.max(10, Math.floor(leaf.r * 0.2))}
-                    fontWeight="600"
-                    fill="#ffffff"
-                    pointerEvents="none"
-                    className="transition-all duration-300"
-                  >
-                    {labels[leaf.id - 1]}
-                  </text>
-                </g>
-              ))}
-            </svg>
-          </div>
-        </div>
-      </div>
-      <div className="-mt-10">
-        <div className="text-center lg:ml-10">
-          <h2 className="text-4xl font-bold text-gray-900 mb-3">
-            Our Services
+          <h2 className="text-4xl text-gray-900 mb-2">
+            Our Offerings
           </h2>
-          <p className="text-lg text-gray-700 max-w-2xl mx-auto leading-relaxed">
-            Discover everything you need to accelerate your career with
-            TechnoPhile's complete ecosystem
+
+          <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto">
+            Explore GT Technovation's ecosystem — designed to empower learners,
+            professionals, and organizations through technology and skill growth.
           </p>
-          <div className="lg:flex-1">
-            <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2">
-              {services.map(({ id, title, description, Icon, href }) => (
-                <button
-                  key={id}
-                  onClick={() => handleClick(href, id)}
-                  aria-label={title}
-                  className="group w-full text-left p-4 rounded-xl border border-gray-100 bg-white shadow-sm hover:shadow-md transition-shadow duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-lg bg-gradient-to-br from-orange-50 to-purple-50 ring-1 ring-transparent group-hover:ring-orange-100 transition-all">
-                      <Icon className="w-6 h-6" />
-                    </div>
+        </div>
 
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-gray-900">
-                        {title}
-                      </h3>
-                      <p className="mt-1 text-sm text-gray-600">
-                        {description}
-                      </p>
-                    </div>
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
+          {services.map((service) => (
+            <div
+              key={service.id}
+              className="group"
+              onMouseEnter={() => setHoveredCard(service.id)}
+              onMouseLeave={() => setHoveredCard(null)}
+            >
+              <button
+                type="button"
+                className="w-full p-5 bg-white rounded-xl border border-gray-200 shadow-sm text-left transform transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                aria-label={`Learn more about ${service.title}`}
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <div
+                    className={`p-2 rounded-lg bg-gradient-to-br ${service.gradient} shadow`}
+                  >
+                    <service.Icon className="w-6 h-6 text-white" />
                   </div>
+                  <div className="text-xs px-2 py-1 bg-gray-100 rounded-full text-gray-700 font-medium">
+                    {service?.stats}
+                  </div>
+                </div>
 
-                  <div className="mt-3 text-sm text-orange-600 font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                    Explore →
-                  </div>
-                </button>
-              ))}
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  {service.title}
+                </h3>
+
+                <p className="text-sm text-gray-600 mb-4">{service.description}</p>
+              </button>
             </div>
-          </div>
+          ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

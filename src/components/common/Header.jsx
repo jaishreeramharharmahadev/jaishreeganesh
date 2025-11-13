@@ -112,8 +112,8 @@ export default function Header() {
                 onMouseEnter={() => setIsMoreOpen(true)}
                 onMouseLeave={() => setIsMoreOpen(false)}
               >
-                <button className="flex items-center px-3 py-1.5 text-sm text-gray-700 font-medium rounded-lg hover:bg-sky-50 hover:text-sky-400 transition-all duration-200 group">
-                  <Sparkles className="w-4 h-4 mr-1.5 text-slate-950 group-hover:text-sky-400 transition-colors" />
+                <button className="flex items-center px-3 py-1.5 text-md text-gray-700 font-medium rounded-lg hover:bg-sky-50 hover:text-sky-400 transition-all duration-200 group">
+                  <Sparkles className="w-4 h-4 mr-1.5 font-semibold text-slate-950 group-hover:text-sky-400 transition-colors" />
                   More
                   <ChevronDown
                     className={`w-4 h-4 ml-1 transition-transform duration-200 ${
@@ -131,7 +131,7 @@ export default function Header() {
                           <Link
                             key={item.name}
                             to={item.path}
-                            className="flex items-center px-3 py-2.5 text-sm text-gray-700 rounded-lg hover:bg-green-50 hover:text-sky-400 transition-all duration-200 group"
+                            className="flex items-center px-3 py-2.5 text-md font-semibold text-gray-700 rounded-lg hover:bg-green-50 hover:text-sky-400 transition-all duration-200 group"
                           >
                             {Icon && (
                               <Icon className="w-4 h-4 mr-2.5 text-slate-950 group-hover:text-sky-400 transition-colors" />
