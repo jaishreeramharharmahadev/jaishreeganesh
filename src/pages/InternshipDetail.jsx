@@ -450,10 +450,6 @@ export default function InternshipDetail() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Content */}
             <div className="relative z-10 space-y-8">
-              <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-blue-200 shadow-sm">
-                <Rocket className="w-4 h-4 text-blue-600" />
-                <span className="text-sm font-semibold text-blue-700">Internship Program</span>
-              </div>
 
               <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight">
                 {internship?.domain || "Internship Program"}
@@ -526,11 +522,6 @@ export default function InternshipDetail() {
                   <span className="relative z-10">Apply Now - Limited Seats</span>
                   <div className="absolute inset-0 bg-white/20 rounded-2xl transform scale-0 group-hover:scale-100 transition-transform"></div>
                 </button>
-                
-                <button className="group flex items-center justify-center gap-2 bg-white text-gray-700 px-8 py-4 rounded-2xl font-semibold border-2 border-gray-300 hover:border-blue-500 transition-all transform hover:scale-105 shadow-lg">
-                  <PlayCircle className="w-5 h-5" />
-                  Watch Demo
-                </button>
               </div>
             </div>
 
@@ -540,7 +531,7 @@ export default function InternshipDetail() {
                 <img
                   src={internship?.image2}
                   alt={internship?.domain || "Internship"}
-                  className="w-full max-w-lg mx-auto rounded-3xl shadow-2xl transform hover:scale-105 transition-transform duration-500"
+                  className="w-full max-w-lg mx-auto"
                   onError={(e) => {
                     e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23f3f4f6'/%3E%3Ctext x='300' y='200' font-family='Arial' font-size='18' fill='%236b7280' text-anchor='middle'%3EInternship Image%3C/text%3E%3C/svg%3E";
                   }}
@@ -548,11 +539,8 @@ export default function InternshipDetail() {
               </div>
               
               {/* Floating Elements */}
-              <div className="absolute -top-4 -right-4 bg-yellow-400 text-gray-900 px-4 py-2 rounded-full font-bold shadow-lg transform rotate-6">
+              <div className="absolute -top-4 -right-4 bg-yellow-300 text-gray-900 px-4 py-2 rounded-full font-bold shadow-lg transform rotate-6">
                 ⭐ Most Popular
-              </div>
-              <div className="absolute -bottom-4 -left-4 bg-green-500 text-white px-4 py-2 rounded-full font-bold shadow-lg transform -rotate-6">
-                🚀 1000+ Hired
               </div>
             </div>
           </div>
@@ -578,11 +566,8 @@ export default function InternshipDetail() {
             {internship?.skills?.map((skill, index) => (
               <div
                 key={index}
-                className="group bg-white rounded-2xl p-4 border-2 border-gray-200 hover:border-blue-500 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 text-center"
+                className="group bg-white rounded-2xl p-4 border-2 border-gray-200 hover:border-sky-300 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 text-center"
               >
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
-                  <Zap className="w-6 h-6 text-white" />
-                </div>
                 <span className="text-gray-800 font-semibold text-sm">
                   {skill}
                 </span>
@@ -600,9 +585,9 @@ export default function InternshipDetail() {
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white/50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-2xl shadow-lg mb-6">
+            <div className="inline-flex items-center gap-3 px-6 py-3 mb-1">
               <Rocket className="w-6 h-6" />
-              <h2 className="text-2xl lg:text-3xl font-bold">
+              <h2 className="text-2xl lg:text-3xl font-bold text-gray-900">
                 Learning Roadmap
               </h2>
             </div>
@@ -615,46 +600,42 @@ export default function InternshipDetail() {
             {/* Connection Line */}
             <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-purple-500 to-blue-500 transform -translate-x-1/2 hidden lg:block"></div>
             
-            <div className="space-y-8 lg:space-y-12">
+            <div className="space-y-8">
               {internship?.projectRoadmap?.map((step, index) => (
                 <div
                   key={step._id}
-                  className={`relative flex flex-col lg:flex-row items-center gap-8 ${
+                  className={`relative flex flex-col lg:flex-row items-center gap-4 ${
                     index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
                   }`}
                 >
                   {/* Content */}
                   <div className={`lg:w-1/2 ${index % 2 === 0 ? 'lg:pr-12' : 'lg:pl-12'}`}>
-                    <div className="bg-white rounded-3xl p-8 shadow-2xl border border-gray-200 hover:shadow-3xl transition-all duration-300">
+                    <div className="bg-white rounded-3xl p-5 shadow-md border border-gray-200">
                       <div className="flex items-center gap-4 mb-4">
-                        <div className="w-16 h-16 bg-gradient-to-br from-purple-600 to-blue-600 rounded-2xl flex items-center justify-center text-white font-bold text-2xl shadow-lg">
+                        <div className="w-12 h-12 bg-gradient-to-br from-sky-400 to-blue-400 rounded-xl flex items-center justify-center text-white font-bold text-2xl shadow-sm">
                           {step.stepNumber}
                         </div>
-                        <h3 className="text-2xl font-bold text-gray-900">
+                        <h3 className="text-xl font-bold text-gray-900">
                           {step.title}
                         </h3>
                       </div>
-                      <p className="text-gray-600 text-lg leading-relaxed">
+                      <p className="text-gray-600 text-md leading-relaxed">
                         {step.description}
                       </p>
-                      <div className="flex items-center gap-2 mt-4 text-blue-600 font-semibold">
-                        <span>Explore more</span>
-                        <ChevronRight className="w-4 h-4" />
-                      </div>
                     </div>
                   </div>
 
                   {/* Step Indicator */}
                   <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 top-1/2 hidden lg:block">
-                    <div className="w-12 h-12 bg-white border-4 border-purple-600 rounded-full flex items-center justify-center shadow-xl">
-                      <span className="text-purple-600 font-bold text-lg">{step.stepNumber}</span>
+                    <div className="w-7 h-7 bg-white border-4 border-purple-600 rounded-full flex items-center justify-center shadow-xl">
+                      <span className="text-purple-500 font-bold text-lg">{step.stepNumber}</span>
                     </div>
                   </div>
 
                   {/* Arrow Connector */}
                   {index < internship.projectRoadmap.length - 1 && (
                     <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-6 hidden lg:block">
-                      <div className="w-8 h-8 bg-gradient-to-b from-purple-500 to-blue-500 rounded-full flex items-center justify-center animate-bounce">
+                      <div className="w-5 h-5 bg-gradient-to-b from-purple-500 to-blue-500 rounded-full flex items-center justify-center animate-bounce">
                         <ChevronRight className="w-4 h-4 text-white transform rotate-90" />
                       </div>
                     </div>
@@ -673,7 +654,7 @@ export default function InternshipDetail() {
       {/* Program Highlights */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1  gap-12">
             {/* Benefits */}
             <div className="space-y-8">
               <div className="flex items-center gap-4">
@@ -758,7 +739,7 @@ export default function InternshipDetail() {
 
       {/* Final CTA */}
       <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-purple-400 to-sky-400"></div>
         <div className="absolute inset-0 bg-black/20"></div>
         
         <div className="relative max-w-4xl mx-auto text-center">
@@ -773,30 +754,10 @@ export default function InternshipDetail() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <button
               onClick={() => handleApplyNow(internship.domain)}
-              className="group bg-white text-blue-600 px-12 py-4 rounded-2xl font-bold text-lg hover:bg-gray-100 transition-all transform hover:scale-105 shadow-2xl hover:shadow-3xl"
+              className="group bg-white text-blue-500 px-12 py-4 rounded-2xl font-bold text-lg hover:bg-gray-100 transition-all transform hover:scale-105 shadow-2xl hover:shadow-3xl"
             >
               <span className="relative z-10">Apply Now - Limited Seats</span>
             </button>
-            
-            <button className="group flex items-center gap-3 text-white px-8 py-4 rounded-2xl font-semibold border-2 border-white/50 hover:border-white transition-all">
-              <HeartHandshake className="w-5 h-5" />
-              Schedule Consultation
-            </button>
-          </div>
-          
-          <div className="mt-8 flex flex-wrap justify-center gap-6 text-blue-100">
-            <div className="flex items-center gap-2">
-              <Award className="w-5 h-5" />
-              <span>Industry Recognized Certificate</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Users className="w-5 h-5" />
-              <span>1:1 Mentor Support</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Briefcase className="w-5 h-5" />
-              <span>Job Placement Assistance</span>
-            </div>
           </div>
         </div>
       </section>
