@@ -446,68 +446,157 @@ export default function InternshipDetail() {
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            {/* Content */}
-            <div className="relative z-10 space-y-8">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-9">
+          {/* Mobile: Image First */}
+          <div className="block lg:hidden">
+            {/* Image */}
+            <div className="relative mb-8">
+              <div className="relative z-10">
+                <img
+                  src={internship?.image2}
+                  alt={internship?.domain || "Internship"}
+                  className="w-full max-w-md mx-auto rounded-2xl shadow-lg"
+                  onError={(e) => {
+                    e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23f3f4f6'/%3E%3Ctext x='300' y='200' font-family='Arial' font-size='18' fill='%236b7280' text-anchor='middle'%3EInternship Image%3C/text%3E%3C/svg%3E";
+                  }}
+                />
+              </div>
+              {/* Floating Element for Mobile */}
+              <div className="absolute -top-2 -right-2 bg-yellow-300 text-gray-900 px-3 py-1 rounded-full font-bold text-sm shadow-lg transform rotate-6">
+                ⭐ Popular
+              </div>
+            </div>
 
-              <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight">
+            {/* Content */}
+            <div className="space-y-6">
+              <h1 className="text-3xl font-bold text-gray-900 leading-tight">
                 {internship?.domain || "Internship Program"}
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                  Masterclass
-                </span>
               </h1>
 
-              <p className="text-xl text-gray-600 leading-relaxed">
+              <p className="text-lg text-gray-600 leading-relaxed">
                 {internship?.description || "Transform your career with hands-on experience and industry-relevant skills."}
+              </p>
+
+              {/* Key Stats - Mobile */}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-white/80 backdrop-blur-sm rounded-xl p-3 border border-blue-200 shadow-sm">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
+                      <IndianRupee className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-600">Stipend</p>
+                      <p className="text-sm font-bold text-gray-900">{internship?.stipend || "Performance Based"}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white/80 backdrop-blur-sm rounded-xl p-3 border border-blue-200 shadow-sm">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
+                      <MapPin className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-600">Location</p>
+                      <p className="text-sm font-bold text-gray-900">{internship?.location || "Remote"}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white/80 backdrop-blur-sm rounded-xl p-3 border border-blue-200 shadow-sm">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
+                      <Star className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-600">Rating</p>
+                      <p className="text-sm font-bold text-gray-900">{internship?.rating?.split("·")[0]?.trim() || "4.8/5"}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white/80 backdrop-blur-sm rounded-xl p-3 border border-blue-200 shadow-sm">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-gradient-to-br from-pink-500 to-pink-600 rounded-lg flex items-center justify-center">
+                      <Users className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-600">Spots Left</p>
+                      <p className="text-sm font-bold text-gray-900">{internship?.spots || "Limited"}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* CTA Button - Mobile */}
+              <button
+                onClick={() => handleApplyNow(internship.domain)}
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-4 rounded-xl font-bold text-lg hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105 shadow-xl"
+              >
+                Apply Now - Limited Seats
+              </button>
+            </div>
+          </div>
+
+          {/* Desktop: Original Layout */}
+          <div className="hidden lg:grid lg:grid-cols-2 gap-12 lg:gap-13 items-center">
+            {/* Content */}
+            <div className="relative z-10 space-y-5">
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 ">
+                {internship?.domain}
+              </h1>
+
+              <p className="text-lg text-gray-600 leading-relaxed">
+                {internship?.description}
               </p>
 
               {/* Key Stats */}
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 border border-blue-200 shadow-sm">
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl px-4 p-2 border border-blue-200 shadow-sm">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
-                      <IndianRupee className="w-6 h-6 text-white" />
+                    <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-md flex items-center justify-center">
+                      <IndianRupee className="w-4 h-4 text-white" />
                     </div>
                     <div>
                       <p className="text-sm text-gray-600">Stipend</p>
-                      <p className="text-lg font-bold text-gray-900">{internship?.stipend || "Performance Based"}</p>
+                      <p className="text-md font-bold text-gray-900">{internship?.stipend || "Performance Based"}</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 border border-blue-200 shadow-sm">
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl px-4 p-2 border border-blue-200 shadow-sm">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
-                      <MapPin className="w-6 h-6 text-white" />
+                    <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-md flex items-center justify-center">
+                      <MapPin className="w-4 h-4 text-white" />
                     </div>
                     <div>
                       <p className="text-sm text-gray-600">Location</p>
-                      <p className="text-lg font-bold text-gray-900">{internship?.location || "Remote"}</p>
+                      <p className="text-md font-bold text-gray-900">{internship?.location || "Remote"}</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 border border-blue-200 shadow-sm">
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl px-4 p-2 border border-blue-200 shadow-sm">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center">
-                      <Star className="w-6 h-6 text-white" />
+                    <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-md flex items-center justify-center">
+                      <Star className="w-4 h-4 text-white" />
                     </div>
                     <div>
                       <p className="text-sm text-gray-600">Rating</p>
-                      <p className="text-lg font-bold text-gray-900">{internship?.rating?.split("·")[0]?.trim() || "4.8/5"}</p>
+                      <p className="text-md font-bold text-gray-900">{internship?.rating?.split("·")[0]?.trim() || "4.8/5"}</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 border border-blue-200 shadow-sm">
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl px-4 p-2 border border-blue-200 shadow-sm">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-pink-600 rounded-xl flex items-center justify-center">
-                      <Users className="w-6 h-6 text-white" />
+                    <div className="w-8 h-8 bg-gradient-to-br from-pink-500 to-pink-600 rounded-md flex items-center justify-center">
+                      <Users className="w-4 h-4 text-white" />
                     </div>
                     <div>
                       <p className="text-sm text-gray-600">Spots Left</p>
-                      <p className="text-lg font-bold text-gray-900">{internship?.spots || "Limited"}</p>
+                      <p className="text-md font-bold text-gray-900">{internship?.spots || "Limited"}</p>
                     </div>
                   </div>
                 </div>
@@ -517,7 +606,7 @@ export default function InternshipDetail() {
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <button
                   onClick={() => handleApplyNow(internship.domain)}
-                  className="group relative bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105 shadow-xl hover:shadow-2xl"
+                  className="group relative bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-bold text-lg hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105 shadow-xl hover:shadow-2xl"
                 >
                   <span className="relative z-10">Apply Now - Limited Seats</span>
                   <div className="absolute inset-0 bg-white/20 rounded-2xl transform scale-0 group-hover:scale-100 transition-transform"></div>
@@ -537,14 +626,10 @@ export default function InternshipDetail() {
                   }}
                 />
               </div>
-              
-              {/* Floating Elements */}
-              <div className="absolute -top-4 -right-4 bg-yellow-300 text-gray-900 px-4 py-2 rounded-full font-bold shadow-lg transform rotate-6">
-                ⭐ Most Popular
-              </div>
             </div>
           </div>
         </div>
+      
       </div>
 
       {/* Skills Section */}
