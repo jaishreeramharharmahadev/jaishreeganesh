@@ -577,14 +577,17 @@ export default function InternshipOffers() {
               )}
 
               <div className="relative overflow-hidden">
-                <img
-                  src={internship.image}
-                  alt={internship.domain}
-                  className="h-52 w-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  onError={(e) => {
-                    e.target.src = "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1000&q=80";
-                  }}
-                />
+                <div className="grid place-content-center">
+                  <img
+                    src={internship.image2}
+                    alt={internship.domain}
+                    className="h-56 w-80 object-cover group-hover:scale-110 transition-transform duration-700"
+                    onError={(e) => {
+                      e.target.src =
+                        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1000&q=80";
+                    }}
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
 
                 <div className="absolute bottom-4 right-4 bg-red-500 text-white rounded-full px-3 py-1 text-xs font-semibold backdrop-blur-sm">
