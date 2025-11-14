@@ -44,7 +44,7 @@ const MostPopularPrograms = () => {
   return (
     <div className=" bg-gradient-to-br from-gray-50 to-blue-50 py-8 md:px-10">
       <div className="text-center mb-14">
-        <h1 className="text-3xl md:text-5xl text-gray-900 my-3">
+        <h1 className="text-3xl md:text-4xl text-gray-900 my-3">
             Most Popular <span className="text-transparent font-semibold bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Programs</span>
           </h1>
         <p className="text-gray-600 max-w-2xl mx-auto">
