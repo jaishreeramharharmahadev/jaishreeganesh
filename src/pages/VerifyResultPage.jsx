@@ -75,12 +75,8 @@ export default function VerifyResultPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-6">
-        <div className="bg-white rounded-2xl shadow-md p-6 max-w-sm w-full text-center">
-          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600 mx-auto mb-3"></div>
-          <h3 className="text-base font-semibold text-gray-900 mb-1">Verifying Certificate</h3>
-          <p className="text-sm text-gray-600">Please wait while we verify the certificate details...</p>
-        </div>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center">
+        <PreLoader text="Please wait while we verify the certificate details..."/>
       </div>
     );
   }

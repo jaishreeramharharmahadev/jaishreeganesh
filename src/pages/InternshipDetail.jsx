@@ -63,14 +63,8 @@ export default function InternshipDetail() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="relative">
-            <div className="animate-spin rounded-full h-20 w-20 border-b-2 border-blue-600 mx-auto mb-4"></div>
-            <Rocket className="w-8 h-8 text-blue-600 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
-          </div>
-          <p className="text-gray-600 text-lg font-medium">Loading internship details...</p>
-        </div>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center">
+        <PreLoader text="Please wait while we verify the certificate details..." />
       </div>
     );
   }
@@ -122,7 +116,6 @@ export default function InternshipDetail() {
         <div className="absolute inset-0 bg-gradient-to-r from-blue-300/10 to-purple-400/10"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-blue-300/10 to-purple-400/10"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-9">
-
           {/* Mobile: Image First */}
           <div className="block lg:hidden">
             {/* Image */}
@@ -133,7 +126,8 @@ export default function InternshipDetail() {
                   alt={internship?.domain || "Internship"}
                   className="w-full max-w-md mx-auto"
                   onError={(e) => {
-                    e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23f3f4f6'/%3E%3Ctext x='300' y='200' font-family='Arial' font-size='18' fill='%236b7280' text-anchor='middle'%3EInternship Image%3C/text%3E%3C/svg%3E";
+                    e.target.src =
+                      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23f3f4f6'/%3E%3Ctext x='300' y='200' font-family='Arial' font-size='18' fill='%236b7280' text-anchor='middle'%3EInternship Image%3C/text%3E%3C/svg%3E";
                   }}
                 />
               </div>
@@ -146,7 +140,8 @@ export default function InternshipDetail() {
               </h1>
 
               <p className="text-lg text-gray-600 leading-relaxed">
-                {internship?.description || "Transform your career with hands-on experience and industry-relevant skills."}
+                {internship?.description ||
+                  "Transform your career with hands-on experience and industry-relevant skills."}
               </p>
 
               {/* Key Stats - Mobile */}
@@ -158,7 +153,9 @@ export default function InternshipDetail() {
                     </div>
                     <div>
                       <p className="text-xs text-gray-600">Stipend</p>
-                      <p className="text-sm font-bold text-gray-900">{internship?.stipend || "Performance Based"}</p>
+                      <p className="text-sm font-bold text-gray-900">
+                        {internship?.stipend || "Performance Based"}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -170,7 +167,9 @@ export default function InternshipDetail() {
                     </div>
                     <div>
                       <p className="text-xs text-gray-600">Location</p>
-                      <p className="text-sm font-bold text-gray-900">{internship?.location || "Remote"}</p>
+                      <p className="text-sm font-bold text-gray-900">
+                        {internship?.location || "Remote"}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -182,7 +181,9 @@ export default function InternshipDetail() {
                     </div>
                     <div>
                       <p className="text-xs text-gray-600">Rating</p>
-                      <p className="text-sm font-bold text-gray-900">{internship?.rating?.split("·")[0]?.trim() || "4.8/5"}</p>
+                      <p className="text-sm font-bold text-gray-900">
+                        {internship?.rating?.split("·")[0]?.trim() || "4.8/5"}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -194,7 +195,9 @@ export default function InternshipDetail() {
                     </div>
                     <div>
                       <p className="text-xs text-gray-600">Spots Left</p>
-                      <p className="text-sm font-bold text-gray-900">{internship?.spots || "Limited"}</p>
+                      <p className="text-sm font-bold text-gray-900">
+                        {internship?.spots || "Limited"}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -231,7 +234,9 @@ export default function InternshipDetail() {
                     </div>
                     <div>
                       <p className="text-sm text-gray-600">Stipend</p>
-                      <p className="text-md font-bold text-gray-900">{internship?.stipend || "Performance Based"}</p>
+                      <p className="text-md font-bold text-gray-900">
+                        {internship?.stipend || "Performance Based"}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -243,7 +248,9 @@ export default function InternshipDetail() {
                     </div>
                     <div>
                       <p className="text-sm text-gray-600">Location</p>
-                      <p className="text-md font-bold text-gray-900">{internship?.location || "Remote"}</p>
+                      <p className="text-md font-bold text-gray-900">
+                        {internship?.location || "Remote"}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -255,7 +262,9 @@ export default function InternshipDetail() {
                     </div>
                     <div>
                       <p className="text-sm text-gray-600">Rating</p>
-                      <p className="text-md font-bold text-gray-900">{internship?.rating?.split("·")[0]?.trim() || "4.8/5"}</p>
+                      <p className="text-md font-bold text-gray-900">
+                        {internship?.rating?.split("·")[0]?.trim() || "4.8/5"}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -267,7 +276,9 @@ export default function InternshipDetail() {
                     </div>
                     <div>
                       <p className="text-sm text-gray-600">Spots Left</p>
-                      <p className="text-md font-bold text-gray-900">{internship?.spots || "Limited"}</p>
+                      <p className="text-md font-bold text-gray-900">
+                        {internship?.spots || "Limited"}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -279,7 +290,9 @@ export default function InternshipDetail() {
                   onClick={() => handleApplyNow(internship.domain)}
                   className="group relative bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-bold text-lg hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105 shadow-xl hover:shadow-2xl"
                 >
-                  <span className="relative z-10">Apply Now - Limited Seats</span>
+                  <span className="relative z-10">
+                    Apply Now - Limited Seats
+                  </span>
                   <div className="absolute inset-0 bg-white/20 rounded-2xl transform scale-0 group-hover:scale-100 transition-transform"></div>
                 </button>
               </div>
@@ -293,14 +306,14 @@ export default function InternshipDetail() {
                   alt={internship?.domain || "Internship"}
                   className="w-full max-w-lg mx-auto"
                   onError={(e) => {
-                    e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23f3f4f6'/%3E%3Ctext x='300' y='200' font-family='Arial' font-size='18' fill='%236b7280' text-anchor='middle'%3EInternship Image%3C/text%3E%3C/svg%3E";
+                    e.target.src =
+                      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23f3f4f6'/%3E%3Ctext x='300' y='200' font-family='Arial' font-size='18' fill='%236b7280' text-anchor='middle'%3EInternship Image%3C/text%3E%3C/svg%3E";
                   }}
                 />
               </div>
             </div>
           </div>
         </div>
-      
       </div>
 
       {/* Skills Section */}
@@ -317,7 +330,7 @@ export default function InternshipDetail() {
               Gain industry-relevant skills that employers are looking for
             </p>
           </div>
-          
+
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {internship?.skills?.map((skill, index) => (
               <div
@@ -330,7 +343,9 @@ export default function InternshipDetail() {
               </div>
             )) || (
               <div className="col-span-6 text-center py-12">
-                <p className="text-gray-500 text-lg">No skills information available.</p>
+                <p className="text-gray-500 text-lg">
+                  No skills information available.
+                </p>
               </div>
             )}
           </div>
@@ -348,24 +363,29 @@ export default function InternshipDetail() {
               </h2>
             </div>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Follow our step-by-step journey from beginner to industry-ready professional
+              Follow our step-by-step journey from beginner to industry-ready
+              professional
             </p>
           </div>
 
           <div className="relative">
             {/* Connection Line */}
             <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-purple-500 to-blue-500 transform -translate-x-1/2 hidden lg:block"></div>
-            
+
             <div className="space-y-8">
               {internship?.projectRoadmap?.map((step, index) => (
                 <div
                   key={step._id}
                   className={`relative flex flex-col lg:flex-row items-center gap-4 ${
-                    index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
+                    index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
                   }`}
                 >
                   {/* Content */}
-                  <div className={`lg:w-1/2 ${index % 2 === 0 ? 'lg:pr-12' : 'lg:pl-12'}`}>
+                  <div
+                    className={`lg:w-1/2 ${
+                      index % 2 === 0 ? "lg:pr-12" : "lg:pl-12"
+                    }`}
+                  >
                     <div className="bg-white rounded-3xl p-5 shadow-md border border-gray-200">
                       <div className="flex items-center gap-4 mb-4">
                         <div className="w-12 h-12 bg-gradient-to-br from-sky-400 to-blue-400 rounded-xl flex items-center justify-center text-white font-bold text-2xl shadow-sm">
@@ -384,7 +404,9 @@ export default function InternshipDetail() {
                   {/* Step Indicator */}
                   <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 top-1/2 hidden lg:block">
                     <div className="w-7 h-7 bg-white border-4 border-purple-600 rounded-full flex items-center justify-center shadow-xl">
-                      <span className="text-purple-500 font-bold text-lg">{step.stepNumber}</span>
+                      <span className="text-purple-500 font-bold text-lg">
+                        {step.stepNumber}
+                      </span>
                     </div>
                   </div>
 
@@ -399,7 +421,9 @@ export default function InternshipDetail() {
                 </div>
               )) || (
                 <div className="text-center py-12">
-                  <p className="text-gray-500 text-lg">No project roadmap available.</p>
+                  <p className="text-gray-500 text-lg">
+                    No project roadmap available.
+                  </p>
                 </div>
               )}
             </div>
@@ -421,7 +445,7 @@ export default function InternshipDetail() {
                   Program Benefits
                 </h3>
               </div>
-              
+
               <div className="space-y-4">
                 {internship?.additionalInfo?.whatYouGet?.map((item, index) => (
                   <div
@@ -432,7 +456,9 @@ export default function InternshipDetail() {
                     <span className="text-gray-700 text-lg">{item}</span>
                   </div>
                 )) || (
-                  <p className="text-gray-500 py-4">No benefits information available.</p>
+                  <p className="text-gray-500 py-4">
+                    No benefits information available.
+                  </p>
                 )}
               </div>
             </div>
@@ -448,17 +474,19 @@ export default function InternshipDetail() {
                     Prerequisites
                   </h3>
                 </div>
-                
+
                 <div className="space-y-3">
-                  {internship?.additionalInfo?.prerequisites?.map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center gap-3 p-3 bg-blue-50 rounded-xl"
-                    >
-                      <div className="w-3 h-3 bg-blue-500 rounded-full flex-shrink-0"></div>
-                      <span className="text-gray-700">{item}</span>
-                    </div>
-                  )) || (
+                  {internship?.additionalInfo?.prerequisites?.map(
+                    (item, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center gap-3 p-3 bg-blue-50 rounded-xl"
+                      >
+                        <div className="w-3 h-3 bg-blue-500 rounded-full flex-shrink-0"></div>
+                        <span className="text-gray-700">{item}</span>
+                      </div>
+                    )
+                  ) || (
                     <p className="text-gray-500">No prerequisites listed.</p>
                   )}
                 </div>
@@ -473,18 +501,24 @@ export default function InternshipDetail() {
                     Tools & Technologies
                   </h3>
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-3">
-                  {internship?.additionalInfo?.toolsYouWillUse?.map((tool, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center gap-2 p-3 bg-purple-50 rounded-xl border border-purple-200"
-                    >
-                      <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-                      <span className="text-gray-700 font-semibold text-sm">{tool}</span>
-                    </div>
-                  )) || (
-                    <p className="text-gray-500 col-span-2">No tools information available.</p>
+                  {internship?.additionalInfo?.toolsYouWillUse?.map(
+                    (tool, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center gap-2 p-3 bg-purple-50 rounded-xl border border-purple-200"
+                      >
+                        <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                        <span className="text-gray-700 font-semibold text-sm">
+                          {tool}
+                        </span>
+                      </div>
+                    )
+                  ) || (
+                    <p className="text-gray-500 col-span-2">
+                      No tools information available.
+                    </p>
                   )}
                 </div>
               </div>
@@ -497,16 +531,17 @@ export default function InternshipDetail() {
       <section className="relative py-8 px-2 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-sky-400"></div>
         <div className="absolute inset-0 bg-black/20"></div>
-        
+
         <div className="relative max-w-4xl mx-auto text-center">
           {/* <Certificate className="w-20 h-20 text-white mx-auto mb-6" /> */}
           <h2 className="text-3xl font-bold text-white mb-3">
             Ready to Launch Your Career?
           </h2>
           <p className="text-blue-100 text-lg mb-5 leading-relaxed">
-            Join thousands of successful graduates who transformed their careers with our intensive internship program
+            Join thousands of successful graduates who transformed their careers
+            with our intensive internship program
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <button
               onClick={() => handleApplyNow(internship.domain)}
