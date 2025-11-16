@@ -15,7 +15,7 @@ import {
   ChevronLeft,
   FileCode,
 } from "lucide-react";
-import logo from "../assets/GTTechno.png";
+import logo from "../assets/GTT1.png";
 import OverviewContent from "../components/StudentDashboard/OverviewContent";
 import ProgressContent from "../components/StudentDashboard/ProgressContent";
 import ProjectsContent from "../components/StudentDashboard/ProjectsContent";
@@ -39,7 +39,6 @@ export default function StudentDashboard() {
   const [certificateLoading, setCertificateLoading] = useState(false);
 
   const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
-  const API = "http://localhost:5000";
 
   useEffect(() => {
     fetchMe();
@@ -429,9 +428,9 @@ const getWeeksWithSubmissions = () => {
             <img src={logo} alt="" />
             <button
               onClick={() => setSidebarOpen(false)}
-              className="lg:hidden p-2 rounded-lg hover:bg-gray-100"
+              className="lg:hidden p-2 text-white rounded-lg hover:bg-gray-100"
             >
-              <ChevronLeft className="w-5 h-5" />
+              <ChevronLeft className="w-5 h-5   text-white" />
             </button>
           </div>
 

@@ -38,7 +38,7 @@ function OverviewContent({ applicant, progressPercent, submittedAssignmentsCount
   return (
     <div className="space-y-5">
       {/* Welcome Card */}
-      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-md p-5 text-white">
+      <div className="bg-gradient-to-r from-emerald-600 to-sky-600 rounded-md p-5 text-white">
         <div className="flex justify-between items-start">
           <div className="flex-1">
             <h2 className="text-2xl font-bold mb-2">

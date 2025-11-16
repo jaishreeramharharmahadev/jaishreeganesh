@@ -27,6 +27,7 @@ import {
   Plus,
   AlertCircle,
 } from "lucide-react";
+import PreLoader from "../common/PreLoader";
 
 function WeekContent({
   activeWeek,
@@ -172,11 +173,8 @@ function WeekContent({
 
   if (!weekData) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto"></div>
-          <p className="mt-2 text-gray-600">Loading week content...</p>
-        </div>
+      <div className="min-h-screen flex items-center justify-center">
+        <PreLoader text="Loading week content..."/>
       </div>
     );
   }
