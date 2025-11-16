@@ -208,24 +208,37 @@ export default function InternshipPage() {
   if (loading) {
     return (
       <section className="py-10 bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <div className="inline-flex items-center px-4 py-2 rounded-full bg-red-100 text-gray-700 text-sm font-semibold mb-4 animate-pulse">
               <Zap className="w-4 h-4 mr-2" />
               Loading Internships...
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            {[1, 2, 3, 4, 5, 6].map((item) => (
+          {/* Loading animation matching new layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {[1, 2, 3, 4].map((item) => (
               <div
                 key={item}
                 className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden animate-pulse"
               >
-                <div className="h-48 bg-gray-300"></div>
-                <div className="p-6">
-                  <div className="h-6 bg-gray-300 rounded mb-4"></div>
-                  <div className="h-4 bg-gray-300 rounded mb-2"></div>
-                  <div className="h-4 bg-gray-300 rounded w-2/3"></div>
+                <div className="flex flex-col lg:flex-row h-full">
+                  {/* Image skeleton */}
+                  <div className="lg:w-2/5 h-48 lg:h-auto bg-gray-300"></div>
+                  {/* Content skeleton */}
+                  <div className="lg:w-3/5 p-6 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="h-6 bg-gray-300 rounded w-3/4"></div>
+                        <div className="w-6 h-6 bg-gray-300 rounded"></div>
+                      </div>
+                      <div className="h-4 bg-gray-300 rounded mb-2"></div>
+                      <div className="h-4 bg-gray-300 rounded w-2/3"></div>
+                    </div>
+                    <div className="mt-4">
+                      <div className="h-10 bg-gray-300 rounded"></div>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
@@ -266,16 +279,16 @@ export default function InternshipPage() {
       <div className="absolute top-0 right-0 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
       <div className="absolute bottom-0 left-1/2 w-72 h-72 bg-amber-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <div className="max-w-7xl mx-auto px-2 relative z-10">
         {/* Hero Section */}
         <div className="text-center mb-16">
           <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-red-100 to-orange-100 text-gray-700 text-sm font-semibold mb-4 shadow-sm">
             <Zap className="w-4 h-4 mr-2 text-orange-500" />
             Limited Spots Available - Apply Before They're Gone!
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl md:text-5xl text-gray-900 mb-4">
             Launch Your{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+            <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
               Tech Career
             </span>
           </h1>
@@ -349,124 +362,139 @@ export default function InternshipPage() {
           </div>
         </div>
 
-        {/* Internship Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 mb-12">
+        {/* Internship Grid - Updated Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           {filteredInternships.map((internship, index) => (
             <div
               key={internship.id}
               ref={(el) => (cardRefs.current[index] = el)}
               data-id={internship.id}
-              className="group bg-white rounded-md border border-gray-200 shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden hover:border-blue-300 hover:-translate-y-2 relative"
+              className="group bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden hover:border-blue-300 hover:-translate-y-2 relative"
             >
-              {/* Featured Badge */}
-              {internship.isFeatured && (
-                <div className="absolute top-4 left-4 z-10">
-                  <div className="bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1 shadow-lg">
-                    <Sparkles className="w-3 h-3" />
-                    Featured
-                  </div>
-                </div>
-              )}
 
-              <div className="relative overflow-hidden">
-                <img
-                  src={internship.image}
-                  alt={internship.domain}
-                  className="h-48 w-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  onError={(e) => {
-                    e.target.src =
-                      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80";
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+              <div className="flex flex-col lg:flex-row h-full">
+                {/* Image Section - Left */}
+                <div className="lg:w-2/5 relative overflow-hidden grid place-content-center">
+                  <img
+                    src={internship.image2}
+                    alt={internship.domain}
+                    className="h-60  w-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    onError={(e) => {
+                      e.target.src =
+                        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80";
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent lg:bg-gradient-to-r lg:from-black/5 lg:to-transparent"></div>
 
-                {/* Spots Left */}
-                <div className="absolute bottom-4 right-4 bg-red-500 text-white rounded-full px-3 py-1 text-xs font-semibold backdrop-blur-sm">
-                  {internship.spots || "Limited spots"}
-                </div>
-
-                {/* Domain Badge */}
-                <div
-                  className={`absolute bottom-4 left-4 border ${
-                    domainColors[internship.domain] ||
-                    "bg-gray-100 text-gray-800 border-gray-200"
-                  } rounded-full px-3 py-1 text-xs font-medium`}
-                >
-                  {internship.domain.split(" ")[0]}
-                </div>
-              </div>
-
-              <div className="p-4">
-                <div className="flex items-start justify-between mb-2">
-                  <h3 className="text-xl font-bold text-gray-900 line-clamp-2">
-                    {internship.domain}
-                  </h3>
-                  {iconMap[internship.domain] || defaultIcon}
-                </div>
-
-                <p className="text-gray-600 text-sm mb-3 leading-relaxed line-clamp-3">
-                  {internship.description}
-                </p>
-
-                {/* Internship Details */}
-                <div className="space-y-3 mb-4">
-                  {/* Stipend */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-sm">
-                      <IndianRupee className="w-4 h-4 text-green-600" />
-                      <span className="text-gray-700">Stipend:</span>
-                    </div>
-                    <span className="font-semibold text-green-600 text-sm">
-                      {internship.stipend}
-                    </span>
+                  {/* Spots Left */}
+                  <div className="absolute bottom-4 right-4 bg-red-500 text-white rounded-full px-3 py-1 text-xs font-semibold backdrop-blur-sm">
+                    {internship.spots || "Limited spots"}
                   </div>
 
-                  {/* Location */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-sm">
-                      <MapPin className="w-4 h-4 text-blue-600" />
-                      <span className="text-gray-700">Location:</span>
-                    </div>
-                    <span className="font-semibold text-blue-600 text-sm">
-                      {internship.location}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Stats */}
-                <div className="flex items-center justify-between text-xs text-gray-500 pt-2 border-t border-gray-100">
-                  {/* Posted Date */}
-                  <div className="text-xs text-gray-400 mb-4">
-                    Posted {getDaysAgo(internship.postedDate)}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Star className="w-3 h-3 text-amber-500" />
-                    <span>{internship.rating}</span>
-                  </div>
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex justify-between items-center pt-2 border-t border-gray-100">
-                  <button
-                    onClick={() => handleApplyNow(internship.domain)}
-                    className="flex-1 mr-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-2 py-2 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group/apply flex items-center justify-center gap-2"
+                  {/* Domain Badge */}
+                  <div
+                    className={`absolute bottom-4 left-4 border ${
+                      domainColors[internship.domain] ||
+                      "bg-gray-100 text-gray-800 border-gray-200"
+                    } rounded-full px-3 py-1 text-xs font-medium`}
                   >
-                    <Target className="w-4 h-4" />
-                    Apply Now
-                    <ArrowRight className="w-4 h-4 group-hover/apply:translate-x-1 transition-transform" />
-                  </button>
+                    {internship.domain.split(" ")[0]}
+                  </div>
+                </div>
 
-                  <div className="">
-                    <Link
-                      to={`/internship/${internship.domain
-                        .toLowerCase()
-                        .replace(/\s+/g, "-")}`}
-                      className="flex items-center p-2 border text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-300 group/knowmore"
-                      title="View Details"
-                    >
-                      <Play className="w-4 h-4 mr-2 group-hover/knowmore:scale-110 transition-transform" />{" "}
-                      Know More
-                    </Link>
+                {/* Content Section - Right */}
+                <div className="lg:w-3/5 p-4 flex flex-col justify-between">
+                  <div>
+                    {/* Header with Title and Icon */}
+                    <div className="flex items-start justify-between mb-2">
+                      <h3 className="text-xl font-bold text-gray-900 line-clamp-2 pr-1">
+                        {internship.domain}
+                      </h3>
+                      <div className="text-blue-600 flex-shrink-0">
+                        {iconMap[internship.domain] || defaultIcon}
+                      </div>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-gray-600 text-sm mb-3 leading-relaxed line-clamp-3">
+                      {internship.description}
+                    </p>
+
+                    {/* Internship Details */}
+                    <div className="space-y-3 mb-4">
+                      {/* Stipend */}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-sm">
+                          <IndianRupee className="w-4 h-4 text-green-500" />
+                          <span className="text-gray-700">Stipend:</span>
+                        </div>
+                        <span className="font-semibold text-green-500 text-sm">
+                          {internship.stipend}
+                        </span>
+                      </div>
+
+                      {/* Location */}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-sm">
+                          <MapPin className="w-4 h-4 text-blue-500" />
+                          <span className="text-gray-700">Location:</span>
+                        </div>
+                        <span className="font-semibold text-blue-500 text-sm">
+                          {internship.location}
+                        </span>
+                      </div>
+
+                      {/* Duration */}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-sm">
+                          <Clock className="w-4 h-4 text-purple-500" />
+                          <span className="text-gray-700">Duration:</span>
+                        </div>
+                        <span className="font-semibold text-purple-500 text-sm">
+                          {internship.duration || "1-6 months"}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    {/* Stats and Posted Date */}
+                    <div className="flex items-center justify-between text-xs text-gray-500 pt-2 border-t border-gray-100 mb-4">
+                      <div className="text-xs text-gray-400">
+                        Posted {getDaysAgo(internship.postedDate)}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {/* <div className="flex items-center gap-1">
+                          <Users className="w-3 h-3 text-gray-400" />
+                          <span>{internship.applicants} applicants</span>
+                        </div> */}
+                        <div className="flex items-center gap-1">
+                          <Star className="w-3 h-3 text-amber-500" />
+                          <span>{internship.rating}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex flex-col sm:flex-row gap-5">
+                      <button
+                        onClick={() => handleApplyNow(internship.domain)}
+                        className="flex-1 bg-gradient-to-r from-sky-500 to-blue-500 text-white px-3 py-2 rounded-xl font-semibold hover:from-blue-500 hover:to-sky-500 transition-all duration-300 transform hover:scale-105 group/apply flex items-center justify-center gap-2"
+                      >
+                        Apply Now
+                        <ArrowRight className="w-4 h-4 group-hover/apply:translate-x-1 transition-transform" />
+                      </button>
+
+                      <Link
+                        to={`/internship/${internship.domain
+                          .toLowerCase()
+                          .replace(/\s+/g, "-")}`}
+                        className="flex items-center justify-center px-3 py-2  text-gray-700 hover:text-blue-500 transition-all duration-300 hover:underline group/knowmore"
+                        title="View Details"
+                      >
+                        Know More
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -500,8 +528,8 @@ export default function InternshipPage() {
         )}
       </div>
 
-      {/* Add custom CSS for animations */}
-      <style jsx>{`
+      {/* Add custom CSS for animations - Fixed version */}
+      <style>{`
         @keyframes blob {
           0% {
             transform: translate(0px, 0px) scale(1);

@@ -75,8 +75,6 @@ const InternshipApplicationFormPage = () => {
         const res = await axios.get(apiUrl("/internship-fees"), {
           timeout: 10000,
         });
-        // Backend returns objects like { duration, price (Number), currency, popular }
-        // Map to include a display string for price so your components can show "₹199"
         const mapped = Array.isArray(res.data)
           ? res.data.map((f) => ({
               ...f,
@@ -299,7 +297,7 @@ const InternshipApplicationFormPage = () => {
           {step === 1 && (
             <>
               {feeLoading ? (
-                <div className="p-6 bg-white rounded shadow text-center">Loading internship fees...</div>
+                <div className="p-6 bg-white rounded shadow text-center">Loading internship...</div>
               ) : feeError ? (
                 <div className="p-6 bg-red-50 rounded shadow text-center text-red-700">
                   {feeError}
