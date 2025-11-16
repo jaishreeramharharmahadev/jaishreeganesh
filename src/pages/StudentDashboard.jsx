@@ -23,6 +23,7 @@ import CertificateContent from "../components/StudentDashboard/CertificateConten
 import ProfileContent from "../components/StudentDashboard/ProfileContent";
 import WeekContent from "../components/StudentDashboard/WeekContent";
 import { apiUrl } from "../utils/api";
+import PreLoader from "../components/common/PreLoader";
 
 export default function StudentDashboard() {
   const [applicant, setApplicant] = useState(null);

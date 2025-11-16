@@ -14,6 +14,7 @@ import {
   Clock,
 } from "lucide-react";
 import { apiUrl } from "../utils/api";
+import PreLoader from "../components/common/PreLoader";
 
 export default function VerifyResultPage() {
   const { certificateNumber } = useParams();

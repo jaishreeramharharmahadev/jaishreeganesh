@@ -22,6 +22,7 @@ import {
   HeartHandshake,
 } from "lucide-react";
 import { apiUrl } from "../utils/api";
+import PreLoader from "../components/common/PreLoader";
 
 export default function InternshipDetail() {
   const { subDomain } = useParams();
