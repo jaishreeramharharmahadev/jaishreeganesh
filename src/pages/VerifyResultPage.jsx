@@ -120,31 +120,35 @@ export default function VerifyResultPage() {
     );
   }
 
+  // Success state
   return (
-    <div className="bg-gradient-to-br from-green-50 to-blue-50 py-6 px-3">
+    <div className="bg-gradient-to-r from-gray-50 to-blue-50 py-8 px-3">
       <div className="max-w-3xl mx-auto">
-        <div className="bg-white rounded-md shadow-sm overflow-hidden">
-          <div className="bg-gradient-to-r from-green-700 to-emerald-600 p-3 text-white">
+        <div className="bg-white rounded-md shadow-sm overflow-hidden p-4">
+          {/* Verification Status Banner */}
+          <div className="bg-white text-gray-800">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-                  <CheckCircle className="w-5 h-5" />
+                  <CheckCircle className="w-8 h-8 text-emerald-600" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold">Verified</h2>
-                  <p className="text-green-100 text-sm">This certificate is authentic and issued by GT Technovation</p>
+                  <h2 className="text-xl font-bold">Verified</h2>
+                  <p className="text-green-500 text-sm">This certificate is authentic and issued by GT Technovation</p>
                 </div>
               </div>
             </div>
           </div>
 
+          {/* Certificate Details */}
           <div className="p-4 md:p-6">
+            {/* Certificate Header: stacks on mobile, row on md+ */}
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
               <div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900">Certificate Details</h3>
-                <p className="text-sm md:text-base text-gray-600 mt-1">Complete information about the verified certificate</p>
+                <h3 className="text-xl text-gray-900">Certificate Details</h3>
               </div>
 
+              {/* Certificate ID placed below the header on mobile because of flex-col; on md it sits on the right */}
               <div className="mt-0 md:mt-0 text-left md:text-right">
                 <div className="text-sm text-gray-500">Certificate ID</div>
                 <div className="flex items-center gap-2 mt-1">
@@ -161,7 +165,9 @@ export default function VerifyResultPage() {
               </div>
             </div>
 
+            {/* Details Grid */}
             <div className="grid md:grid-cols-2 gap-6 mb-4">
+              {/* Personal Information */}
               <div className="space-y-3">
                 <div className="flex items-start gap-3 p-3 bg-blue-50 rounded-lg">
                   <div className="p-2 bg-blue-100 rounded-lg">
@@ -184,6 +190,7 @@ export default function VerifyResultPage() {
                 </div>
               </div>
 
+              {/* Course Information */}
               <div className="space-y-3">
                 <div className="flex items-start gap-3 p-3 bg-green-50 rounded-lg">
                   <div className="p-2 bg-green-100 rounded-lg">
@@ -207,6 +214,7 @@ export default function VerifyResultPage() {
               </div>
             </div>
 
+            {/* Duration Information */}
             <div className="bg-gray-50 rounded-lg p-3">
               <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2 text-sm md:text-base">
                 <Clock className="w-4 h-4 text-gray-600" />
@@ -224,6 +232,7 @@ export default function VerifyResultPage() {
               </div>
             </div>
 
+            {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 justify-center pt-5 border-t border-gray-100">
               <button
                 className="flex items-center justify-center gap-2 px-4 py-2 bg-sky-400 text-black/80 rounded-lg font-semibold hover:bg-sky-300 transition-colors"
@@ -236,6 +245,7 @@ export default function VerifyResultPage() {
           </div>
         </div>
 
+        {/* Footer Note */}
         <div className="text-center mt-6">
           <p className="text-xs md:text-sm text-gray-500">
             Need help? Contact our support team at{' '}

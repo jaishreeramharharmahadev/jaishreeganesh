@@ -23,33 +23,41 @@ export default function VerificationPage() {
 
     setTimeout(() => {
       navigate(`/verify/${encodeURIComponent(trimmed)}`);
+      // Navigation occurs; loading spinner stops after navigation
     }, 400);
   }
 
+  // Convert input to uppercase and limit length
   function handleInputChange(e) {
     const upper = (e.target.value || "").toUpperCase().slice(0, 18);
     setInput(upper);
   }
 
   return (
-    <div className="pt-7 flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-50 to-blue-50 -mt-10">
       <div className="w-full max-w-3xl">
-        <div className="mx-auto max-w-xl">
+        <h1 className="text-4xl mb-2 text-center text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600">
+          Certificate Verification
+        </h1>
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed text-center">
+          Enter your certificate number to verify authenticity
+        </p>
+        {/* Centered Card */}
+        <div className="mx-auto max-w-xl mt-5">
           <div className="bg-white rounded-md shadow-sm p-4">
+            {/* Header */}
             <div className="flex items-center gap-3 mb-6">
               <div className="p-2 bg-blue-100 rounded-lg">
                 <Search className="w-6 h-6 text-blue-600" />
               </div>
               <div>
-                <h2 className="text-xl font-bold text-gray-900">
-                  Certificate Verification
+                <h2 className="text-xl font-bold text-gray-700">
+                  Verify Certificate
                 </h2>
-                <p className="text-gray-600 text-sm">
-                  Enter your certificate number to verify authenticity
-                </p>
               </div>
             </div>
 
+            {/* Form */}
             <form onSubmit={onSubmit} className="space-y-6">
               <div>
                 <label
@@ -67,7 +75,7 @@ export default function VerificationPage() {
                     placeholder="e.g., CERT-12345678-X0X1"
                     style={{ textTransform: "uppercase" }}
                     maxLength={18}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all text-lg font-medium"
+                    className="w-full border rounded-md px-3 py-2 focus:outline-sky-300 transition md:text-base text-lg font-medium"
                     autoFocus
                     required
                     autoComplete="off"
@@ -78,14 +86,17 @@ export default function VerificationPage() {
                 </div>
 
                 <div className="flex justify-between mt-2 text-sm text-gray-500">
-                  <p>This number is shown at the top-right corner on the certificate.</p>
+                  <p>
+                    This number is shown at the top-right corner on the
+                    certificate.
+                  </p>
                 </div>
               </div>
 
               <button
                 type="submit"
                 disabled={isLoading || !input.trim()}
-                className="w-full bg-gradient-to-r from-sky-600 to-green-900 text-white py-3 px-3 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                className="bg-gradient-to-r from-sky-500 to-blue-500 hover:from-blue-500 hover:to-sky-500 text-white px-3 py-1.5 rounded-lg transition-all duration-300 flex items-center gap-3 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed justify-center"
               >
                 {isLoading ? (
                   <>
@@ -95,13 +106,14 @@ export default function VerificationPage() {
                 ) : (
                   <>
                     <Shield className="w-5 h-5" />
-                    Verify Certificate
+                    Verify
                     <ArrowRight className="w-5 h-5" />
                   </>
                 )}
               </button>
             </form>
 
+            {/* Trust Indicators */}
             <div className="mt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div className="flex items-center gap-3">
                 <Award className="w-5 h-5 text-gray-600" />
@@ -124,6 +136,7 @@ export default function VerificationPage() {
             </div>
           </div>
 
+          {/* Footer */}
           <div className="mt-6 text-center text-sm">
             <p className="text-gray-600">
               Having trouble verifying your certificate?{" "}
