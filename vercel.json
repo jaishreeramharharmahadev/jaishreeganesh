@@ -1,15 +1,5 @@
 {
-  "redirects": [
-    {
-      "source": "/",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.gttechnovation.com"
-        }
-      ],
-      "destination": "https://gttechnovation.com",
-      "permanent": true
-    }
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
   ]
 }
