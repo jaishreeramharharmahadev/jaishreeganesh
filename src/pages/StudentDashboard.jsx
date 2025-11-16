@@ -428,9 +428,9 @@ const getWeeksWithSubmissions = () => {
             <img src={logo} alt="" />
             <button
               onClick={() => setSidebarOpen(false)}
-              className="lg:hidden p-2 text-white rounded-lg hover:bg-gray-100"
+              className="lg:hidden p-1 text-white"
             >
-              <ChevronLeft className="w-5 h-5   text-white" />
+              <ChevronLeft className="w-5 h-5 text-white" />
             </button>
           </div>
 
@@ -506,7 +506,7 @@ const getWeeksWithSubmissions = () => {
                 onClick={() => setSidebarOpen(true)}
                 className="lg:hidden p-2 rounded-lg hover:bg-gray-100"
               >
-                <Menu className="w-5 h-5" />
+                <Menu className="w-5 h-5 text-white -ml-2" />
               </button>
               <div>
                 <h1 className="text-xl font-semibold text-white capitalize">
