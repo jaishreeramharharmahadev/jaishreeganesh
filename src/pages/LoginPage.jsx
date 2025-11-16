@@ -140,7 +140,7 @@ function LoginPage() {
   };
 
   return (
-    <div className="flex">
+    <div className="min-h-screen flex">
       <div className="hidden lg:flex lg:flex-1 bg-gradient-to-br from-blue-600 to-indigo-800 text-white p-10 flex-col justify-between">
         <div className="max-w-md">
           <h1 className="text-3xl font-bold mb-4">
