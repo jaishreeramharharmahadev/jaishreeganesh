@@ -3,83 +3,83 @@
 
   <!-- Home -->
   <url>
-    <loc>https://www.gttechnovation.com/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <loc>https://gttechnovation.com/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1</priority>
   </url>
 
   <!-- Internships listing (static listing page) -->
   <url>
-    <loc>https://www.gttechnovation.com/internships</loc>
+    <loc>https://gttechnovation.com/internships</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
 
   <!-- About -->
-  <!-- <url>
-    <loc>https://www.gttechnovation.com/about-us</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url> -->
+  <url>
+    <loc>https://gttechnovation.com/about-us</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
 
   <!-- Courses -->
   <url>
-    <loc>https://www.gttechnovation.com/courses</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://gttechnovation.com/courses</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
 
   <!-- Jobs -->
   <url>
-    <loc>https://www.gttechnovation.com/jobs</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://gttechnovation.com/jobs</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
 
   <!-- Apply (internship application form) -->
   <url>
-    <loc>https://www.gttechnovation.com/apply</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://gttechnovation.com/apply</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
 
   <!-- Public policies & legal pages -->
   <url>
-    <loc>https://www.gttechnovation.com/privacy-policy</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://gttechnovation.com/privacy-policy</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://www.gttechnovation.com/shipping-delivery</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://gttechnovation.com/shipping-delivery</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://www.gttechnovation.com/terms-and-conditions</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://gttechnovation.com/terms-and-conditions</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://www.gttechnovation.com/refund-policy</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://gttechnovation.com/refund-policy</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
 
   <!-- Contact -->
   <url>
-    <loc>https://www.gttechnovation.com/contact-us</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://gttechnovation.com/contact-us</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
 
   <!-- Verification listing page (public) -->
   <url>
-    <loc>https://www.gttechnovation.com/verify</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
+    <loc>https://gttechnovation.com/verify</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
 
 </urlset>

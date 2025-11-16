@@ -1,5 +1,15 @@
 {
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.gttechnovation.com"
+        }
+      ],
+      "destination": "https://gttechnovation.com/:path*",
+      "permanent": true
+    }
   ]
 }
