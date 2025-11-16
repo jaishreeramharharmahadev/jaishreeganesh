@@ -1,14 +1,14 @@
 {
   "redirects": [
     {
-      "source": "/:path*",
+      "source": "/",
       "has": [
         {
           "type": "host",
           "value": "www.gttechnovation.com"
         }
       ],
-      "destination": "https://gttechnovation.com/:path*",
+      "destination": "https://gttechnovation.com",
       "permanent": true
     }
   ]
