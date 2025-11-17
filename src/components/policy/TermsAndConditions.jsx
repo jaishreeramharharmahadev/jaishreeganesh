@@ -5,7 +5,7 @@ import { FileText, AlertCircle, BookOpen, CreditCard, Shield, UserCheck, Scale }
 export default function TermsAndConditions() {
   return (
     <div className="mt-0 lg:mt-2">
-      <div className="bg-gradient-to-r from-gray-50 to-blue-50 p-4 lg:p-8">
+      <div className="bg-gradient-to-r from-gray-50 to-blue-50 p-4 lg:p-8 pt-7">
         <div className="flex items-center gap-4 mb-8">
           <div className="p-3 bg-purple-50 rounded-xl">
             <FileText className="w-8 h-8 text-purple-600" />

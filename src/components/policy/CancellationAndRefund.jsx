@@ -5,7 +5,7 @@ import { CreditCard, AlertTriangle, CheckCircle, XCircle, HelpCircle } from "luc
 export default function CancellationAndRefund() {
   return (
     <div className="mt-0 lg:mt-2">
-      <div className="bg-gradient-to-r from-gray-50 to-blue-50 p-4 lg:p-8">
+      <div className="bg-gradient-to-r from-gray-50 to-blue-50 p-4 lg:p-8 pt-7">
         <div className="flex items-center gap-4 mb-8">
           <div className="p-3 bg-red-50 rounded-xl">
             <CreditCard className="w-6 h-6 text-red-400" />

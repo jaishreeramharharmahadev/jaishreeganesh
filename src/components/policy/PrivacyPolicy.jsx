@@ -5,7 +5,7 @@ import { Shield, Lock, Eye, Server, Users, Cookie } from "lucide-react";
 export default function PrivacyPolicy() {
   return (
     <div className="mt-0 lg:mt-2">
-      <div className="bg-gradient-to-r from-gray-50 to-blue-50 p-4 lg:p-8">
+      <div className="bg-gradient-to-r from-gray-50 to-blue-50 p-4 lg:p-8 pt-7">
         <div className="flex items-center gap-4 mb-5">
           <div className="p-3 bg-blue-50 rounded-xl">
             <Shield className="w-8 h-8 text-blue-600" />
