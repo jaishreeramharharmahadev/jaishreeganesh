@@ -5,13 +5,13 @@ import { Shield, Lock, Eye, Server, Users, Cookie } from "lucide-react";
 export default function PrivacyPolicy() {
   return (
     <div className="mt-0 lg:mt-2">
-      <div className="bg-gradient-to-r from-gray-50 to-blue-50 p-8">
+      <div className="bg-gradient-to-r from-gray-50 to-blue-50 p-4 lg:p-8">
         <div className="flex items-center gap-4 mb-5">
           <div className="p-3 bg-blue-50 rounded-xl">
             <Shield className="w-8 h-8 text-blue-600" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Privacy Policy</h1>
+            <h1 className="text-2xl text-gray-900">Privacy Policy</h1>
             <p className="text-gray-600 mt-1 text-sm">Last updated: 24 October 2025</p>
           </div>
         </div>
@@ -53,7 +53,7 @@ export default function PrivacyPolicy() {
 
           <div className="space-y-8">
             <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Information We Collect</h2>
+              <h2 className="text-xl text-gray-900 mb-2">Information We Collect</h2>
               <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
                 <p className="text-blue-800 font-medium">We collect information to provide better services to our users.</p>
               </div>
@@ -88,7 +88,7 @@ export default function PrivacyPolicy() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">How We Use Your Information</h2>
+              <h2 className="text-xl text-gray-900 mb-2">How We Use Your Information</h2>
               <p className="text-gray-700 mb-4">
                 We use the information we collect for the following purposes:
               </p>
@@ -109,8 +109,8 @@ export default function PrivacyPolicy() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">How We Protect Your Information</h2>
-              <div className="flex items-start gap-4 bg-gray-50 p-4 rounded-lg">
+              <h2 className="text-xl text-gray-900 mb-2">How We Protect Your Information</h2>
+              <div className="flex items-start gap-4 bg-slate-100 p-4 rounded-lg">
                 <Lock className="w-6 h-6 text-green-600 mt-1 flex-shrink-0" />
                 <div>
                   <p className="text-gray-700">
@@ -125,7 +125,7 @@ export default function PrivacyPolicy() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Sharing of Information</h2>
+              <h2 className="text-xl text-gray-900 mb-2">Sharing of Information</h2>
               <p className="text-gray-700 mb-4">
                 We may share your personal information with trusted third-party service providers to help us 
                 operate and improve our platform, as well as to process payments and provide customer support. 
@@ -134,7 +134,7 @@ export default function PrivacyPolicy() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Third-Party Links and Services</h2>
+              <h2 className="text-xl text-gray-900 mb-2">Third-Party Links and Services</h2>
               <p className="text-gray-700">
                 Our platform may contain links to third-party websites or services that are not owned or 
                 controlled by us. We are not responsible for the privacy practices of these third-party 
@@ -144,7 +144,7 @@ export default function PrivacyPolicy() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Children's Privacy</h2>
+              <h2 className="text-xl text-gray-900 mb-2">Children's Privacy</h2>
               <p className="text-gray-700">
                 Our platform is not intended for use by individuals under the age of 13. If you are a parent 
                 or guardian and believe that your child has provided us with personal information, please 
@@ -153,7 +153,7 @@ export default function PrivacyPolicy() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Changes to the Privacy Policy</h2>
+              <h2 className="text-xl text-gray-900 mb-2">Changes to the Privacy Policy</h2>
               <p className="text-gray-700">
                 We may update this Privacy Policy from time to time to reflect changes in our practices or 
                 for other operational, legal, or regulatory reasons. We will notify you of any material changes 

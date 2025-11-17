@@ -5,13 +5,13 @@ import { Mail, Phone, MapPin, Clock, MessageCircle } from "lucide-react";
 export default function ContactUs() {
   return (
     <div className="mt-0 lg:mt-2">
-      <div className="bg-gradient-to-r from-gray-50 to-blue-50 p-8">
+      <div className="bg-gradient-to-r from-gray-50 to-blue-50 p-4 lg:p-8">
         <div className="flex items-center gap-4 mb-8">
           <div className="p-3 bg-blue-50 rounded-xl">
             <MessageCircle className="w-8 h-8 text-blue-600" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Contact Us</h1>
+            <h1 className="text-2xl text-gray-900">Contact Us</h1>
             <p className="text-gray-600 mt-1 text-sm">
               We're here to help with any questions or concerns
             </p>
@@ -19,7 +19,7 @@ export default function ContactUs() {
         </div>
 
         <div className="prose prose-lg max-w-none">
-          <p className="text-lg text-gray-700 leading-relaxed mb-8">
+          <p className="text-md text-gray-700 leading-relaxed mb-8">
             Have questions about our courses, need technical support, or want to
             learn more about GT Technovation? Our dedicated support team is
             ready to assist you.
@@ -43,7 +43,7 @@ export default function ContactUs() {
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
+              {/* <div className="flex items-start gap-4">
                 <div className="p-3 bg-green-50 rounded-lg">
                   <Phone className="w-5 h-5 text-green-600" />
                 </div>
@@ -76,53 +76,7 @@ export default function ContactUs() {
                     India
                   </p>
                 </div>
-              </div>
-            </div>
-
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <h3 className="font-semibold text-gray-900 mb-4">
-                How Can We Help You?
-              </h3>
-
-              <div className="space-y-4">
-                <div className="border-l-4 border-blue-500 pl-4">
-                  <h4 className="font-semibold text-gray-900">
-                    Technical Support
-                  </h4>
-                  <p className="text-sm text-gray-600 mt-1">
-                    Issues with course access, platform functionality, or
-                    technical problems
-                  </p>
-                </div>
-
-                <div className="border-l-4 border-green-500 pl-4">
-                  <h4 className="font-semibold text-gray-900">
-                    Billing & Payments
-                  </h4>
-                  <p className="text-sm text-gray-600 mt-1">
-                    Questions about payments, invoices, or payment-related
-                    issues
-                  </p>
-                </div>
-
-                <div className="border-l-4 border-purple-500 pl-4">
-                  <h4 className="font-semibold text-gray-900">
-                    Course Content
-                  </h4>
-                  <p className="text-sm text-gray-600 mt-1">
-                    Questions about course materials, curriculum, or learning
-                    resources
-                  </p>
-                </div>
-
-                <div className="border-l-4 border-orange-500 pl-4">
-                  <h4 className="font-semibold text-gray-900">Partnerships</h4>
-                  <p className="text-sm text-gray-600 mt-1">
-                    Business inquiries, collaboration opportunities, or
-                    partnership requests
-                  </p>
-                </div>
-              </div>
+              </div> */}
 
               <div className="mt-6 p-4 bg-blue-50 rounded-lg">
                 <h4 className="font-semibold text-gray-900 mb-2">
@@ -134,15 +88,56 @@ export default function ContactUs() {
                   <li>• Describe your issue in detail for better assistance</li>
                 </ul>
               </div>
-            </div>
-          </div>
 
-          <div className="mt-8 bg-yellow-50 border-l-4 border-yellow-500 p-4">
-            <p className="text-yellow-800">
-              <strong>Emergency Support:</strong> For urgent technical issues
-              preventing course access, please call us directly during business
-              hours for immediate assistance.
-            </p>
+            </div>
+
+            <div className="bg-gray-50 p-6 rounded-lg">
+              <h3 className="font-semibold text-gray-900 mb-4">
+                How Can We Help You?
+              </h3>
+
+              <div className="space-y-4">
+                <div className="border-l-4 border-blue-300 pl-4">
+                  <h4 className="font-semibold text-gray-900">
+                    Technical Support
+                  </h4>
+                  <p className="text-sm text-gray-600 mt-1">
+                    Issues with course access, platform functionality, or
+                    technical problems
+                  </p>
+                </div>
+
+                <div className="border-l-4 border-green-300 pl-4">
+                  <h4 className="font-semibold text-gray-900">
+                    Billing & Payments
+                  </h4>
+                  <p className="text-sm text-gray-600 mt-1">
+                    Questions about payments, invoices, or payment-related
+                    issues
+                  </p>
+                </div>
+
+                <div className="border-l-4 border-purple-300 pl-4">
+                  <h4 className="font-semibold text-gray-900">
+                    Course Content
+                  </h4>
+                  <p className="text-sm text-gray-600 mt-1">
+                    Questions about course materials, curriculum, or learning
+                    resources
+                  </p>
+                </div>
+
+                <div className="border-l-4 border-orange-300 pl-4">
+                  <h4 className="font-semibold text-gray-900">Partnerships</h4>
+                  <p className="text-sm text-gray-600 mt-1">
+                    Business inquiries, collaboration opportunities, or
+                    partnership requests
+                  </p>
+                </div>
+              </div>
+
+              
+            </div>
           </div>
         </div>
       </div>

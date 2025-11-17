@@ -5,30 +5,21 @@ import { FileText, AlertCircle, BookOpen, CreditCard, Shield, UserCheck, Scale }
 export default function TermsAndConditions() {
   return (
     <div className="mt-0 lg:mt-2">
-      <div className="bg-gradient-to-r from-gray-50 to-blue-50 p-8">
+      <div className="bg-gradient-to-r from-gray-50 to-blue-50 p-4 lg:p-8">
         <div className="flex items-center gap-4 mb-8">
           <div className="p-3 bg-purple-50 rounded-xl">
             <FileText className="w-8 h-8 text-purple-600" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Terms & Conditions</h1>
+            <h1 className="text-2xl text-gray-900">Terms & Conditions</h1>
             <p className="text-gray-600 mt-1 text-sm">Last updated: 24 October 2025</p>
-          </div>
-        </div>
-
-        <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-8">
-          <div className="flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" />
-            <p className="text-yellow-800">
-              <strong>Important:</strong> By accessing or using GT Technovation's services, you agree to be bound by these Terms and Conditions. Please read them carefully.
-            </p>
           </div>
         </div>
 
         <div className="prose prose-lg max-w-none">
           <div className="space-y-8">
             <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Acceptance of Terms</h2>
+              <h2 className="text-xl text-gray-900 mb-2">1. Acceptance of Terms</h2>
               <p className="text-gray-700">
                 By accessing and using this website ("GT Technovation"), you accept and agree to be bound 
                 by the following terms and conditions. The content of this Website is for general information 
@@ -37,12 +28,12 @@ export default function TermsAndConditions() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Account Registration & Security</h2>
-              <div className="flex items-start gap-4 bg-gray-50 p-4 rounded-lg mb-4">
+              <h2 className="text-xl text-gray-900 mb-2">2. Account Registration & Security</h2>
+              <div className="flex items-start gap-4 p-2 rounded-lg mb-2">
                 <UserCheck className="w-6 h-6 text-blue-600 mt-1 flex-shrink-0" />
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-2">User Eligibility & Responsibilities</h4>
-                  <p className="text-gray-700 mb-3">
+                  <p className="text-gray-700">
                     You must be at least 18 years old or have the consent of a parent or legal guardian to use this platform. 
                     You are responsible for maintaining the confidentiality of your account and password and for restricting 
                     access to your computer or device to prevent unauthorized access to your account.
@@ -55,8 +46,8 @@ export default function TermsAndConditions() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">3. Payment Terms</h2>
-              <div className="flex items-start gap-4 bg-green-50 p-4 rounded-lg mb-4">
+              <h2 className="text-xl text-gray-900 mb-2">3. Payment Terms</h2>
+              <div className="flex items-start gap-4 p-2 mb-2">
                 <CreditCard className="w-6 h-6 text-green-600 mt-1 flex-shrink-0" />
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-2">Secure Payment Processing</h4>
@@ -70,8 +61,8 @@ export default function TermsAndConditions() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">4. Intellectual Property Rights</h2>
-              <div className="flex items-start gap-4 bg-purple-50 p-4 rounded-lg mb-4">
+              <h2 className="text-xl text-gray-900 mb-2">4. Intellectual Property Rights</h2>
+              <div className="flex items-start gap-4 p-2 mb-2">
                 <BookOpen className="w-6 h-6 text-purple-600 mt-1 flex-shrink-0" />
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-2">Content Ownership & Usage</h4>
@@ -83,7 +74,7 @@ export default function TermsAndConditions() {
                   </p>
                 </div>
               </div>
-              <div className="bg-red-50 border-l-4 border-red-500 p-4">
+              <div className="bg-slate-50 border-l-4 border-red-500 p-4">
                 <p className="text-red-800 font-semibold mb-2">Prohibited Activities:</p>
                 <ul className="list-disc ml-6 space-y-1 text-red-700">
                   <li>Sharing, selling, or distributing any Course materials without explicit permission</li>
@@ -96,8 +87,8 @@ export default function TermsAndConditions() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">5. User Conduct & Restrictions</h2>
-              <p className="text-gray-700 mb-4">
+              <h2 className="text-xl text-gray-900 mb-2">5. User Conduct & Restrictions</h2>
+              <p className="text-gray-700 mb-2">
                 You agree not to use this platform for any illegal or unauthorized purpose, and you must 
                 comply with all applicable laws and regulations. You will not engage in any activity that 
                 may disrupt or interfere with the proper functioning of the platform.
@@ -114,7 +105,7 @@ export default function TermsAndConditions() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">6. Limitation of Liability</h2>
+              <h2 className="text-xl text-gray-900 mb-2">6. Limitation of Liability</h2>
               <div className="flex items-start gap-4 bg-orange-50 p-4 rounded-lg">
                 <Scale className="w-6 h-6 text-orange-600 mt-1 flex-shrink-0" />
                 <div>
@@ -134,7 +125,7 @@ export default function TermsAndConditions() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Indemnification</h2>
+              <h2 className="text-xl text-gray-900 mb-2">7. Indemnification</h2>
               <p className="text-gray-700">
                 You agree to indemnify and hold harmless GT Technovation, its affiliates, instructors, 
                 and partners from any claims, damages, losses, liabilities, and expenses (including 
@@ -144,7 +135,7 @@ export default function TermsAndConditions() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Consent to Data Usage</h2>
+              <h2 className="text-xl text-gray-900 mb-2">8. Consent to Data Usage</h2>
               <p className="text-gray-700">
                 Students acknowledge that GT Technovation may collect and use their images and placement 
                 details for inclusion in our marketing materials and online presence. We are committed to 
@@ -154,7 +145,7 @@ export default function TermsAndConditions() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Modification of Terms</h2>
+              <h2 className="text-xl text-gray-900 mb-2">9. Modification of Terms</h2>
               <p className="text-gray-700">
                 We reserve the right to modify these terms at any time. We will notify users of 
                 significant changes through email or platform notifications. Continued use of our 
@@ -163,7 +154,7 @@ export default function TermsAndConditions() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">10. Governing Law & Jurisdiction</h2>
+              <h2 className="text-xl text-gray-900 mb-2">10. Governing Law & Jurisdiction</h2>
               <p className="text-gray-700">
                 These terms shall be governed by the laws of India. Any disputes shall be subject to 
                 the exclusive jurisdiction of the courts in Bangalore, Karnataka.
@@ -171,9 +162,9 @@ export default function TermsAndConditions() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Internship Program Terms</h2>
+              <h2 className="text-xl text-gray-900 mb-2">Internship Program Terms</h2>
               <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-                <h3 className="font-semibold text-gray-900 mb-4">Key Terms & Conditions:</h3>
+                <h3 className="font-semibold text-gray-900 mb-2">Key Terms & Conditions:</h3>
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
@@ -199,10 +190,7 @@ export default function TermsAndConditions() {
               <h3 className="font-semibold text-gray-900 mb-3">Contact Information</h3>
               <p className="text-gray-700">
                 For questions about these Terms & Conditions, please contact our legal team at:{' '}
-                <span className="font-semibold">legal@gttechnovation.com</span>
-              </p>
-              <p className="text-gray-700 mt-2">
-                Phone: <span className="font-semibold">+91 98765 43210</span>
+                <span className="font-semibold">info@gttechnovation.com</span>
               </p>
             </div>
           </div>
