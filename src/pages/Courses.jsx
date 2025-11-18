@@ -1,4 +1,3 @@
-// ===== File: src/pages/Courses.jsx =====
 import React from "react";
 import { BookOpen, Clock, Users, Star, ArrowRight, Video, Download, Award } from "lucide-react";
 
@@ -35,18 +34,16 @@ export default function Courses() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-gray-50 to-blue-50 py-8">
+    <div className="min-h-screen bg-gradient-to-r from-gray-50 to-blue-50 py-8 lg:pt-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Hero Section */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium mb-6">
-            <BookOpen className="w-4 h-4" />
-            Transforming Education Through Technology
-          </div>
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-            Launch Your Tech Career
+          <h1 className="text-4xl md:text-5xl text-gray-900 mb-4">
+            Launch Your{" "}
+            <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+              Tech Career
+            </span>
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto mb-8">
             Master in-demand skills with our industry-relevant courses. Get ready for comprehensive 
             learning experiences designed by industry experts.
           </p>
@@ -70,7 +67,6 @@ export default function Courses() {
           </div>
         </div>
 
-        {/* Coming Soon Section */}
         <div className="mb-16">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -110,7 +106,6 @@ export default function Courses() {
           </div>
         </div>
 
-        {/* Features Section */}
         <div className="bg-white rounded-2xl shadow-lg p-8 mb-16">
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
@@ -137,7 +132,6 @@ export default function Courses() {
           </div>
         </div>
 
-        {/* CTA Section */}
         <div className="text-center bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-12 text-white">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Transform Your Career?</h2>
           <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">

@@ -70,7 +70,7 @@ export default function Offerings() {
       id: "internship",
       title: "Internships",
       description:
-        "Gain real-world exposure with hands-on internships and live industry projects guided by experts.",
+        "Gain real-world exposure with hands-on internship and industry projects guided by experts.",
       Icon: Briefcase,
       stats: "500+ Placements",
       gradient: "from-orange-400 to-orange-500",
@@ -155,7 +155,7 @@ export default function Offerings() {
                   <h3 className="relative z-10 text-xl font-semibold text-gray-900 mb-2">
                     {service.title}
                   </h3>
-                  <p className="relative z-10 text-gray-600 text-sm leading-relaxed">
+                  <p className="relative z-10 text-gray-600 text-md leading-relaxed">
                     {service.description}
                   </p>
                 </div>
