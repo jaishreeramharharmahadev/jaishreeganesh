@@ -292,10 +292,7 @@ export default function App() {
       <HelmetProvider>
         <ScrollToTop />
         <NotificationHandler />
-
-        {/* Optional PreLoader */}
-        {/* <PreLoader fullScreen /> */}
-
+        <PreLoader/>
         <AppRoutes />
       </HelmetProvider>
     </AppProvider>
