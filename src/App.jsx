@@ -22,7 +22,6 @@ import VerifyResultPage from "./pages/VerifyResultPage";
 
 // Components
 import ProtectedRoute from "./components/ProtectedRoute";
-import PreLoader from "./components/common/PreLoader";
 import NotificationHandler from "./components/common/NotificationHandler";
 
 // Context
@@ -292,7 +291,6 @@ export default function App() {
       <HelmetProvider>
         <ScrollToTop />
         <NotificationHandler />
-        <PreLoader/>
         <AppRoutes />
       </HelmetProvider>
     </AppProvider>
