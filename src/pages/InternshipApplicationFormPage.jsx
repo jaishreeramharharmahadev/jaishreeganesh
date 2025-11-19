@@ -75,6 +75,8 @@ const InternshipApplicationFormPage = () => {
         const res = await axios.get(apiUrl("/internship-fees"), {
           timeout: 10000,
         });
+        // Backend returns objects like { duration, price (Number), currency, popular }
+        // Map to include a display string for price so your components can show "₹199"
         const mapped = Array.isArray(res.data)
           ? res.data.map((f) => ({
               ...f,
@@ -199,66 +201,154 @@ const InternshipApplicationFormPage = () => {
     if (step > 1) setStep(step - 1);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setIsSubmitting(true);
 
-    if (!validateStep(4)) {
+  //   if (!validateStep(4)) {
+  //     setIsSubmitting(false);
+  //     return;
+  //   }
+
+  //   try {
+  //     // Hash the password before sending
+  //     const hashedPassword = await hashPassword(formData.password);
+
+  //     // Prepare payload according to backend JSON schema
+  //     const payload = {
+  //       duration: formData.duration,
+  //       fullName: formData.fullName,
+  //       email: formData.email.toLowerCase().trim(), // Normalize email
+  //       phone: formData.phone.replace(/\D/g, ""), // Normalize phone number
+  //       dob: formData.dob,
+  //       college: formData.college,
+  //       address: formData.address,
+  //       domain: formData.domain,
+  //       linkedin: formData.linkedin,
+  //       github: formData.github,
+  //       password: hashedPassword, // Send hashed password
+  //       agree: formData.agree,
+  //     };
+
+  //     // Send data to backend API
+  //     const response = await axios.post(apiUrl("/applicants/register"), payload, {
+  //       timeout: 120000, // 120 second timeout
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+
+  //     // Handle success response
+  //     if (response.status === 201) {
+  //       setUniqueId(response.data.uniqueId);
+  //       setShowSuccess(true);
+  //       console.log("Application submitted successfully:", response.data);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error submitting form:", error);
+
+  //     if (error.response?.status === 409) {
+  //       alert("⚠️ This email is already registered for an internship.");
+  //     } else if (error.response?.data?.message) {
+  //       alert(`❌ ${error.response.data.message}`);
+  //     } else if (error.code === "ECONNABORTED") {
+  //       alert("⏰ Request timeout. Please check your connection and try again.");
+  //     } else {
+  //       alert("❌ Something went wrong while submitting your application. Please try again.");
+  //     }
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+
+
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+
+  if (!validateStep(4)) {
+    setIsSubmitting(false);
+    return;
+  }
+
+  try {
+    const hashedPassword = await hashPassword(formData.password);
+
+    const payload = {
+      duration: formData.duration,
+      fullName: formData.fullName,
+      email: formData.email.toLowerCase().trim(),
+      phone: formData.phone.replace(/\D/g, ""),
+      dob: formData.dob,
+      college: formData.college,
+      address: formData.address,
+      domain: formData.domain,
+      linkedin: formData.linkedin,
+      github: formData.github,
+      password: hashedPassword,
+      agree: formData.agree,
+    };
+
+    // Call backend to create Razorpay order
+    const { data } = await axios.post(
+      apiUrl("/payments/create-order-with-applicant"),
+      payload
+    );
+
+    if (!data?.success) {
+      alert("Failed to initiate payment. Try again!");
       setIsSubmitting(false);
       return;
     }
 
-    try {
-      // Hash the password before sending
-      const hashedPassword = await hashPassword(formData.password);
+    const options = {
+      key: data.key,
+      amount: data.amount,
+      currency: data.currency,
+      name: "GT Technovation",
+      description: "Internship Registration Fee",
+      order_id: data.orderId,
+      handler: async function (response) {
+        try {
+          const verifyRes = await axios.post(apiUrl("/payments/verify"), {
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+            paymentDbId: data.paymentDbId,
+          });
 
-      // Prepare payload according to backend JSON schema
-      const payload = {
-        duration: formData.duration,
-        fullName: formData.fullName,
-        email: formData.email.toLowerCase().trim(), // Normalize email
-        phone: formData.phone.replace(/\D/g, ""), // Normalize phone number
-        dob: formData.dob,
-        college: formData.college,
-        address: formData.address,
-        domain: formData.domain,
-        linkedin: formData.linkedin,
-        github: formData.github,
-        password: hashedPassword, // Send hashed password
-        agree: formData.agree,
-      };
-
-      // Send data to backend API
-      const response = await axios.post(apiUrl("/applicants/register"), payload, {
-        timeout: 120000, // 120 second timeout
-        headers: {
-          "Content-Type": "application/json",
+          if (verifyRes.data.success) {
+            setUniqueId(verifyRes.data.uniqueId);
+            setShowSuccess(true);
+          } else {
+            alert("Payment verification failed!");
+          }
+        } catch (err) {
+          console.error("Verify error:", err);
+          alert("Verification failed! Contact support.");
+        } finally {
+          setIsSubmitting(false);
+        }
+      },
+      theme: { color: "#1D4ED8" },
+      prefill: { name: formData.fullName, email: formData.email },
+      modal: {
+        ondismiss: function () {
+          setIsSubmitting(false);
         },
-      });
+      },
+    };
 
-      // Handle success response
-      if (response.status === 201) {
-        setUniqueId(response.data.uniqueId);
-        setShowSuccess(true);
-        console.log("Application submitted successfully:", response.data);
-      }
-    } catch (error) {
-      console.error("Error submitting form:", error);
+    const razor = new window.Razorpay(options);
+    razor.open();
 
-      if (error.response?.status === 409) {
-        alert("⚠️ This email is already registered for an internship.");
-      } else if (error.response?.data?.message) {
-        alert(`❌ ${error.response.data.message}`);
-      } else if (error.code === "ECONNABORTED") {
-        alert("⏰ Request timeout. Please check your connection and try again.");
-      } else {
-        alert("❌ Something went wrong while submitting your application. Please try again.");
-      }
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
+  } catch (err) {
+    console.error("Payment Error:", err);
+    alert("Payment initiation failed. Try again!");
+    setIsSubmitting(false);
+  }
+};
+ 
   const handleLoginRedirect = () => {
     navigate("/login");
   };
@@ -350,7 +440,7 @@ const InternshipApplicationFormPage = () => {
         {/* Footer */}
         <div className="border-t border-gray-500 py-3">
           <div className="text-center text-gray-600 text-xs md:text-sm">
-            Need help? Contact us at support@gttechnovation.com or call +91-7891922459
+            Need help? Contact us at support@gttechnovation.com
           </div>
         </div>
       </div>

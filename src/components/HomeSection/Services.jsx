@@ -121,10 +121,15 @@ export default function Offerings() {
   ];
 
   return (
-    <section className="w-full py-20 px-6 bg-gradient-to-r from-gray-50 to-blue-50 min-h-screen flex justify-center items-center">
+    <section className="w-full py-8 px-10 bg-gradient-to-r from-gray-50 to-blue-50 flex justify-center items-center">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-14">
-          <h2 className="text-4xl text-gray-900">Our Offerings</h2>
+          <h1 className="text-3xl md:text-4xl text-gray-900 mb-3">
+          Our{" "}
+          <span className="text-transparent font-semibold bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+            Offerings
+          </span>
+        </h1>
           <p className="text-gray-600 text-lg max-w-3xl mx-auto">
             Designed to empower learners and organizations through technology & innovation.
           </p>

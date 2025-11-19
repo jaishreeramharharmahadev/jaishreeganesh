@@ -27,7 +27,7 @@ const Step4Payment = ({
         {/* Order Summary */}
         <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 md:p-6 mb-6">
           <h4 className="font-semibold text-gray-800 mb-4 text-sm md:text-base">
-            Order Summary
+            Summary
           </h4>
           <div className="space-y-3 text-sm md:text-base">
             <div className="flex justify-between">
@@ -36,11 +36,11 @@ const Step4Payment = ({
             </div>
             <div className="flex justify-between">
               <span>Registration Fee</span>
-              <span className="font-semibold">{selectedFee?.price}</span>
+              <span className="font-semibold">₹{selectedFee?.price}</span>
             </div>
             <div className="border-t pt-3 flex justify-between text-base md:text-lg font-bold">
               <span>Total Amount</span>
-              <span className="text-blue-600">{selectedFee?.price}</span>
+              <span className="text-blue-700">₹{selectedFee?.price}</span>
             </div>
           </div>
         </div>
@@ -194,7 +194,7 @@ const Step4Payment = ({
               </>
             ) : (
               <>
-                Pay {selectedFee?.price} Now
+                Pay ₹{selectedFee?.price} Now
                 <span className="text-lg"></span>
               </>
             )}
