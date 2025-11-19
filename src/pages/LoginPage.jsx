@@ -1,7 +1,20 @@
+
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import OtpInput from "../components/OtpInput";
 import { apiUrl } from "../utils/api";
+import {
+  Eye,
+  EyeOff,
+  Mail,
+  Lock,
+  ArrowLeft,
+  Loader2,
+  Shield,
+  CheckCircle2,
+  X,
+} from "lucide-react";
 
 const hashPassword = async (password) => {
   const encoder = new TextEncoder();
@@ -14,135 +27,184 @@ const hashPassword = async (password) => {
 
 function LoginPage() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showForgotModal, setShowForgotModal] = useState(false);
+  const [step, setStep] = useState(1);
+  const [fpEmail, setFpEmail] = useState("");
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [fpError, setFpError] = useState("");
+  const [fpLoading, setFpLoading] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [resendAllowed, setResendAllowed] = useState(false);
+  const [resendUsed, setResendUsed] = useState(false);
+  const [countdown, setCountdown] = useState(60);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      const token = localStorage.getItem("authToken");
-      if (token) {
-        try {
-          const response = await axios.get(
-            apiUrl("/applicants/me"),
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-              timeout: 5000,
-            }
-          );
+    let timer;
+    if (step === 2 && !resendAllowed && countdown > 0) {
+      timer = setTimeout(() => setCountdown((prev) => prev - 1), 1000);
+    } else if (step === 2 && countdown <= 0) {
+      setResendAllowed(true);
+    }
+    return () => clearTimeout(timer);
+  }, [step, countdown, resendAllowed]);
 
-          if (response.status === 200) {
-            navigate("/dashboard", { replace: true });
-          }
-        } catch (error) {
-          localStorage.removeItem("authToken");
-          localStorage.removeItem("userData");
-        }
-      }
-    };
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
 
-    checkAuth();
+    axios
+      .get(apiUrl("/auth/applicants/me"), {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then(() => navigate("/dashboard", { replace: true }))
+      .catch(() => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userData");
+      });
   }, [navigate]);
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-    if (errors[e.target.name]) {
-      setErrors({
-        ...errors,
-        [e.target.name]: "",
-      });
-    }
-    if (errors.general) {
-      setErrors({ ...errors, general: "" });
-    }
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Email is invalid";
-    }
-
-    if (!formData.password) {
-      newErrors.password = "Password is required";
-    } else if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (!validateForm()) return;
+    if (!formData.email || !formData.password)
+      return setErrors({ general: "Please enter both email and password" });
 
     setIsLoading(true);
 
     try {
       const hashedPassword = await hashPassword(formData.password);
 
-      const response = await axios.post(
-        apiUrl("/auth/login"),
-        {
-          email: formData.email.toLowerCase().trim(),
-          password: hashedPassword,
-        },
-        {
-          timeout: 10000,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await axios.post(apiUrl(`/auth/login`), {
+        email: formData.email.toLowerCase(),
+        password: hashedPassword,
+      });
 
-      if (response.status === 200) {
-        const { token, user } = response.data;
+      const { token, user } = res.data;
+      localStorage.setItem("token", token);
+      localStorage.setItem("userData", JSON.stringify(user));
 
-        localStorage.setItem("token", token);
-        localStorage.setItem("userData", JSON.stringify(user));
-
-        const from = location.state?.from?.pathname || "/dashboard";
-        navigate(from, { replace: true });
-      }
-    } catch (error) {
-      console.error("Login error:", error);
-
-      if (error.response?.status === 401) {
-        setErrors({ general: "Invalid email or password" });
-      } else if (error.response?.status === 404) {
-        setErrors({ general: "User not found. Please check your email." });
-      } else if (error.response?.data?.message) {
-        setErrors({ general: error.response.data.message });
-      } else if (error.code === "ECONNABORTED") {
-        setErrors({ general: "Request timeout. Please try again." });
-      } else if (error.message === "Network Error") {
-        setErrors({ general: "Network error. Please check your connection." });
-      } else {
-        setErrors({ general: "Login failed. Please try again." });
-      }
-    } finally {
-      setIsLoading(false);
+      navigate("/dashboard", { replace: true });
+    } catch (err) {
+      setErrors({ general: "Invalid email or password. Please try again." });
     }
+    setIsLoading(false);
+  };
+
+  const sendOtp = async () => {
+    setFpError("");
+    if (!fpEmail.trim())
+      return setFpError("Please enter your registered email address");
+
+    setFpLoading(true);
+
+    try {
+      await axios.post(apiUrl(`/auth/forgot-password`), {
+        email: fpEmail.toLowerCase(),
+      });
+
+      setStep(2);
+      setCountdown(60);
+      setResendAllowed(false);
+      setResendUsed(false);
+    } catch (err) {
+      setFpError(
+        err.response?.data?.message || "Failed to send OTP. Please try again."
+      );
+    }
+    setFpLoading(false);
+  };
+
+  const resendOtp = async () => {
+    if (resendUsed) return;
+
+    setFpError("");
+    setFpLoading(true);
+
+    try {
+      await axios.post(apiUrl(`/auth/forgot-password`), {
+        email: fpEmail.toLowerCase(),
+      });
+
+      setOtp(["", "", "", "", "", ""]);
+      setCountdown(60);
+      setResendAllowed(false);
+      setResendUsed(true);
+    } catch (err) {
+      setFpError(
+        err.response?.data?.message || "Failed to resend OTP. Please try again."
+      );
+    }
+
+    setFpLoading(false);
+  };
+
+  const verifyOtp = async () => {
+    if (otp.join("").length !== 6)
+      return setFpError("Please enter the complete 6-digit OTP");
+
+    setFpLoading(true);
+
+    try {
+      await axios.post(apiUrl(`/auth/verify-otp`), {
+        email: fpEmail.toLowerCase(),
+        otp: otp.join(""),
+      });
+      setStep(3);
+    } catch (err) {
+      setFpError(
+        err.response?.data?.message || "Invalid OTP. Please try again."
+      );
+    }
+    setFpLoading(false);
+  };
+
+  const updatePassword = async () => {
+    if (newPassword.length < 6)
+      return setFpError("Password must be at least 6 characters long");
+    if (newPassword !== confirmNewPassword)
+      return setFpError("Passwords do not match");
+
+    setFpLoading(true);
+
+    try {
+      const hashedPwd = await hashPassword(newPassword);
+
+      await axios.post(apiUrl(`/auth/reset-password`), {
+        email: fpEmail.toLowerCase(),
+        newPassword: hashedPwd,
+      });
+
+      setFpError("");
+      setTimeout(() => {
+        setShowForgotModal(false);
+        setStep(1);
+        setOtp(["", "", "", "", "", ""]);
+        setFpEmail("");
+        setResendAllowed(false);
+        setResendUsed(false);
+        setCountdown(60);
+      }, 1500);
+    } catch (err) {
+      setFpError(
+        err.response?.data?.message ||
+          "Failed to update password. Please try again."
+      );
+    }
+    setFpLoading(false);
   };
 
   return (
-    <div className="min-h-screen flex">
-      <div className="hidden lg:flex lg:flex-1 bg-gradient-to-br from-blue-600 to-indigo-800 text-white p-10 flex-col justify-between">
-        <div className="max-w-md">
+    <div className="min-h-[90vh] flex bg-gradient-to-r from-gray-50 to-blue-50">
+      <div className="hidden lg:flex lg:w-[40%] bg-gradient-to-br from-emerald-700 to-teal-700 text-white p-10 flex-col justify-between">
+        <div className="max-w-lg">
           <h1 className="text-3xl font-bold mb-4">
             Welcome Back to Your Professional Journey
           </h1>
@@ -212,15 +274,15 @@ function LoginPage() {
             </div>
           </div>
 
-          <div className="bg-blue-500/30 backdrop-blur-sm rounded-2xl p-6 border border-blue-400/30">
+          <div className="bg-sky-600 rounded-2xl p-6 border border-blue-400/30">
             <div className="flex items-center space-x-4 mb-4">
-              <div className="w-12 h-12 bg-blue-400 rounded-full flex items-center justify-center">
+              <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
                 <span className="font-semibold">JS</span>
               </div>
               <div>
                 <p className="font-semibold">Jessica Smith</p>
                 <p className="text-blue-200 text-sm">
-                  Software Engineer Intern
+                  Full Stack Web Developer Intern
                 </p>
               </div>
             </div>
@@ -232,110 +294,73 @@ function LoginPage() {
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-20 xl:px-24 bg-gradient-to-r from-gray-50 to-blue-50">
-        <div className="mx-auto w-full max-w-md">
+      <div className="flex-grow flex justify-center items-center p-3">
+        <div className="w-full max-w-md bg-white p-8 rounded-md shadow-md border border-gray-100">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900">Login</h2>
-            <p className="text-gray-600 mt-2">Sign in to your account</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">Login</h2>
+            <p className="text-gray-600">Sign in to your account</p>
           </div>
 
           {errors.general && (
-            <div className="border border-red-200 bg-red-50 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center">
-              <svg
-                className="w-5 h-5 mr-2 flex-shrink-0"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              {errors.general}
+            <div className="mb-6 p-2 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3">
+              <div className="w-5 h-5 bg-red-100 rounded-full flex items-center justify-center">
+                <X className="w-3 h-3 text-red-600" />
+              </div>
+              <p className="text-red-700 text-sm">{errors.general}</p>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleLogin} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Email Address
               </label>
-              <input
-                type="email"
-                name="email"
-                placeholder="Enter your registered email"
-                value={formData.email}
-                onChange={handleChange}
-                className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition ${
-                  errors.email
-                    ? "border-red-500 ring-2 ring-red-200"
-                    : "border-gray-300"
-                }`}
-              />
-              {errors.email && (
-                <p className="text-red-600 text-sm mt-1 flex items-center">
-                  <svg
-                    className="w-4 h-4 mr-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                  {errors.email}
-                </p>
-              )}
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type="email"
+                  placeholder="Enter your registered email"
+                  className="w-full border rounded-md px-3 pl-10 py-2 focus:outline-sky-300 transition text-sm md:text-base"
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                />
+              </div>
             </div>
 
             <div>
-              <div className="mb-1">
-                <label className="block text-sm font-medium text-gray-700">
-                  Password
-                </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Password
+              </label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter your password"
+                  className="w-full border rounded-md px-3 pl-10 py-2 focus:outline-sky-300 transition text-sm md:text-base"
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
+                />
+                <button
+                  type="button"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
+                </button>
               </div>
-              <input
-                type="password"
-                name="password"
-                placeholder="Enter your password"
-                value={formData.password}
-                onChange={handleChange}
-                className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition ${
-                  errors.password
-                    ? "border-red-500 ring-2 ring-red-200"
-                    : "border-gray-300"
-                }`}
-              />
-              {errors.password && (
-                <p className="text-red-600 text-sm mt-1 flex items-center">
-                  <svg
-                    className="w-4 h-4 mr-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                  {errors.password}
-                </p>
-              )}
             </div>
-            <div>
+
+            <div className="flex justify-between items-center">
               <button
                 type="button"
-                className="text-sm text-blue-600 hover:text-blue-500 font-medium"
+                className="text-blue-700 hover:text-blue-800 font-medium text-sm transition-colors hover:underline"
+                onClick={() => setShowForgotModal(true)}
               >
                 Forgot password?
               </button>
@@ -344,50 +369,251 @@ function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-blue-600 text-white py-2 px-3 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition duration-200 font-semibold flex items-center justify-center shadow-sm"
+              className="w-full bg-gradient-to-r from-sky-500 to-blue-500 hover:from-blue-500 hover:to-sky-500 text-white font-semibold px-4 py-2 rounded-lg transition-all duration-300 flex items-center justify-center gap-2"
             >
               {isLoading ? (
                 <>
-                  <svg
-                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
+                  <Loader2 className="w-5 h-5 animate-spin" />
                   Signing in...
                 </>
               ) : (
-                "Sign in to dashboard"
+                "Sign in"
               )}
             </button>
-          </form>
 
-          <div className="mt-8 text-center">
-            <p className="text-gray-600">
+            <div className="text-center mt-4 text-sm text-gray-600">
               Don't have an account?{" "}
               <button
+                type="button"
+                className="text-blue-600 font-medium hover:text-blue-700 underline"
                 onClick={() => navigate("/internships")}
-                className="text-blue-600 hover:text-blue-500 font-medium"
               >
                 Apply for Internship
               </button>
-            </p>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
+
+      {showForgotModal && (
+        <div className="fixed inset-0 bg-black/50 flex justify-center items-center px-4 z-50">
+          <div className="w-full max-w-md bg-white rounded-md shadow-xl animate-in fade-in duration-200">
+            <div className="flex items-center justify-between p-2 px-5 border-b border-gray-200">
+              <div className="flex items-center gap-2">
+                {step > 1 && (
+                  <button
+                    onClick={() => setStep(step - 1)}
+                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                  >
+                    <ArrowLeft className="w-5 h-5 text-gray-600" />
+                  </button>
+                )}
+                <h3 className="text-xl font-semibold text-gray-900">
+                  Reset Password
+                </h3>
+              </div>
+              <button
+                onClick={() => {
+                  setShowForgotModal(false);
+                  setStep(1);
+                  setOtp(["", "", "", "", "", ""]);
+                  setFpEmail("");
+                  setResendAllowed(false);
+                  setResendUsed(false);
+                  setCountdown(60);
+                }}
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <X className="w-5 h-5 text-gray-600" />
+              </button>
+            </div>
+
+            <div className="p-3 px-6">
+              {fpError && (
+                <div className="mb-3 p-2 bg-red-50 border border-red-200 rounded-sm flex items-center gap-3">
+                  <div className="w-5 h-5 bg-red-100 rounded-full flex items-center justify-center">
+                    <X className="w-3 h-3 text-red-600" />
+                  </div>
+                  <p className="text-red-700 text-sm">{fpError}</p>
+                </div>
+              )}
+
+              {step === 1 && (
+                <div>
+                  <p className="text-gray-600 text-md mb-4">
+                    Enter your registered email address and we'll send you a
+                    verification code.
+                  </p>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Email Address
+                    </label>
+                    <div className="relative mb-5">
+                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                      <input
+                        type="email"
+                        placeholder="Enter your registered email"
+                        className="w-full border rounded-md px-3 pl-10 py-2 focus:outline-sky-300 transition text-sm md:text-base"
+                        value={fpEmail}
+                        onChange={(e) => setFpEmail(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <button
+                    onClick={sendOtp}
+                    disabled={fpLoading}
+                    className="mb-1 bg-gradient-to-r from-sky-500 to-blue-500 hover:from-blue-500 hover:to-sky-500 text-white font-semibold px-4 py-2 rounded-lg transition-all duration-300 flex items-center gap-2"
+                  >
+                    {fpLoading ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      "Send Verification Code"
+                    )}
+                  </button>
+                </div>
+              )}
+
+              {step === 2 && (
+                <div className="space-y-6">
+                  <div className="text-center">
+                    <p className="text-gray-600 text-sm mb-2">
+                      We've sent a 6-digit verification code to
+                    </p>
+                    <p className="font-medium text-gray-900">{fpEmail}</p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-3 text-center">
+                      Enter Verification Code
+                    </label>
+                    <OtpInput otp={otp} setOtp={setOtp} />
+                  </div>
+
+                  <button
+                    onClick={verifyOtp}
+                    disabled={fpLoading}
+                    className="bg-gradient-to-r from-sky-500 to-blue-500 hover:from-blue-500 hover:to-sky-500 text-white font-semibold px-4 py-2 rounded-lg transition-all duration-300 flex items-center gap-2"
+                  >
+                    {fpLoading ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        Verifying...
+                      </>
+                    ) : (
+                      "Verify Code"
+                    )}
+                  </button>
+
+                  <div className="text-center">
+                    {!resendAllowed ? (
+                      <p className="text-gray-500 text-sm">
+                        Resend code in {countdown}s
+                      </p>
+                    ) : (
+                      <button
+                        onClick={resendOtp}
+                        disabled={resendUsed || fpLoading}
+                        className={`text-sm font-medium transition-colors ${
+                          resendUsed
+                            ? "text-gray-400 cursor-not-allowed"
+                            : "text-blue-600 hover:text-blue-700"
+                        }`}
+                      >
+                        {resendUsed
+                          ? "Resend limit reached"
+                          : "Resend verification code"}
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {step === 3 && (
+                <div className="space-y-4">
+                  <p className="text-gray-600 text-sm">
+                    Create a new password for your account.
+                  </p>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      New Password
+                    </label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                      <input
+                        type={showNewPassword ? "text" : "password"}
+                        placeholder="Enter new password"
+                        className="w-full border rounded-md px-3 pl-10 py-2 focus:outline-sky-300 transition text-sm md:text-base"
+                        onChange={(e) => setNewPassword(e.target.value)}
+                      />
+                      <button
+                        type="button"
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                        onClick={() => setShowNewPassword(!showNewPassword)}
+                      >
+                        {showNewPassword ? (
+                          <EyeOff className="w-5 h-5" />
+                        ) : (
+                          <Eye className="w-5 h-5" />
+                        )}
+                      </button>
+                    </div>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Must be at least 6 characters long
+                    </p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Confirm New Password
+                    </label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                      <input
+                        type={showConfirmPassword ? "text" : "password"}
+                        placeholder="Confirm your new password"
+                        className="w-full border rounded-md px-3 pl-10 py-2 focus:outline-sky-300 transition text-sm md:text-base"
+                        onChange={(e) => setConfirmNewPassword(e.target.value)}
+                      />
+                      <button
+                        type="button"
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                        onClick={() =>
+                          setShowConfirmPassword(!showConfirmPassword)
+                        }
+                      >
+                        {showConfirmPassword ? (
+                          <EyeOff className="w-5 h-5" />
+                        ) : (
+                          <Eye className="w-5 h-5" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={updatePassword}
+                    disabled={fpLoading}
+                    className="bg-gradient-to-r from-sky-500 to-blue-500 hover:from-blue-500 hover:to-sky-500 text-white font-semibold px-4 py-2 rounded-lg transition-all duration-300 flex items-center gap-2"
+                  >
+                    {fpLoading ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        Updating...
+                      </>
+                    ) : (
+                      "Update Password"
+                    )}
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
