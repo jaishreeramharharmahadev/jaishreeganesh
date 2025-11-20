@@ -1,242 +1,196 @@
-import React from 'react'
+import React from "react";
 import {
-  Calendar,
   CheckCircle,
   Clock,
-  Download,
   FileText,
-  Github,
-  Globe,
-  Home,
-  Laptop,
-  Lock,
-  LogOut,
-  Menu,
-  Target,
-  User,
-  Award,
   BarChart3,
-  BookOpen,
-  ChevronRight,
-  ChevronLeft,
-  Upload,
-  Search,
-  ExternalLink,
-  FileCode,
+  Lock,
   ArrowRight,
 } from "lucide-react";
 
-function OverviewContent({ applicant, progressPercent, submittedAssignmentsCount, weeksWithSubmissions, onWeekNavigate }) {
+export default function OverviewContent({
+  applicant,
+  progressPercent = 0,
+  submittedAssignmentsCount = 0,
+  weeksWithSubmissions = 0,
+  onWeekNavigate,
+}) {
   const { learningPath = [] } = applicant;
   const completedWeeks = learningPath.filter((w) => w.completed).length;
   const totalWeeks = learningPath.length || 1;
 
-  // Calculate assignment statistics
-  const totalAssignmentsSubmitted = submittedAssignmentsCount || 0;
-  const weeksWithAssignments = weeksWithSubmissions || 0;
+  const timeRemaining = applicant.endDate
+    ? Math.max(
+        0,
+        Math.ceil(
+          (new Date(applicant.endDate) - new Date()) / (1000 * 60 * 60 * 24)
+        )
+      )
+    : "N/A";
 
   return (
-    <div className="space-y-5">
-      {/* Welcome Card */}
-      <div className="bg-gradient-to-r from-emerald-600 to-sky-600 rounded-md p-5 text-white">
-        <div className="flex justify-between items-start">
-          <div className="flex-1">
-            <h2 className="text-2xl font-bold mb-2">
-              Welcome to Your Internship, {applicant.fullName}! 🎉
-            </h2>
-            <p className="text-indigo-100 mb-4 text-md">
-              {applicant.internshipRef?.description ||
-                "Continue your learning journey and build amazing projects!"}
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <span className="bg-white/20 px-4 py-1 rounded-full text-sm font-medium">
-                ID: {applicant.uniqueId}
-              </span>
-              <span className="bg-white/20 px-4 py-1 rounded-full text-sm font-medium">
-                {applicant.duration}
-              </span>
-              <span className="bg-white/20 px-4 py-1 rounded-full text-sm font-medium">
-                {applicant.domain}
-              </span>
-            </div>
-          </div>
-          <div className="hidden lg:block ml-6">
-            <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center">
-              <div className="relative flex items-center justify-center">
-                <span className="absolute inline-flex h-10 w-10 rounded-full bg-green-400 opacity-75 animate-ping"></span>
-                <span className="relative inline-flex rounded-full h-6 w-6 bg-white/90"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="space-y-8">
+      {/* Welcome Section */}
+      <section className="bg-gray-50 p-4 sm:p-6 rounded-lg shadow-sm">
+        <h2 className="text-2xl font-bold">Welcome, {applicant.fullName}!</h2>
+        <p className="text-gray-700 mt-1 mb-4 text-sm sm:text-base">
+          {applicant?.internshipRef?.description ||
+            "Continue your learning journey and build amazing projects!"}
+        </p>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="bg-white rounded-md p-4 shadow-sm border">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Progress</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">
-                {progressPercent}%
-              </p>
-            </div>
-            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-              <BarChart3 className="w-6 h-6 text-blue-600" />
-            </div>
-          </div>
-          <div className="mt-4">
-            <div className="w-full bg-gray-200 rounded-full h-2">
-              <div
-                className="bg-blue-600 h-2 rounded-full transition-all duration-500"
-                style={{ width: `${progressPercent}%` }}
-              ></div>
-            </div>
-            <p className="text-xs text-gray-500 mt-2">
-              {completedWeeks} of {totalWeeks} weeks completed
-            </p>
-          </div>
+        <div className="flex flex-wrap gap-2 sm:gap-4 text-xs sm:text-sm font-medium">
+          <span className="bg-teal-500 text-white px-3 py-1 rounded-full">
+            ID: {applicant.uniqueId}
+          </span>
+          <span className="bg-teal-500 text-white px-3 py-1 rounded-full">
+            {applicant.duration}
+          </span>
+          <span className="bg-teal-500 text-white px-3 py-1 rounded-full">
+            {applicant.domain}
+          </span>
         </div>
+      </section>
 
-        <div className="bg-white rounded-md p-4 shadow-sm border">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">
-                Weeks Completed
-              </p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">
-                {completedWeeks}
-              </p>
-            </div>
-            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-              <CheckCircle className="w-6 h-6 text-green-600" />
-            </div>
-          </div>
-          <p className="text-xs text-gray-500 mt-2">
-            Great progress! Keep going
-          </p>
-        </div>
+      {/* Stats */}
+      <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <StatCard
+          title="Progress"
+          value={`${progressPercent}%`}
+          icon={<BarChart3 className="w-6 h-6 text-[#0A444D]" />}
+          progress={progressPercent}
+          subtitle={`${completedWeeks} of ${totalWeeks} weeks`}
+        />
 
-        <div className="bg-white rounded-md p-4 shadow-sm border">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">
-                Assignments Submitted
-              </p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">
-                {totalAssignmentsSubmitted}
-              </p>
-            </div>
-            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-              <FileText className="w-6 h-6 text-purple-600" />
-            </div>
-          </div>
-          <p className="text-xs text-gray-500 mt-2">
-            {weeksWithAssignments} weeks with submissions
-          </p>
-        </div>
+        <StatCard
+          title="Weeks Completed"
+          value={completedWeeks}
+          icon={<CheckCircle className="w-6 h-6 text-[#0A444D]" />}
+        />
 
-        <div className="bg-white rounded-md p-4 shadow-sm border">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">
-                Time Remaining
-              </p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">
-                {applicant.endDate
-                  ? Math.ceil(
-                      (new Date(applicant.endDate) - new Date()) /
-                        (1000 * 60 * 60 * 24)
-                    )
-                  : 0}{" "}
-                days
-              </p>
-            </div>
-            <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-              <Clock className="w-6 h-6 text-orange-600" />
-            </div>
-          </div>
-          <p className="text-xs text-gray-500 mt-2">
-            Ends on{" "}
-            {applicant.endDate
-              ? new Date(applicant.endDate).toLocaleDateString()
-              : "N/A"}
-          </p>
-        </div>
-      </div>
+        <StatCard
+          title="Assignments Submitted"
+          value={submittedAssignmentsCount}
+          icon={<FileText className="w-6 h-6 text-[#0A444D]" />}
+          subtitle={`${weeksWithSubmissions} weeks`}
+        />
 
-      {/* Recent Weeks */}
-      <div className="bg-white rounded-md shadow-sm border p-4">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Contents</h3>
+        <StatCard
+          title="Time Remaining"
+          value={`${timeRemaining} days`}
+          icon={<Clock className="w-6 h-6 text-[#0A444D]" />}
+          subtitle={
+            applicant.endDate &&
+            new Date(applicant.endDate).toLocaleDateString()
+          }
+        />
+      </section>
+
+      {/* Learning Content */}
+      <section className="bg-white border rounded-xl p-3 shadow-sm">
+        <h3 className="text-sm font-semibold text-[#0A444D] mb-4 ml-2">
+          Learning Contents
+        </h3>
+
         <div className="space-y-4">
           {learningPath.slice(0, 4).map((week) => (
-            <div
+            <WeekItem
               key={week.weekNumber}
-              className={`p-4 border rounded-md ${
-                week.completed
-                  ? "border-green-200 bg-green-50"
-                  : week.locked
-                  ? "border-gray-200 bg-gray-50"
-                  : "border-blue-200 bg-blue-50"
-              }`}
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                      week.completed
-                        ? "bg-green-100 text-green-600"
-                        : week.locked
-                        ? "bg-gray-200 text-gray-500"
-                        : "bg-blue-100 text-blue-600"
-                    }`}
-                  >
-                    {week.completed ? (
-                      <CheckCircle className="w-5 h-5" />
-                    ) : (
-                      <span className="font-semibold">{week.weekNumber}</span>
-                    )}
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-gray-900">
-                      Week {week.weekNumber}: {week.title}
-                    </h4>
-                    <p className="text-sm text-gray-600">{week.content}</p>
-                    {week.assignmentSubmissions && week.assignmentSubmissions.length > 0 && (
-                      <p className="text-xs text-purple-600 mt-1">
-                        {week.assignmentSubmissions.length} assignment(s) submitted
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <div className="flex items-center space-x-2">
-                  {week.completed && (
-                    <span className="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full font-medium">
-                      Completed
-                    </span>
-                  )}
-                  {week.locked && (
-                    <span className="px-3 py-1 bg-gray-100 text-gray-600 text-sm rounded-full font-medium">
-                      <Lock className="w-4 h-4 text-gray-400" />
-                    </span>
-                  )}
-                  {!week.completed && !week.locked && (
-                    <button
-                      onClick={() => onWeekNavigate && onWeekNavigate(week.weekNumber)}
-                      className="flex items-center space-x-1 px-3 py-1 bg-blue-600 text-white text-sm rounded-full font-medium hover:bg-blue-700 transition-colors"
-                    >
-                      <span>Go</span>
-                      <ArrowRight className="w-3 h-3" />
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
+              week={week}
+              onWeekNavigate={onWeekNavigate}
+            />
           ))}
         </div>
-      </div>
+      </section>
     </div>
   );
 }
 
-export default OverviewContent;
+/** --- Reusable UI Components --- **/
+const StatCard = ({ title, value, subtitle, icon, progress }) => (
+  <div className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
+    <div className="flex justify-between items-center">
+      <div>
+        <p className="text-gray-500 text-xs font-medium">{title}</p>
+        <p className="text-xl sm:text-2xl font-bold text-[#0A444D]">{value}</p>
+      </div>
+      <div className="bg-gray-100 p-2 rounded-lg">{icon}</div>
+    </div>
+
+    {progress !== undefined && (
+      <div className="mt-3 bg-gray-200 h-2 rounded-full">
+        <div
+          className="bg-[#0A444D] h-2 rounded-full"
+          style={{ width: `${progress}%` }}
+        ></div>
+      </div>
+    )}
+
+    {subtitle && <p className="text-xs text-gray-500 mt-2">{subtitle}</p>}
+  </div>
+);
+
+const WeekItem = ({ week, onWeekNavigate }) => {
+  const isCompleted = week.completed;
+  const isLocked = week.locked;
+
+  return (
+    <div
+      className={`p-3 rounded-xl border shadow-sm transition hover:shadow-md ${
+        isCompleted
+          ? "bg-green-50 border-green-200"
+          : isLocked
+          ? "bg-gray-50 border-gray-200"
+          : "bg-[#0A444D]/5 border-[#0A444D]/20"
+      }`}
+    >
+      <div className="flex justify-between items-start">
+        <div className="flex gap-3 items-start">
+          <div
+            className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
+              isCompleted
+                ? "bg-green-100 text-green-600"
+                : isLocked
+                ? "bg-gray-200 text-gray-500"
+                : "bg-[#0A444D]/10 text-[#0A444D]"
+            }`}
+          >
+            {isCompleted ? (
+              <CheckCircle className="w-5 h-5" />
+            ) : (
+              week.weekNumber
+            )}
+          </div>
+
+          <div>
+            <p className="font-semibold text-[#0A444D]">
+              Week {week.weekNumber}: {week.title}
+            </p>
+            <p className="text-xs text-gray-600">{week.content}</p>
+
+            {!!week.assignmentSubmissions?.length && (
+              <p className="text-xs text-green-500 mt-1">
+                {week.assignmentSubmissions.length} assignment(s) submitted
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Action State */}
+        {isCompleted ? (
+          <span className="text-xs text-green-700 bg-green-100 rounded-full px-2 py-1">
+            Done
+          </span>
+        ) : isLocked ? (
+          <Lock className="w-4 h-4 text-gray-500" />
+        ) : (
+          <button
+            onClick={() => onWeekNavigate(week.weekNumber)}
+            className="px-3 py-1 bg-teal-600 text-white text-xs rounded-full hover:bg-teal-700 flex items-center gap-1"
+          >
+            Go <ArrowRight className="w-3 h-3" />
+          </button>
+        )}
+      </div>
+    </div>
+  );
+};

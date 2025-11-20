@@ -1,15 +1,8 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import {
-  Calendar,
-  CheckCircle,
-  Clock,
-  Download,
-  FileText,
   Github,
   Globe,
   Upload,
-  Search,
   ExternalLink,
   FileCode,
   Linkedin
@@ -35,10 +28,7 @@ function ProjectsContent({ applicant, submitProject, projectUploading }) {
       consentAccuracy: !formData.get('consentAccuracy'),
       consentTerms: !formData.get('consentTerms')
     };
-
     setFormErrors(errors);
-
-    // Check if there are any errors
     const hasErrors = Object.values(errors).some(error => error);
     
     if (!hasErrors) {
@@ -47,7 +37,6 @@ function ProjectsContent({ applicant, submitProject, projectUploading }) {
   };
 
   const handleInputChange = (fieldName) => {
-    // Clear error when user starts typing in a field
     if (formErrors[fieldName]) {
       setFormErrors(prev => ({
         ...prev,
@@ -58,7 +47,6 @@ function ProjectsContent({ applicant, submitProject, projectUploading }) {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      {/* Project Submission Form */}
       <div className="bg-white rounded-md shadow-sm border p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-6">
           Submit New Project
@@ -71,7 +59,7 @@ function ProjectsContent({ applicant, submitProject, projectUploading }) {
             <input
               name="projectName"
               placeholder="Enter project name"
-              className={`w-full px-3 py-2 border rounded-md focus:outline-2 focus:outline-green-500 ${
+              className={`w-full px-3 py-2 border rounded-md focus:outline-2 focus:outline-sky-300 ${
                 formErrors.projectName ? 'border-red-500' : 'border-gray-300'
               }`}
               onChange={() => handleInputChange('projectName')}
@@ -89,7 +77,7 @@ function ProjectsContent({ applicant, submitProject, projectUploading }) {
               name="projectDescription"
               rows={3}
               placeholder="Describe your project..."
-              className={`w-full px-3 py-2 border rounded-md focus:outline-2 focus:outline-green-500 ${
+              className={`w-full px-3 py-2 border rounded-md focus:outline-2 focus:outline-sky-300 ${
                 formErrors.projectDescription ? 'border-red-500' : 'border-gray-300'
               }`}
               onChange={() => handleInputChange('projectDescription')}
@@ -109,7 +97,7 @@ function ProjectsContent({ applicant, submitProject, projectUploading }) {
                 name="liveLink"
                 type="url"
                 placeholder="https://your-project.com"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-2 focus:outline-green-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-2 focus:outline-sky-300"
               />
             </div>
 
@@ -122,7 +110,7 @@ function ProjectsContent({ applicant, submitProject, projectUploading }) {
                 name="githubLink"
                 type="url"
                 placeholder="https://github.com/your-repo"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-2 focus:outline-green-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-2 focus:outline-sky-300"
               />
             </div>
 
@@ -135,7 +123,7 @@ function ProjectsContent({ applicant, submitProject, projectUploading }) {
                 name="linkedinLink"
                 type="url"
                 placeholder="https://linkedin.com/your-project"
-                className={`w-full px-3 py-2 border rounded-md focus:outline-2 focus:outline-green-500 ${
+                className={`w-full px-3 py-2 border rounded-md focus:outline-2 focus:outline-sky-300 ${
                   formErrors.linkedinLink ? 'border-red-500' : 'border-gray-300'
                 }`}
                 onChange={() => handleInputChange('linkedinLink')}
@@ -154,7 +142,7 @@ function ProjectsContent({ applicant, submitProject, projectUploading }) {
               type="file"
               name="reportPdf"
               accept=".pdf"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-2 focus:outline-green-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-2 focus:outline-sky-300"
             />
           </div>
 

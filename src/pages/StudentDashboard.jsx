@@ -4,14 +4,12 @@ import {
   CheckCircle,
   FileText,
   Home,
-  Laptop,
   Lock,
   LogOut,
   Menu,
   User,
   Award,
   BarChart3,
-  ChevronRight,
   ChevronLeft,
   FileCode,
 } from "lucide-react";
@@ -38,7 +36,8 @@ export default function StudentDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [certificateLoading, setCertificateLoading] = useState(false);
 
-  const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
   useEffect(() => {
     fetchMe();
@@ -47,7 +46,7 @@ export default function StudentDashboard() {
   async function fetchMe() {
     setLoading(true);
     setError("");
-    
+
     try {
       const res = await axios.get(apiUrl(`/applicants/me`), {
         headers: { Authorization: `Bearer ${token}` },
@@ -247,7 +246,6 @@ export default function StudentDashboard() {
     }
   }
 
-  // Make fetchMe available globally for the FeedbackSection callback
   useEffect(() => {
     window.fetchMe = fetchMe;
     return () => {
@@ -270,26 +268,26 @@ export default function StudentDashboard() {
     }
   }
 
-  // Add this function inside your StudentDashboard component, after the state declarations
-const getSubmittedAssignmentsCount = () => {
-  if (!applicant?.learningPath) return 0;
-  
-  let totalSubmissions = 0;
-  applicant.learningPath.forEach(week => {
-    if (week.assignmentSubmissions && week.assignmentSubmissions.length > 0) {
-      totalSubmissions += week.assignmentSubmissions.length;
-    }
-  });
-  return totalSubmissions;
-};
+  const getSubmittedAssignmentsCount = () => {
+    if (!applicant?.learningPath) return 0;
 
-const getWeeksWithSubmissions = () => {
-  if (!applicant?.learningPath) return 0;
-  
-  return applicant.learningPath.filter(week => 
-    week.assignmentSubmissions && week.assignmentSubmissions.length > 0
-  ).length;
-};
+    let totalSubmissions = 0;
+    applicant.learningPath.forEach((week) => {
+      if (week.assignmentSubmissions && week.assignmentSubmissions.length > 0) {
+        totalSubmissions += week.assignmentSubmissions.length;
+      }
+    });
+    return totalSubmissions;
+  };
+
+  const getWeeksWithSubmissions = () => {
+    if (!applicant?.learningPath) return 0;
+
+    return applicant.learningPath.filter(
+      (week) =>
+        week.assignmentSubmissions && week.assignmentSubmissions.length > 0
+    ).length;
+  };
 
   const isCertificateAvailable = () => {
     if (!applicant?.endDate) return false;
@@ -306,7 +304,7 @@ const getWeeksWithSubmissions = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center">
-        <PreLoader text="Loading your Dashboard. Happy Learning..."/>
+        <PreLoader text="Loading your Dashboard. Happy Learning..." />
       </div>
     );
   }
@@ -353,25 +351,25 @@ const getWeeksWithSubmissions = () => {
   const renderContent = () => {
     switch (activeNav) {
       case "overview":
-  return (
-    <OverviewContent
-      applicant={applicant}
-      progressPercent={progressPercent}
-      submittedAssignmentsCount={getSubmittedAssignmentsCount()}
-      weeksWithSubmissions={getWeeksWithSubmissions()}
-      onWeekNavigate={openWeek} // Add this line
-    />
-  );
+        return (
+          <OverviewContent
+            applicant={applicant}
+            progressPercent={progressPercent}
+            submittedAssignmentsCount={getSubmittedAssignmentsCount()}
+            weeksWithSubmissions={getWeeksWithSubmissions()}
+            onWeekNavigate={openWeek}
+          />
+        );
       case "progress":
-  return (
-    <ProgressContent
-      applicant={applicant}
-      progressPercent={progressPercent}
-      submittedAssignmentsCount={getSubmittedAssignmentsCount()}
-      weeksWithSubmissions={getWeeksWithSubmissions()}
-      onWeekNavigate={openWeek} // Add this line
-    />
-  );
+        return (
+          <ProgressContent
+            applicant={applicant}
+            progressPercent={progressPercent}
+            submittedAssignmentsCount={getSubmittedAssignmentsCount()}
+            weeksWithSubmissions={getWeeksWithSubmissions()}
+            onWeekNavigate={openWeek}
+          />
+        );
       case "projects":
         return (
           <ProjectsContent
@@ -416,7 +414,6 @@ const getWeeksWithSubmissions = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
-      {/* Sidebar */}
       <div
         className={`fixed inset-y-0 left-0 z-50 w-52 bg-slate-800 text-white transform ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
@@ -424,71 +421,80 @@ const getWeeksWithSubmissions = () => {
       >
         <div className="flex flex-col">
           {/* Logo */}
-          <div className="flex items-center justify-between p-5 border-b">
-            <img src={logo} alt="" />
+          <div className="flex items-center justify-between p-5 border-b border-slate-700">
+            <img
+              src={logo}
+              alt="GT Technovation"
+              className="w-48 object-contain"
+            />
             <button
               onClick={() => setSidebarOpen(false)}
-              className="lg:hidden p-1 text-white"
+              className="lg:hidden p-1 hover:bg-slate-700 rounded-md"
             >
               <ChevronLeft className="w-5 h-5 text-white" />
             </button>
           </div>
 
-          {/* Main Navigation */}
-          <nav className="flex-1 px-4 py-4 space-y-4">
+          <nav className="flex-1 px-4 py-4 space-y-2">
             {mainNavigation.map((item) => {
               const Icon = item.icon;
               return (
                 <button
                   key={item.id}
-                  onClick={() => setActiveNav(item.id)}
-                  className={`w-full flex items-center space-x-2 px-3 py-2 roundes text-left transition-colors ${
+                  onClick={() => {
+                    setActiveNav(item.id);
+                    if (window.innerWidth < 1024) setSidebarOpen(false); // Auto-close in mobile
+                  }}
+                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-md transition-all duration-200 ${
                     activeNav === item.id
-                      ? "bg-indigo-50 text-indigo-700 border border-indigo-100"
+                      ? "bg-teal-50 text-[#0A444D] shadow-sm"
                       : "text-white hover:bg-slate-900"
                   }`}
                 >
                   <Icon className="w-5 h-5" />
-                  <span className="font-medium">{item.name}</span>
+                  <span className="font-medium text-sm">{item.name}</span>
                 </button>
               );
             })}
           </nav>
 
-          {/* Weeks Navigation */}
           <div className="border-t px-4 py-4">
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-2 px-4">
+            <h3 className="text-xs font-semibold text-white uppercase tracking-wider mb-3">
               Learning Path
             </h3>
-            <div className="space-y-3">
+
+            <div className="space-y-2">
               {learningPath.map((week) => (
                 <button
                   key={week.weekNumber}
-                  onClick={() => openWeek(week.weekNumber)}
-                  className={`w-full flex items-center space-x-3 px-4 py-2 rounded-sm text-left transition-colors ${
+                  onClick={() => {
+                    openWeek(week.weekNumber);
+                    if (window.innerWidth < 1024) setSidebarOpen(false); // Auto-close mobile
+                  }}
+                  disabled={week.locked}
+                  className={`w-full flex items-center space-x-3 px-4 py-2 rounded-md text-left transition-all duration-200 ${
                     activeWeek === week.weekNumber &&
                     activeNav === "week-content"
-                      ? "bg-blue-50 text-blue-700 border border-blue-100"
+                      ? "bg-teal-50 text-[#0A444D] shadow-sm"
                       : "text-white hover:bg-slate-900"
                   } ${week.locked ? "opacity-50 cursor-not-allowed" : ""}`}
-                  disabled={week.locked}
                 >
                   {week.completed ? (
-                    <CheckCircle className="w-4 h-6 text-green-500" />
+                    <CheckCircle className="w-4 h-4 text-green-500" />
                   ) : week.locked ? (
                     <Lock className="w-4 h-4 text-gray-400" />
                   ) : (
-                    <FileText className="w-4 h-4 text-blue-500" />
+                    <FileText className="w-4 h-4 text-teal-300" />
                   )}
+
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm font-medium truncate">
+                    <p className="text-sm truncate font-medium">
                       Week {week.weekNumber}
-                    </div>
-                    <div className="text-xs text-gray-500 truncate">
+                    </p>
+                    <p className="text-xs truncate text-gray-300">
                       {week.title}
-                    </div>
+                    </p>
                   </div>
-                  <ChevronRight className="w-4 h-4 text-gray-400" />
                 </button>
               ))}
             </div>
@@ -496,9 +502,7 @@ const getWeeksWithSubmissions = () => {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="flex-1 flex flex-col lg:ml-0">
-        {/* Header */}
         <header className="bg-slate-800 shadow-sm border-b">
           <div className="flex items-center justify-between p-4">
             <div className="flex items-center space-x-4">
@@ -513,7 +517,7 @@ const getWeeksWithSubmissions = () => {
                   {activeNav.replace("-", " ")}
                 </h1>
                 <p className="text-sm text-white/90">
-                  Welcome back, {applicant.fullName}
+                  Welcome, {applicant.fullName}
                 </p>
               </div>
             </div>
@@ -536,14 +540,14 @@ const getWeeksWithSubmissions = () => {
           </div>
         </header>
 
-        {/* Page Content */}
-        <main className="flex-1 p-6 overflow-auto">{renderContent()}</main>
+        <main className="flex-1 p-1 lg:p-4 overflow-auto">
+          {renderContent()}
+        </main>
       </div>
 
-      {/* Overlay for mobile sidebar */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          className="fixed inset-0 bg-black/10 backdrop-blur-xs z-40 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -552,19 +556,10 @@ const getWeeksWithSubmissions = () => {
 }
 
 <div>
-  {/* Overview Component */}
   <OverviewContent />
-  {/* Progress Component */}
   <ProgressContent />
-  {/* Projects Component */}
-
   <ProjectsContent />
-  {/* Certificate Component */}
   <CertificateContent />
-
-  {/* Profile Component */}
   <ProfileContent />
-
-  {/* Week Content Component */}
   <WeekContent />
 </div>;

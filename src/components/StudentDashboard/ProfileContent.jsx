@@ -1,115 +1,66 @@
-import React from 'react'
+import React from "react";
 
 function ProfileContent({ applicant }) {
+  const progressPercent = Math.round(
+    (applicant.learningPath?.filter((w) => w.completed).length /
+      (applicant.learningPath?.length || 1)) *
+      100
+  );
+
   return (
-    <div className="max-w-2xl">
-      <div className="bg-white rounded-md shadow-sm border p-5">
-        <h3 className="text-lg font-semibold text-gray-900 mb-6">
+    <div className="max-w-3xl">
+      <div className="bg-white rounded-md shadow-sm border p-6 space-y-8">
+        <h3 className="text-2xl font-semibold text-[#0A444D]">
           Profile Information
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
-                Full Name
-              </label>
-              <p className="text-lg font-semibold text-gray-900">
-                {applicant.fullName}
-              </p>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
-                Email Address
-              </label>
-              <p className="text-lg font-semibold text-gray-900">
-                {applicant.email}
-              </p>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
-                Mobile Number
-              </label>
-              <p className="text-lg font-semibold text-gray-900">
-                {applicant.phone || "Not provided"}
-              </p>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
-                Internship ID
-              </label>
-              <p className="text-lg font-semibold text-gray-900 font-mono">
-                {applicant.uniqueId}
-              </p>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
-                Domain
-              </label>
-              <p className="text-lg font-semibold text-gray-900">
-                {applicant.domain}
-              </p>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
-                Duration
-              </label>
-              <p className="text-lg font-semibold text-gray-900">
-                {applicant.duration}
-              </p>
-            </div>
-          </div>
+          <ProfileField label="Full Name" value={applicant.fullName} />
+          <ProfileField label="Email Address" value={applicant.email} />
+          <ProfileField
+            label="Mobile Number"
+            value={applicant.phone || "Not Provided"}
+          />
+          <ProfileField
+            label="Internship ID"
+            value={applicant.uniqueId}
+            mono
+          />
+          <ProfileField label="Domain" value={applicant.domain} />
+          <ProfileField label="Duration" value={applicant.duration} />
         </div>
 
-        <div className="mt-6 pt-6 border-t">
-          <h4 className="text-md font-semibold text-gray-900 mb-4">
+        <div className="pt-6 border-t">
+          <h4 className="text-lg font-semibold text-[#0A444D] mb-4">
             Additional Information
           </h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-            <div className="flex">
-              <span className="w-20 border-r text-gray-600">College:</span>
-              <span className="font-medium ml-5">{applicant.college}</span>
-            </div>
-            <div className="flex">
-              <span className="text-gray-600 w-20 border-r">Start Date:</span>
-              <span className="font-medium ml-5">
-                {applicant.startDate
+
+          <div className="space-y-3 text-sm">
+            <InfoRow label="College" value={applicant.college || "N/A"} />
+            <InfoRow
+              label="Start Date"
+              value={
+                applicant.startDate
                   ? new Date(applicant.startDate).toLocaleDateString()
-                  : "N/A"}
-              </span>
-            </div>
-            <div className="flex">
-              <span className="text-gray-600 w-20 border-r">Progress:</span>
-              <span className="font-medium ml-5">
-                {Math.round(
-                  (applicant.learningPath?.filter((w) => w.completed).length /
-                    (applicant.learningPath?.length || 1)) *
-                    100
-                )}
-                %
-              </span>
-            </div>
-            <div className="flex">
-              <span className="text-gray-600 w-20 border-r">End Date:</span>
-              <span className="font-medium ml-5">
-                {applicant.endDate
+                  : "N/A"
+              }
+            />
+            <InfoRow label="Progress" value={`${progressPercent}%`} />
+            <InfoRow
+              label="End Date"
+              value={
+                applicant.endDate
                   ? new Date(applicant.endDate).toLocaleDateString()
-                  : "N/A"}
-              </span>
-            </div>
+                  : "N/A"
+              }
+            />
           </div>
         </div>
-        <div className="mt-8 p-2 bg-red-50 border border-red-200 rounded-md">
-          <p className="text-sm text-red-500">
+
+        <div className="p-3 bg-[#0A444D]/10 border border-[#0A444D]/20 rounded-lg">
+          <p className="text-xs text-red-600">
             <strong>Note:</strong> Profile information cannot be edited. Please
-            contact support for any updates.
+            contact support in case of any updates.
           </p>
         </div>
       </div>
@@ -118,3 +69,25 @@ function ProfileContent({ applicant }) {
 }
 
 export default ProfileContent;
+
+const ProfileField = ({ label, value, mono }) => (
+  <div>
+    <label className="block text-xs font-medium text-gray-500 mb-1">
+      {label}
+    </label>
+    <p
+      className={`text-lg font-semibold text-[#0A444D] ${
+        mono ? "font-mono" : ""
+      }`}
+    >
+      {value}
+    </p>
+  </div>
+);
+
+const InfoRow = ({ label, value }) => (
+  <div className="flex justify-between text-[#0A444D] font-medium">
+    <span className="text-gray-600">{label}:</span>
+    <span>{value}</span>
+  </div>
+);
