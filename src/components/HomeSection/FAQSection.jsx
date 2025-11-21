@@ -1,15 +1,13 @@
+
 import React, { useState } from "react";
 import {
   ChevronDown,
   ChevronUp,
   Headphones,
   HelpCircle,
-  Layers,
-  Shield,
-  Rocket,
 } from "lucide-react";
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 const faqs = [
   {
@@ -55,61 +53,133 @@ const faqs = [
 ];
 
 export default function FAQSection() {
-    const [openIndex, setOpenIndex] = useState(null);
-    const navigate = useNavigate();
+  const [openIndex, setOpenIndex] = useState(null);
+  const navigate = useNavigate();
+
+  // Framer transitions
+  const containerVariant = {
+    hidden: { opacity: 0, y: 18 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { when: "beforeChildren", staggerChildren: 0.06 },
+    },
+  };
+
+  const itemVariant = {
+    hidden: { opacity: 0, y: 10 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
+  };
+
+  const answerAnimation = {
+    initial: { height: 0, opacity: 0 },
+    animate: { height: "auto", opacity: 1 },
+    exit: { height: 0, opacity: 0 },
+    transition: { duration: 0.38, ease: "easeOut" },
+  };
 
   return (
     <section className="bg-gray-50 py-20 px-6 md:px-10">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-14">
-          <h2 className="text-3xl md:text-4xl text-gray-800 mb-2">
+        <motion.div
+          className="text-center mb-14"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.02 }}
+          variants={containerVariant}
+        >
+          <motion.h2
+            className="text-3xl md:text-4xl text-gray-800 mb-2"
+            variants={itemVariant}
+          >
             Frequently Asked Questions
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          </motion.h2>
+
+          <motion.p
+            className="text-lg text-gray-600 max-w-2xl mx-auto"
+            variants={itemVariant}
+            style={{ marginTop: 6 }}
+          >
             Find answers to the most common questions about working with{" "}
             <span className="text-emerald-500 font-semibold">GT Technovation</span>
             . From services to technology stacks — we’ve got you covered.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         {/* FAQ Items */}
-        <div className="space-y-5 mb-16">
-          {faqs.map((faq, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300"
-            >
-              <button
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full flex justify-between items-center px-5 py-3 text-left text-gray-900 font-semibold focus:outline-none hover:bg-blue-50/40 rounded-2xl transition-colors"
+        <motion.div
+          className="space-y-5 mb-16"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.02 }}
+          variants={containerVariant}
+        >
+          {faqs.map((faq, index) => {
+            const isOpen = openIndex === index;
+            return (
+              <motion.div
+                key={index}
+                className="bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300"
+                variants={itemVariant}
+                layout
+                whileTap={{ scale: 0.995 }}
               >
-                <span className="text-md pr-4">{faq.question}</span>
-                {openIndex === index ? (
-                  <ChevronUp className="w-5 h-5 text-gray-600 flex-shrink-0" />
-                ) : (
-                  <ChevronDown className="w-5 h-5 text-gray-600 flex-shrink-0" />
-                )}
-              </button>
+                <button
+                  onClick={() => setOpenIndex(isOpen ? null : index)}
+                  aria-expanded={isOpen}
+                  aria-controls={`faq-answer-${index}`}
+                  className="w-full flex justify-between items-center px-5 py-3 text-left text-gray-900 font-semibold focus:outline-none hover:bg-blue-50/40 rounded-2xl transition-colors"
+                >
+                  <span className="text-md pr-4">{faq.question}</span>
+                  {isOpen ? (
+                    <ChevronUp className="w-5 h-5 text-gray-600 flex-shrink-0" />
+                  ) : (
+                    <ChevronDown className="w-5 h-5 text-gray-600 flex-shrink-0" />
+                  )}
+                </button>
 
-              {/* Animated Answer Section */}
-              <div
-                className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                  openIndex === index
-                    ? "max-h-96 opacity-100 p-6 pt-0"
-                    : "max-h-0 opacity-0 p-0"
-                }`}
-              >
-                <p className="text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
-                  {faq.answer}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      id={`faq-answer-${index}`}
+                      role="region"
+                      aria-labelledby={`faq-question-${index}`}
+                      initial="initial"
+                      animate="animate"
+                      exit="exit"
+                      variants={{
+                        initial: answerAnimation.initial,
+                        animate: answerAnimation.animate,
+                        exit: answerAnimation.exit,
+                      }}
+                      transition={answerAnimation.transition}
+                      className="px-5 pb-5"
+                      style={{ overflow: "hidden" }}
+                    >
+                      <motion.p
+                        className="text-gray-600 leading-relaxed border-t border-gray-100 pt-4"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1, transition: { duration: 0.28 } }}
+                      >
+                        {faq.answer}
+                      </motion.p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
+        </motion.div>
 
         {/* Support CTA */}
-        <div className="bg-gradient-to-r from-sky-500 to-indigo-500 rounded-md p-5 text-center text-white shadow-lg">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.02 }}
+          transition={{ duration: 0.6 }}
+          className="bg-gradient-to-r from-sky-500 to-indigo-500 rounded-md p-5 text-center text-white shadow-lg"
+        >
           <div className="flex justify-center mb-3">
             <HelpCircle className="w-7 h-7 text-white/90" />
           </div>
@@ -121,11 +191,14 @@ export default function FAQSection() {
             delivery. Get personalized assistance today.
           </p>
 
-          <button onClick={() => navigate('/contact-us')} className="inline-flex items-center justify-center border-2 border-white text-white px-6 py-2 rounded-xl font-semibold hover:bg-white/10 transition-all duration-300">
+          <button
+            onClick={() => navigate("/contact-us")}
+            className="inline-flex items-center justify-center border-2 border-white text-white px-6 py-2 rounded-xl font-semibold hover:bg-white/10 transition-all duration-300"
+          >
             <Headphones className="w-5 h-5 mr-2" />
             Contact Support
           </button>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

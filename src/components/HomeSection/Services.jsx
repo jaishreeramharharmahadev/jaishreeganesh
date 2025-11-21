@@ -1,3 +1,5 @@
+
+
 import React, { useState } from "react";
 import {
   Briefcase,
@@ -7,6 +9,7 @@ import {
   Code2,
   Users,
 } from "lucide-react";
+import { motion } from "framer-motion"; // <-- Added Motion
 
 const HEX_CLIP = "polygon(25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%, 0% 50%)";
 
@@ -43,7 +46,6 @@ function HexagonBg({ centerSize = 80, neighborSize = 46, color = "#9CA3AF" }) {
           ...commonStyle,
         }}
       />
-
       {neighbors.map((n, idx) => (
         <div
           key={idx}
@@ -74,6 +76,7 @@ export default function Offerings() {
       Icon: Briefcase,
       stats: "500+ Placements",
       gradient: "from-orange-400 to-orange-500",
+      delay: 0.1,
     },
     {
       id: "corporateTraining",
@@ -83,6 +86,7 @@ export default function Offerings() {
       Icon: Info,
       stats: "30+ Companies",
       gradient: "from-blue-400 to-blue-500",
+      delay: 0.2,
     },
     {
       id: "courses",
@@ -92,6 +96,7 @@ export default function Offerings() {
       Icon: BookOpen,
       stats: "10+ Courses",
       gradient: "from-green-400 to-green-500",
+      delay: 0.3,
     },
     {
       id: "masterClass",
@@ -100,6 +105,7 @@ export default function Offerings() {
       Icon: FileText,
       stats: "Industry Experts",
       gradient: "from-purple-400 to-purple-500",
+      delay: 0.4,
     },
     {
       id: "projects",
@@ -108,6 +114,7 @@ export default function Offerings() {
       Icon: Code2,
       stats: "50+ Projects",
       gradient: "from-red-400 to-red-500",
+      delay: 0.5,
     },
     {
       id: "community",
@@ -117,55 +124,66 @@ export default function Offerings() {
       Icon: Users,
       stats: "10K+ Members",
       gradient: "from-indigo-400 to-indigo-500",
+      delay: 0.6,
     },
   ];
 
   return (
-    <section className="w-full py-8 px-10 bg-gradient-to-r from-gray-50 to-blue-50 flex justify-center items-center">
+    <section className="w-full py-8 px-3 bg-gradient-to-r from-gray-50 to-blue-50 flex justify-center items-center">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-14">
+
+        {/* Heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="text-center mb-14"
+        >
           <h1 className="text-3xl md:text-4xl text-gray-900 mb-3">
-          Our{" "}
-          <span className="text-transparent font-semibold bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-            Offerings
-          </span>
-        </h1>
+            Our{" "}
+            <span className="text-transparent font-semibold bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+              Offerings
+            </span>
+          </h1>
           <p className="text-gray-600 text-lg max-w-3xl mx-auto">
             Designed to empower learners and organizations through technology & innovation.
           </p>
-        </div>
+        </motion.div>
 
+        {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service) => (
-            <div
+            <motion.div
               key={service.id}
-              className="group"
+              initial={{ opacity: 0, y: 45 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.7, delay: service.delay }}
               onMouseEnter={() => setHoveredCard(service.id)}
               onMouseLeave={() => setHoveredCard(null)}
+              className="group"
             >
-              <div>
-                <div className="relative p-6 bg-white rounded-md border border-gray-200 shadow-md overflow-hidden">
+              <div className="relative p-6 bg-white rounded-md border border-gray-200 shadow-md overflow-hidden hover:shadow-lg transition">
+                <HexagonBg centerSize={50} neighborSize={36} color="#aeb3bd" />
 
-                  <HexagonBg centerSize={50} neighborSize={36} color="#aeb3bd" />
-
-                  <div className="relative z-10 flex items-start justify-between mb-4">
-                    <div className={`p-2 rounded-full bg-gradient-to-br ${service.gradient}`}>
-                      <service.Icon className="w-6 h-6 text-white" />
-                    </div>
-                    <div className="text-xs px-2 py-1 bg-gray-100 rounded-full text-gray-700 font-medium">
-                      {service.stats}
-                    </div>
+                <div className="relative z-10 flex items-start justify-between mb-4">
+                  <div className={`p-2 rounded-full bg-gradient-to-br ${service.gradient}`}>
+                    <service.Icon className="w-6 h-6 text-white" />
                   </div>
-
-                  <h3 className="relative z-10 text-xl font-semibold text-gray-900 mb-2">
-                    {service.title}
-                  </h3>
-                  <p className="relative z-10 text-gray-600 text-md leading-relaxed">
-                    {service.description}
-                  </p>
+                  <div className="text-xs px-2 py-1 bg-gray-100 rounded-full text-gray-700 font-medium">
+                    {service.stats}
+                  </div>
                 </div>
+
+                <h3 className="relative z-10 text-xl font-semibold text-gray-900 mb-2">
+                  {service.title}
+                </h3>
+                <p className="relative z-10 text-gray-600 leading-relaxed">
+                  {service.description}
+                </p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

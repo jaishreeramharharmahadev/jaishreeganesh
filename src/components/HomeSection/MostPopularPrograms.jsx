@@ -1,5 +1,7 @@
+
 import React from "react";
 import { Code2, Brain, Megaphone, Cpu, PenTool, Palette } from "lucide-react";
+import { motion } from "framer-motion";
 
 const programs = [
   {
@@ -43,7 +45,15 @@ const programs = [
 const MostPopularPrograms = () => {
   return (
     <div className=" bg-gradient-to-r from-gray-50 to-blue-50 py-6 px-3 md:px-10">
-      <div className="text-center mb-10">
+      
+      {/* Heading Animation */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="text-center mb-10"
+      >
         <h1 className="text-3xl md:text-4xl text-gray-900 my-3">
           Most Popular{" "}
           <span className="text-transparent font-semibold bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
@@ -55,23 +65,26 @@ const MostPopularPrograms = () => {
           technical skills. Choose your path and start learning with expert-led
           guidance.
         </p>
-      </div>
+      </motion.div>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {programs.map((program, index) => (
-          <div
+          <motion.div
             key={index}
+            initial={{ opacity: 0, y: 45 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{
+              duration: 0.7,
+              ease: "easeOut",
+              delay: index * 0.15,
+            }}
             className="bg-white shadow-sm hover:shadow-md rounded-lg p-2 transition duration-300 border border-gray-300 hover:-translate-y-2"
           >
-            <div
-              key={index}
-              className="relative bg-white shadow-sm hover:shadow-md p-6 border border-gray-300 overflow-hidden"
-            >
-              <svg
-                className="absolute top-1 left-0 opacity-50"
-                width="160"
-                height="80"
-              >
+            <div className="relative bg-white shadow-sm hover:shadow-md p-6 border border-gray-300 overflow-hidden">
+              
+              {/* 🔹 Circuit #1 — TOP LEFT */}
+              <svg className="absolute top-1 left-0 opacity-50" width="160" height="80">
                 {[
                   [0, 3, 20, 3],
                   [0, 8, 30, 8],
@@ -79,24 +92,14 @@ const MostPopularPrograms = () => {
                   [0, 18, 10, 18],
                 ].map(([x1, y1, x2, y2], i) => (
                   <g key={i}>
-                    <line
-                      x1={x1}
-                      y1={y1}
-                      x2={x2}
-                      y2={y2}
-                      stroke="#2fe0a6"
-                      strokeWidth="1"
-                    />
+                    <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#2fe0a6" strokeWidth="1" />
                     <circle cx={x2} cy={y2} r="2" fill="#2fe0a6" />
                   </g>
                 ))}
               </svg>
 
-              <svg
-                className="absolute bottom-1 right-0 opacity-50"
-                width="160"
-                height="80"
-              >
+              {/* 🔹 Circuit #2 — BOTTOM RIGHT */}
+              <svg className="absolute bottom-1 right-0 opacity-50" width="160" height="80">
                 {[
                   [170, 60, 140, 60],
                   [190, 65, 120, 65],
@@ -104,19 +107,13 @@ const MostPopularPrograms = () => {
                   [190, 75, 120, 75],
                 ].map(([x1, y1, x2, y2], i) => (
                   <g key={i}>
-                    <line
-                      x1={x1}
-                      y1={y1}
-                      x2={x2}
-                      y2={y2}
-                      stroke="#314bf5"
-                      strokeWidth="1"
-                    />
+                    <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#314bf5" strokeWidth="1" />
                     <circle cx={x2} cy={y2} r="2" fill="#314bf5" />
                   </g>
                 ))}
               </svg>
 
+              {/* Foreground */}
               <div className="relative z-10 flex items-center justify-center mb-3">
                 {program.icon}
               </div>
@@ -129,7 +126,7 @@ const MostPopularPrograms = () => {
                 {program.description}
               </p>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
