@@ -244,7 +244,7 @@ export default function GlobeWithContent() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
-        className="w-full lg:w-1/2 h-[55vh] lg:h-[80vh] flex items-center justify-center"
+        className="w-full lg:w-1/2 h-[40vh] lg:h-[80vh] flex items-center justify-center"
       >
         <GlobeCanvas />
       </motion.div>
