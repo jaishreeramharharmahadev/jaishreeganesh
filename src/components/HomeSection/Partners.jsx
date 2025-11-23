@@ -21,7 +21,7 @@ const Partners = () => {
     },
     {
       name: "Accenture",
-      logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQe97x-KD2Pec_w_A8kf03rMHgg36NWaicFeQ&s",
+      logo: "https://www.clutch.com/wp-content/uploads/2018/04/Accenture-logo-no-background.png",
     },
     {
       name: "Cognizant",
