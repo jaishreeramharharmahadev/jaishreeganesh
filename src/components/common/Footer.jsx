@@ -69,7 +69,7 @@ export default function Footer() {
   ];
 
   const contactInfo = [
-    { icon: Phone, text: "+91 7891922459", href: "tel:+917891922459" },
+    { icon: Phone, text: "+91 7877224655", href: "tel:+917877224655" },
     {
       icon: Mail,
       text: "support@gttechnovation.com",
