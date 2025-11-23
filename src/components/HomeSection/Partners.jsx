@@ -3,14 +3,47 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Partners = () => {
   const partners = [
-    { name: "Google", logo: "https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" },
-    { name: "Microsoft", logo: "https://cdn.worldvectorlogo.com/logos/microsoft-5.svg" },
-    { name: "Amazon", logo: "https://cdn.worldvectorlogo.com/logos/aws-2.svg" },
-    { name: "Meta", logo: "https://i.pinimg.com/736x/b7/06/fa/b706fa17832e8854ee125404a655f0df.jpg" },
-    { name: "Netflix", logo: "https://cdn.worldvectorlogo.com/logos/netflix-3.svg" },
+    {
+      name: "TCS",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Tata_Consultancy_Services_old_logo.svg/1280px-Tata_Consultancy_Services_old_logo.svg.png",
+    },
+    {
+      name: "IBM",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg",
+    },
+    {
+      name: "HCL",
+      logo: "https://e7.pngegg.com/pngimages/685/961/png-clipart-logo-brand-trademark-product-design-hcl-technologies-design-blue-text.png",
+    },
+    {
+      name: "Tech Mahindra",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Tech_Mahindra_New_Logo.svg/2560px-Tech_Mahindra_New_Logo.svg.png",
+    },
+    {
+      name: "Accenture",
+      logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQe97x-KD2Pec_w_A8kf03rMHgg36NWaicFeQ&s",
+    },
+    {
+      name: "Cognizant",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Cognizant_logo_2022.svg/2560px-Cognizant_logo_2022.svg.png",
+    },
+    {
+      name: "Wipro",
+      logo: "https://1000logos.net/wp-content/uploads/2021/05/Wipro-logo.png",
+    },
+    {
+      name: "Honda",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Honda_Logo.svg/2000px-Honda_Logo.svg.png",
+    },
     { name: "Uber", logo: "https://cdn.worldvectorlogo.com/logos/uber-2.svg" },
-    { name: "Spotify", logo: "https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" },
-    { name: "Airbnb", logo: "https://cdn.worldvectorlogo.com/logos/airbnb-1.svg" }
+    {
+      name: "BYJU'S",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Byju%27s_logo.svg/2560px-Byju%27s_logo.svg.png",
+    },
+    {
+      name: "Zomato",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/7/75/Zomato_logo.png",
+    },
   ];
 
   const loopItems = [...partners, ...partners];
