@@ -43,7 +43,7 @@ export default function ContactUs() {
                 </div>
               </div>
 
-              {/* <div className="flex items-start gap-4">
+              <div className="flex items-start gap-4">
                 <div className="p-3 bg-green-50 rounded-lg">
                   <Phone className="w-5 h-5 text-green-600" />
                 </div>
@@ -51,32 +51,12 @@ export default function ContactUs() {
                   <h3 className="font-semibold text-gray-900 mb-1">
                     Phone Support
                   </h3>
-                  <p className="text-gray-700">+91 98765 43210</p>
+                  <p className="text-gray-700">+91 78772 24655</p>
                   <p className="text-sm text-gray-500 mt-1">
                     Mon-Fri, 9:00 AM - 6:00 PM IST
                   </p>
                 </div>
               </div>
-
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-purple-50 rounded-lg">
-                  <MapPin className="w-5 h-5 text-purple-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 mb-1">
-                    Office Address
-                  </h3>
-                  <p className="text-gray-700">
-                    GT Technovation
-                    <br />
-                    72A, Patel Marg
-                    <br />
-                    Jaipur, Rajasthan 302020
-                    <br />
-                    India
-                  </p>
-                </div>
-              </div> */}
 
               <div className="mt-6 p-4 bg-blue-50 rounded-lg">
                 <h4 className="font-semibold text-gray-900 mb-2">
@@ -88,7 +68,6 @@ export default function ContactUs() {
                   <li>• Describe your issue in detail for better assistance</li>
                 </ul>
               </div>
-
             </div>
 
             <div className="bg-gray-50 p-6 rounded-lg">
@@ -135,8 +114,6 @@ export default function ContactUs() {
                   </p>
                 </div>
               </div>
-
-              
             </div>
           </div>
         </div>
