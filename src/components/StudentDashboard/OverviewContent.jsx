@@ -28,6 +28,14 @@ export default function OverviewContent({
       )
     : "N/A";
 
+  const formattedStartDate = applicant.startDate
+    ? new Date(applicant.startDate).toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })
+    : "N/A";
+
   return (
     <div className="space-y-8">
       {/* Welcome Section */}
@@ -47,6 +55,11 @@ export default function OverviewContent({
           </span>
           <span className="bg-teal-500 text-white px-3 py-1 rounded-full">
             {applicant.domain}
+          </span>
+
+          {/* New Start Date Badge */}
+          <span className="bg-amber-600 text-white px-3 py-1 rounded-full">
+            Internship Start Date: {formattedStartDate}
           </span>
         </div>
       </section>
