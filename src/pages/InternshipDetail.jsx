@@ -1,25 +1,17 @@
+
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
-  Briefcase,
   MapPin,
   IndianRupee,
   Star,
   Users,
-  Rocket,
   Code2,
   CheckCircle2,
-  Shield,
-  Clock,
-  Calendar,
-  Award,
-  ChevronRight,
-  PlayCircle,
+  Rocket,
   Target,
   BookOpen,
-  Zap,
-  HeartHandshake,
 } from "lucide-react";
 import { apiUrl } from "../utils/api";
 import PreLoader from "../components/common/PreLoader";
@@ -32,485 +24,257 @@ export default function InternshipDetail() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!subDomain) return;
-
-    const fetchInternship = async () => {
-      setLoading(true);
-      setError(null);
+    const fetchData = async () => {
       try {
         const res = await axios.get(apiUrl(`/internships/${subDomain}`));
-        if (res.data.success && res.data.data) {
-          setInternship(res.data.data);
-        } else {
-          throw new Error(res.data.message || "Invalid API response");
-        }
+        if (!res.data.success) throw new Error("Invalid response");
+        setInternship(res.data.data);
       } catch (err) {
-        console.error("⚠️ Fetch error:", err);
         setError(err.response?.data?.message || err.message);
       } finally {
         setLoading(false);
       }
     };
-
-    fetchInternship();
+    fetchData();
   }, [subDomain]);
 
   const handleApplyNow = (domain) => {
     navigate("/apply", { state: { selectedDomain: domain } });
-    setTimeout(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-    }, 30);
+    setTimeout(() => window.scrollTo(0, 0), 30);
   };
 
-  if (loading) {
+  if (loading)
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center">
-        <PreLoader text="Please wait while we verify the certificate details..."/>
+        <PreLoader text="Loading internship details..." />
       </div>
     );
-  }
 
-  if (error) {
+  if (error)
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-50 flex items-center justify-center p-4">
-        <div className="text-center max-w-md mx-auto p-8 bg-white rounded-2xl shadow-xl">
-          <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <div className="text-red-500 text-2xl">⚠️</div>
-          </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            Something went wrong
-          </h2>
-          <p className="text-gray-600 mb-6">{error}</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center px-4">
+        <div className="bg-white p-6 rounded-xl shadow-xl text-center">
+          <h2 className="text-xl font-bold mb-2 text-green-700">⚠ Error</h2>
+          <p className="text-gray-600 mb-4">{error}</p>
           <button
             onClick={() => window.location.reload()}
-            className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg"
+            className="bg-green-700 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-800"
           >
             Try Again
           </button>
         </div>
       </div>
     );
-  }
-
-  if (!internship) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-50 flex items-center justify-center">
-        <div className="text-center bg-white p-8 rounded-2xl shadow-xl">
-          <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <div className="text-gray-400 text-2xl">🔍</div>
-          </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            Internship Not Found
-          </h2>
-          <p className="text-gray-600">
-            The internship you're looking for doesn't exist.
-          </p>
-        </div>
-      </div>
-    );
-  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-gray-50 to-blue-50">
-      {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        {/* <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-purple-50"></div> */}
-        {/* <div className="absolute inset-0 bg-gradient-to-r from-blue-300/10 to-purple-400/10"></div> */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-9">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 text-gray-900">
 
-          {/* Mobile: Image First */}
-          <div className="block lg:hidden">
-            {/* Image */}
-            <div className="relative mb-8">
-              <div className="relative z-10">
-                <img
-                  src={internship?.image2}
-                  alt={internship?.domain || "Internship"}
-                  className="w-full max-w-md mx-auto"
-                  onError={(e) => {
-                    e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23f3f4f6'/%3E%3Ctext x='300' y='200' font-family='Arial' font-size='18' fill='%236b7280' text-anchor='middle'%3EInternship Image%3C/text%3E%3C/svg%3E";
-                  }}
-                />
-              </div>
-            </div>
+      {/* 🔹 HERO SECTION */}
+      <div className="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
 
-            {/* Content */}
-            <div className="space-y-4">
-              <h1 className="text-3xl font-bold text-gray-900 leading-tight">
-                {internship?.domain || "Internship Program"}
-              </h1>
+        {/* Image First on Mobile */}
+        <div className="lg:order-2 flex justify-center">
+          <img
+            src={internship?.image2}
+            alt="Internship Banner"
+            className="w-full max-w-md object-cover"
+            onError={(e) =>
+              (e.target.src =
+                "https://via.placeholder.com/500x350?text=No+Image")
+            }
+          />
+        </div>
 
-              <p className="text-lg text-gray-600 leading-relaxed">
-                {internship?.description || "Transform your career with hands-on experience and industry-relevant skills."}
-              </p>
+        {/* Text Content */}
+        <div className="lg:order-1 space-y-4">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-gray-700 leading-tight">
+            {internship?.domain}
+          </h1>
+          <p className="text-lg text-gray-600 leading-relaxed">
+            {internship?.description}
+          </p>
 
-              {/* Key Stats - Mobile */}
-              <div className="grid grid-cols-2 gap-3">
-                <div className="bg-white/80 backdrop-blur-sm rounded-xl p-3 border border-blue-200 shadow-sm">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
-                      <IndianRupee className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-600">Stipend</p>
-                      <p className="text-sm font-bold text-gray-900">{internship?.stipend || "Performance Based"}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white/80 backdrop-blur-sm rounded-xl p-3 border border-blue-200 shadow-sm">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
-                      <MapPin className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-600">Location</p>
-                      <p className="text-sm font-bold text-gray-900">{internship?.location || "Remote"}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white/80 backdrop-blur-sm rounded-xl p-3 border border-blue-200 shadow-sm">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
-                      <Star className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-600">Rating</p>
-                      <p className="text-sm font-bold text-gray-900">{internship?.rating?.split("·")[0]?.trim() || "4.8/5"}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white/80 backdrop-blur-sm rounded-xl p-3 border border-blue-200 shadow-sm">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-gradient-to-br from-pink-500 to-pink-600 rounded-lg flex items-center justify-center">
-                      <Users className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-600">Spots Left</p>
-                      <p className="text-sm font-bold text-gray-900">{internship?.spots || "Limited"}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* CTA Button - Mobile */}
-              <button
-                onClick={() => handleApplyNow(internship.domain)}
-                className="bg-gradient-to-r from-sky-500 to-blue-500 hover:from-blue-500 hover:to-sky-500 text-white font-semibold px-4 py-2 rounded-lg transition-all duration-300 flex items-center gap-2 hover:scale-105"
-              >
-                Apply Now - Limited Seats
-              </button>
-            </div>
+          {/* Stats */}
+          <div className="grid grid-cols-2 gap-4">
+            <Stat
+              label="Stipend"
+              icon={<IndianRupee />}
+              value={internship?.stipend || "Not Mentioned"}
+              note="(Based on performance)"
+            />
+            <Stat
+              label="Location"
+              icon={<MapPin />}
+              value={internship?.location || "Remote"}
+            />
+            <Stat
+              label="Rating"
+              icon={<Star />}
+              value={internship?.rating || "4.8/5"}
+              note="Student Rated"
+            />
+            <Stat
+              label="Spots Left"
+              icon={<Users />}
+              value={internship?.spots || "Limited"}
+              note="Fast Filling"
+            />
           </div>
 
-          {/* Desktop: Original Layout */}
-          <div className="hidden lg:grid lg:grid-cols-2 gap-12 lg:gap-13 items-center">
-            {/* Content */}
-            <div className="relative z-10 space-y-5">
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 ">
-                {internship?.domain}
-              </h1>
-
-              <p className="text-lg text-gray-600 leading-relaxed">
-                {internship?.description}
-              </p>
-
-              {/* Key Stats */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-white/80 backdrop-blur-sm rounded-2xl px-4 p-2 border border-blue-200 shadow-sm">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-md flex items-center justify-center">
-                      <IndianRupee className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-600">Stipend</p>
-                      <p className="text-md font-bold text-gray-900">{internship?.stipend || "Performance Based"}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white/80 backdrop-blur-sm rounded-2xl px-4 p-2 border border-blue-200 shadow-sm">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-md flex items-center justify-center">
-                      <MapPin className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-600">Location</p>
-                      <p className="text-md font-bold text-gray-900">{internship?.location || "Remote"}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white/80 backdrop-blur-sm rounded-2xl px-4 p-2 border border-blue-200 shadow-sm">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-md flex items-center justify-center">
-                      <Star className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-600">Rating</p>
-                      <p className="text-md font-bold text-gray-900">{internship?.rating?.split("·")[0]?.trim() || "4.8/5"}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white/80 backdrop-blur-sm rounded-2xl px-4 p-2 border border-blue-200 shadow-sm">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-gradient-to-br from-pink-500 to-pink-600 rounded-md flex items-center justify-center">
-                      <Users className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-600">Spots Left</p>
-                      <p className="text-md font-bold text-gray-900">{internship?.spots || "Limited"}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <button
-                  onClick={() => handleApplyNow(internship.domain)}
-                  className="group relative bg-gradient-to-r from-sky-500 to-blue-500 hover:from-blue-500 hover:to-sky-500 text-white font-semibold px-4 py-2 rounded-lg transition-all duration-300 flex items-center gap-2 hover:scale-105"
-                >
-                  <span className="relative z-10">Apply Now - Limited Seats</span>
-                  <div className="absolute inset-0 bg-white/20 rounded-2xl transform scale-0 group-hover:scale-100 transition-transform"></div>
-                </button>
-              </div>
-            </div>
-
-            {/* Image */}
-            <div className="relative">
-              <div className="relative z-10">
-                <img
-                  src={internship?.image2}
-                  alt={internship?.domain || "Internship"}
-                  className="w-full max-w-lg mx-auto"
-                  onError={(e) => {
-                    e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23f3f4f6'/%3E%3Ctext x='300' y='200' font-family='Arial' font-size='18' fill='%236b7280' text-anchor='middle'%3EInternship Image%3C/text%3E%3C/svg%3E";
-                  }}
-                />
-              </div>
-            </div>
-          </div>
+          <button
+            onClick={() => handleApplyNow(internship.domain)}
+            className="bg-gradient-to-r from-sky-500 to-blue-700 text-white px-5 py-2 rounded-lg font-semibold shadow-md hover:from-blue-700 hover:to-sky-500 w-fit transition"
+          >
+            Apply Now — Limited Seats
+          </button>
         </div>
       </div>
 
-      {/* Skills Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-3 bg-white/80 backdrop-blur-sm px-6 py-3 rounded-2xl border border-blue-200 shadow-sm mb-6">
-              <Code2 className="w-6 h-6 text-blue-600" />
-              <h2 className="text-2xl lg:text-3xl font-bold text-gray-900">
-                Skills You'll Master
-              </h2>
-            </div>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Gain industry-relevant skills that employers are looking for
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {internship?.skills?.map((skill, index) => (
-              <div
-                key={index}
-                className="group bg-white rounded-2xl p-4 border-2 border-gray-200 hover:border-sky-300 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 text-center"
-              >
-                <span className="text-gray-800 font-semibold text-sm">
-                  {skill}
-                </span>
-              </div>
-            )) || (
-              <div className="col-span-6 text-center py-12">
-                <p className="text-gray-500 text-lg">No skills information available.</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* Learning Roadmap Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white/50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-3 px-6 py-3 mb-1">
-              <Rocket className="w-6 h-6" />
-              <h2 className="text-2xl lg:text-3xl font-bold text-gray-900">
-                Learning Roadmap
-              </h2>
-            </div>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Follow our step-by-step journey from beginner to industry-ready professional
-            </p>
-          </div>
-
-          <div className="relative">
-            {/* Connection Line */}
-            <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-purple-500 to-blue-500 transform -translate-x-1/2 hidden lg:block"></div>
-            
-            <div className="space-y-8">
-              {internship?.projectRoadmap?.map((step, index) => (
-                <div
-                  key={step._id}
-                  className={`relative flex flex-col lg:flex-row items-center gap-4 ${
-                    index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
-                  }`}
-                >
-                  {/* Content */}
-                  <div className={`lg:w-1/2 ${index % 2 === 0 ? 'lg:pr-12' : 'lg:pl-12'}`}>
-                    <div className="bg-white rounded-3xl p-5 shadow-md border border-gray-200">
-                      <div className="flex items-center gap-4 mb-4">
-                        <div className="w-12 h-12 bg-gradient-to-br from-sky-400 to-blue-400 rounded-xl flex items-center justify-center text-white font-bold text-2xl shadow-sm">
-                          {step.stepNumber}
-                        </div>
-                        <h3 className="text-xl font-bold text-gray-900">
-                          {step.title}
-                        </h3>
-                      </div>
-                      <p className="text-gray-600 text-md leading-relaxed">
-                        {step.description}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Step Indicator */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 top-1/2 hidden lg:block">
-                    <div className="w-7 h-7 bg-white border-4 border-purple-600 rounded-full flex items-center justify-center shadow-xl">
-                      <span className="text-purple-500 font-bold text-lg">{step.stepNumber}</span>
-                    </div>
-                  </div>
-
-                  {/* Arrow Connector */}
-                  {index < internship.projectRoadmap.length - 1 && (
-                    <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-6 hidden lg:block">
-                      <div className="w-5 h-5 bg-gradient-to-b from-purple-500 to-blue-500 rounded-full flex items-center justify-center animate-bounce">
-                        <ChevronRight className="w-4 h-4 text-white transform rotate-90" />
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )) || (
-                <div className="text-center py-12">
-                  <p className="text-gray-500 text-lg">No project roadmap available.</p>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Program Highlights */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1  gap-12">
-            {/* Benefits */}
-            <div className="space-y-8">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center">
-                  <CheckCircle2 className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-2xl lg:text-3xl font-bold text-gray-900">
-                  Program Benefits
-                </h3>
-              </div>
-              
-              <div className="space-y-4">
-                {internship?.additionalInfo?.whatYouGet?.map((item, index) => (
-                  <div
-                    key={index}
-                    className="flex items-start gap-4 p-4 bg-white rounded-2xl border border-gray-200 hover:border-green-500 hover:shadow-lg transition-all"
-                  >
-                    <CheckCircle2 className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
-                    <span className="text-gray-700 text-lg">{item}</span>
-                  </div>
-                )) || (
-                  <p className="text-gray-500 py-4">No benefits information available.</p>
-                )}
-              </div>
-            </div>
-
-            {/* Prerequisites & Tools */}
-            <div className="space-y-8">
-              <div className="space-y-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center">
-                    <Target className="w-6 h-6 text-white" />
-                  </div>
-                  <h3 className="text-2xl lg:text-3xl font-bold text-gray-900">
-                    Prerequisites
-                  </h3>
-                </div>
-                
-                <div className="space-y-3">
-                  {internship?.additionalInfo?.prerequisites?.map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center gap-3 p-3 bg-blue-50 rounded-xl"
-                    >
-                      <div className="w-3 h-3 bg-blue-500 rounded-full flex-shrink-0"></div>
-                      <span className="text-gray-700">{item}</span>
-                    </div>
-                  )) || (
-                    <p className="text-gray-500">No prerequisites listed.</p>
-                  )}
-                </div>
-              </div>
-
-              <div className="space-y-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center">
-                    <BookOpen className="w-6 h-6 text-white" />
-                  </div>
-                  <h3 className="text-2xl lg:text-3xl font-bold text-gray-900">
-                    Tools & Technologies
-                  </h3>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-3">
-                  {internship?.additionalInfo?.toolsYouWillUse?.map((tool, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center gap-2 p-3 bg-purple-50 rounded-xl border border-purple-200"
-                    >
-                      <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-                      <span className="text-gray-700 font-semibold text-sm">{tool}</span>
-                    </div>
-                  )) || (
-                    <p className="text-gray-500 col-span-2">No tools information available.</p>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="relative py-8 px-2 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-sky-400"></div>
-        <div className="absolute inset-0 bg-black/20"></div>
-        
-        <div className="relative max-w-4xl mx-auto text-center">
-          {/* <Certificate className="w-20 h-20 text-white mx-auto mb-6" /> */}
-          <h2 className="text-3xl font-bold text-white mb-3">
-            Ready to Launch Your Career?
-          </h2>
-          <p className="text-blue-100 text-lg mb-5 leading-relaxed">
-            Join thousands of successful graduates who transformed their careers with our intensive internship program
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button
-              onClick={() => handleApplyNow(internship.domain)}
-              className="group bg-white text-blue-500 px-6 py-2 rounded-lg font-bold text-lg hover:bg-gray-100 transition-all transform hover:scale-105 shadow-2xl hover:shadow-3xl"
+      {/* 🔹 SKILLS SECTION */}
+      <Section title="Skills You'll Learn" icon={<Code2 className="text-green-700" />}>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {internship?.skills?.map((skill, i) => (
+            <div
+              key={i}
+              className="bg-white border border-green-200 rounded-lg p-3 text-sm font-semibold text-gray-700 shadow-sm"
             >
-              <span className="relative z-10">Apply Now - Limited Seats</span>
-            </button>
-          </div>
+              {skill}
+            </div>
+          ))}
         </div>
-      </section>
+      </Section>
+
+      {/* 🔹 ROADMAP - TREE STYLE 🌿 */}
+      <Section title="Learning Roadmap" icon={<Rocket className="text-green-700" />}>
+        <div className="relative pl-10 md:pl-14">
+
+          {/* Tree Stem */}
+          <div className="absolute left-4 md:left-7 top-0 bottom-0 w-[3px] bg-green-700 rounded-full"></div>
+
+          <div className="space-y-8">
+            {internship?.projectRoadmap?.map((step, idx) => (
+              <div key={idx} className="relative flex items-start gap-4 group">
+
+                {/* Leaf Badge */}
+                <div className="absolute -left-2 md:-left-[10px] top-1.5">
+                  <svg width="28" height="28" viewBox="0 0 24 24"
+                    className="fill-green-600 transition-transform group-hover:scale-110 drop-shadow-md">
+                    <path d="M12 2C8 2 5 5 5 9c0 2 .5 3 .5 3s-2.5 3-2.5 6c0 4 3 6 7 6s7-2 7-6c0-3-2.5-6-2.5-6S19 11 19 9c0-4-3-7-7-7z"/>
+                  </svg>
+                </div>
+
+                {/* Step Number */}
+                <div className="w-10 h-10 bg-green-700 text-white flex items-center justify-center rounded-full text-sm font-bold shadow-md group-hover:scale-110 transition">
+                  {step.stepNumber}
+                </div>
+
+                {/* Step Card */}
+                <div className="bg-white border border-green-200 rounded-xl shadow-sm p-4 hover:shadow-md transition w-full">
+                  <h4 className="font-bold text-gray-800">{step.title}</h4>
+                  <p className="text-gray-600 text-sm">{step.description}</p>
+                </div>
+
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </Section>
+
+      {/* 🔹 BENEFITS */}
+      <Section title="Program Benefits" icon={<CheckCircle2 className="text-green-700" />}>
+        <ul className="space-y-3">
+          {internship?.additionalInfo?.whatYouGet?.map((item, i) => (
+            <li key={i} className="flex items-start gap-2 bg-white border border-green-200 p-3 rounded-lg shadow-sm">
+              <CheckCircle2 className="text-green-600 mt-1" />
+              <span className="text-sm text-gray-700">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      {/* 🔹 REQUIREMENTS + TOOLS */}
+      <div className="max-w-6xl mx-auto px-4 pb-12 grid md:grid-cols-2 gap-6">
+        <SubSection
+          title="Prerequisites"
+          icon={<Target className="text-green-700" />}
+          items={internship?.additionalInfo?.prerequisites}
+        />
+        <SubSection
+          title="Tools & Technologies"
+          icon={<BookOpen className="text-green-700" />}
+          items={internship?.additionalInfo?.toolsYouWillUse}
+        />
+      </div>
+
+      {/* 🔹 FINAL CTA */}
+      <div className="bg-gradient-to-r from-gray-100 to-teal-50 text-gray-800 text-center py-8">
+        <h2 className="text-2xl font-bold mb-2">Kickstart Your Career 🚀</h2>
+        <p className="opacity-90 mb-3">Secure your internship position today!</p>
+        <button
+          onClick={() => handleApplyNow(internship.domain)}
+          className="bg-white text-green-700 font-bold px-5 py-2 rounded-lg shadow-md hover:bg-gray-100"
+        >
+          Apply Today
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* 🔹 REUSABLE COMPONENTS */
+function Stat({ icon, label, value, note }) {
+  return (
+    <div className="bg-white border border-gray-200 rounded-xl px-3 py-3 shadow-sm hover:shadow-md transition flex items-start gap-3">
+
+      {/* Icon */}
+      <span className="text-teal-500 w-4 h-4 flex-shrink-0 mt-0.5">
+        {icon}
+      </span>
+
+      {/* Texts */}
+      <div className="leading-tight">
+        <p className="text-sm font-bold text-gray-900">
+          {label}: <span className="text-green-700 font-bold">{value}</span>
+        </p>
+        {note && (
+          <p className="text-[11px] text-gray-600 font-medium mt-0.5">
+            {note}
+          </p>
+        )}
+      </div>
+
+    </div>
+  );
+}
+
+function Section({ title, icon, children }) {
+  return (
+    <section className="max-w-6xl mx-auto px-4 py-8">
+      <div className="flex items-center gap-2 mb-4">
+        {icon}
+        <h2 className="text-lg font-extrabold text-green-800">{title}</h2>
+      </div>
+      {children}
+    </section>
+  );
+}
+
+function SubSection({ title, icon, items }) {
+  return (
+    <div className="bg-white p-5 rounded-lg border border-green-200 shadow-sm">
+      <div className="flex items-center gap-2 mb-3">
+        {icon}
+        <h3 className="font-bold text-green-800">{title}</h3>
+      </div>
+      <ul className="space-y-2 text-sm text-gray-700">
+        {items?.map((item, i) => (
+          <li key={i} className="flex gap-2">
+            <div className="w-2 h-2 bg-green-700 mt-2 rounded-full"></div>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
