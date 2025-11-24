@@ -38,7 +38,9 @@ export default function VerifyResultPage() {
       setError(null);
       try {
         const res = await axios.get(
-          apiUrl(`/certificates/verify/${encodeURIComponent(certificateNumber)}`)
+          apiUrl(
+            `/certificates/verify/${encodeURIComponent(certificateNumber)}`
+          )
         );
         if (!cancelled) setData(res.data);
       } catch (err) {
@@ -76,185 +78,140 @@ export default function VerifyResultPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center">
-        <PreLoader text="Please wait while we verify the certificate details..."/>
+      <div className="min-h-screen flex items-center justify-center bg-[#E9F5F6]">
+        <PreLoader text="Please wait while we verify the certificate..." />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="mt-12 bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-6">
-        <div className="bg-white rounded-2xl shadow-md p-6 max-w-lg w-full">
-          <div className="text-center mb-5">
-            <div className="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3">
-              <XCircle className="w-7 h-7 text-red-600" />
-            </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-1">Verification Failed</h3>
+      <div className="min-h-screen flex items-center justify-center bg-[#E9F5F6] p-5">
+        <div className="bg-white rounded-lg shadow-md p-6 max-w-md w-full">
+          <div className="text-center mb-4">
+            <XCircle className="w-12 h-12 text-red-600 mx-auto mb-2" />
+            <h3 className="text-lg font-semibold text-[#0A444D]">
+              Invalid Certificate
+            </h3>
             <p className="text-sm text-gray-600">{error}</p>
           </div>
 
-          <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-5">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <FileText className="w-4 h-4 text-red-600" />
-                <span className="text-sm font-medium text-red-800">Certificate Number:</span>
-              </div>
-              <code className="text-sm text-red-700 bg-red-100 px-2 py-1 rounded break-all">
-                {certificateNumber}
-              </code>
+          <div className="bg-red-50 p-3 rounded-md mb-4">
+            <div className="flex justify-between items-center text-sm">
+              <span className="font-medium text-red-800">
+                Certificate Number:
+              </span>
+              <code className="text-red-700">{certificateNumber}</code>
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <button
-              className="flex items-center justify-center gap-2 px-5 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
-              onClick={() => navigate("/verify")}
-            >
-              <Search className="w-4 h-4" />
-              Verify Another
-            </button>
-          </div>
+          <button
+            onClick={() => navigate("/verify")}
+            className="w-full bg-[#0A444D] text-white py-2 rounded-md hover:bg-[#08606B] transition"
+          >
+            <Search className="w-4 h-4 inline mr-2" />
+            Verify Another
+          </button>
         </div>
       </div>
     );
   }
 
-  // Success state
   return (
-    <div className="bg-gradient-to-r from-gray-50 to-blue-50 py-8 px-3">
-      <div className="max-w-3xl mx-auto">
-        <div className="bg-white rounded-md shadow-sm overflow-hidden p-4">
-          {/* Verification Status Banner */}
-          <div className="bg-white text-gray-800">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-                  <CheckCircle className="w-8 h-8 text-emerald-600" />
-                </div>
-                <div>
-                  <h2 className="text-xl font-bold">Verified</h2>
-                  <p className="text-green-500 text-sm">This certificate is authentic and issued by GT Technovation</p>
-                </div>
-              </div>
-            </div>
+    <div className="min-h-screen bg-[#E9F5F6] py-8 px-3">
+      <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-6">
+        <div className="flex items-center gap-3 mb-6">
+          <CheckCircle className="w-8 h-8 text-[#0A8A92]" />
+          <div>
+            <h2 className="text-xl font-bold text-[#0A444D]">
+              Certificate Verified
+            </h2>
+            <p className="text-sm text-green-600">
+              Document issued by GT Technovation
+            </p>
+          </div>
+        </div>
+
+        <div className="flex justify-between items-center border rounded-md p-3 mb-6 bg-[#F7FAFA]">
+          <div>
+            <p className="text-xs text-gray-600">Certificate ID</p>
+            <code className="text-base font-semibold text-[#0A8A92] break-all">
+              {data?.certificateNumber}
+            </code>
+          </div>
+          <button
+            onClick={copyToClipboard}
+            className="p-2 hover:text-[#0A444D] transition"
+          >
+            <Copy className="w-4 h-4" />
+          </button>
+        </div>
+        {copied && <div className="text-xs text-green-600 mb-3">Copied</div>}
+
+        <div className="grid sm:grid-cols-2 gap-5 mb-6">
+          <div className="p-3 border rounded-lg bg-[#FAFEFE]">
+            <User className="w-5 h-5 text-[#0A444D] mb-1" />
+            <p className="text-xs text-gray-600">Full Name</p>
+            <p className="font-semibold">{data?.fullName || "-"}</p>
           </div>
 
-          {/* Certificate Details */}
-          <div className="p-4 md:p-6">
-            {/* Certificate Header: stacks on mobile, row on md+ */}
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
-              <div>
-                <h3 className="text-xl text-gray-900">Certificate Details</h3>
-              </div>
+          <div className="p-3 border rounded-lg bg-[#FAFEFE]">
+            <IdCard className="w-5 h-5 text-[#0A444D] mb-1" />
+            <p className="text-xs text-gray-600">Applicant ID</p>
+            <p className="font-semibold">{data?.applicantUniqueId || "-"}</p>
+          </div>
 
-              {/* Certificate ID placed below the header on mobile because of flex-col; on md it sits on the right */}
-              <div className="mt-0 md:mt-0 text-left md:text-right">
-                <div className="text-sm text-gray-500">Certificate ID</div>
-                <div className="flex items-center gap-2 mt-1">
-                  <code className="font-mono text-base md:text-lg font-semibold text-blue-600 break-all">{data?.certificateNumber}</code>
-                  <button
-                    onClick={copyToClipboard}
-                    className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
-                    title="Copy certificate number"
-                  >
-                    <Copy className="w-4 h-4" />
-                  </button>
-                </div>
-                {copied && <div className="text-xs text-green-600 mt-1">Copied</div>}
-              </div>
+          <div className="p-3 border rounded-lg bg-[#FAFEFE]">
+            <Tag className="w-5 h-5 text-[#0A444D] mb-1" />
+            <p className="text-xs text-gray-600">Domain / Course</p>
+            <p className="font-semibold">{data?.domain || "-"}</p>
+          </div>
+
+          <div className="p-3 border rounded-lg bg-[#FAFEFE]">
+            <Calendar className="w-5 h-5 text-[#0A444D] mb-1" />
+            <p className="text-xs text-gray-600">Issued On</p>
+            <p className="font-semibold">{formatMonth(data?.issueDate)}</p>
+          </div>
+        </div>
+
+        <div className="p-4 border rounded-lg bg-[#F3FAFA]">
+          <h4 className="font-semibold text-[#0A444D] mb-3 flex items-center gap-2 text-sm">
+            <Clock className="w-4 h-4" />
+            Program Duration
+          </h4>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <p className="text-xs text-gray-600">Start Date</p>
+              <p className="font-semibold">{formatMonth(data?.startDate)}</p>
             </div>
-
-            {/* Details Grid */}
-            <div className="grid md:grid-cols-2 gap-6 mb-4">
-              {/* Personal Information */}
-              <div className="space-y-3">
-                <div className="flex items-start gap-3 p-3 bg-blue-50 rounded-lg">
-                  <div className="p-2 bg-blue-100 rounded-lg">
-                    <User className="w-5 h-5 text-blue-600" />
-                  </div>
-                  <div>
-                    <div className="text-xs text-gray-500 mb-1">Full Name</div>
-                    <div className="text-base font-semibold text-gray-900">{data?.fullName || "-"}</div>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3 p-3 bg-purple-50 rounded-lg">
-                  <div className="p-2 bg-purple-100 rounded-lg">
-                    <IdCard className="w-5 h-5 text-purple-600" />
-                  </div>
-                  <div>
-                    <div className="text-xs text-gray-500 mb-1">Applicant Unique ID</div>
-                    <div className="text-base font-semibold text-gray-900">{data?.applicantUniqueId || "-"}</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Course Information */}
-              <div className="space-y-3">
-                <div className="flex items-start gap-3 p-3 bg-green-50 rounded-lg">
-                  <div className="p-2 bg-green-100 rounded-lg">
-                    <Tag className="w-5 h-5 text-green-600" />
-                  </div>
-                  <div>
-                    <div className="text-xs text-gray-500 mb-1">Domain / Course</div>
-                    <div className="text-base font-semibold text-gray-900">{data?.domain || "-"}</div>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3 p-3 bg-orange-50 rounded-lg">
-                  <div className="p-2 bg-orange-100 rounded-lg">
-                    <Calendar className="w-5 h-5 text-orange-600" />
-                  </div>
-                  <div>
-                    <div className="text-xs text-gray-500 mb-1">Issued On</div>
-                    <div className="text-base font-semibold text-gray-900">{data?.issueDate ? formatMonth(data.issueDate) : "-"}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Duration Information */}
-            <div className="bg-gray-50 rounded-lg p-3">
-              <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2 text-sm md:text-base">
-                <Clock className="w-4 h-4 text-gray-600" />
-                Program Duration
-              </h4>
-              <div className="grid md:grid-cols-2 gap-3">
-                <div className="text-center p-3 bg-white rounded-lg">
-                  <div className="text-xs text-gray-500 mb-1">Start Date</div>
-                  <div className="text-base font-semibold text-gray-900">{formatMonth(data?.startDate)}</div>
-                </div>
-                <div className="text-center p-3 bg-white rounded-lg">
-                  <div className="text-xs text-gray-500 mb-1">End Date</div>
-                  <div className="text-base font-semibold text-gray-900">{formatMonth(data?.endDate)}</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-center pt-5 border-t border-gray-100">
-              <button
-                className="flex items-center justify-center gap-2 px-4 py-2 bg-sky-400 text-black/80 rounded-lg font-semibold hover:bg-sky-300 transition-colors"
-                onClick={() => navigate("/verify")}
-              >
-                <Search className="w-4 h-4" />
-                Verify Another Certificate
-              </button>
+            <div>
+              <p className="text-xs text-gray-600">End Date</p>
+              <p className="font-semibold">{formatMonth(data?.endDate)}</p>
             </div>
           </div>
         </div>
 
-        {/* Footer Note */}
-        <div className="text-center mt-6">
-          <p className="text-xs md:text-sm text-gray-500">
-            Need help? Contact our support team at{' '}
-            <a href="mailto:support@gttechnovation.com" className="text-blue-600 hover:underline">
-              support@gttechnovation.com
-            </a>
-          </p>
+        <div className="mt-6 text-center">
+          <button
+            onClick={() => navigate("/verify")}
+            className="px-5 py-2 bg-[#0A444D] text-white text-sm rounded-md hover:bg-[#08606B] transition"
+          >
+            <Search className="w-4 h-4 inline mr-2" />
+            Verify Another Certificate
+          </button>
         </div>
       </div>
+
+      <p className="text-center text-xs mt-4 text-gray-600">
+        Need help? Contact:{" "}
+        <a
+          href="mailto:support@gttechnovation.com"
+          className="text-[#0A8A92] underline"
+        >
+          support@gttechnovation.com
+        </a>
+      </p>
     </div>
   );
 }
