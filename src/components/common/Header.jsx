@@ -194,7 +194,7 @@ export default function Header() {
 
                 {isMoreOpen && (
                   <div 
-                    className="absolute top-10 left-0 bg-white border border-gray-200 shadow-xl rounded-lg w-48 overflow-hidden z-50"
+                    className="absolute top-08 left-0 bg-white border border-gray-200 shadow-xl rounded-lg w-48 overflow-hidden z-50"
                     onMouseEnter={() => setIsMoreOpen(true)}
                     onMouseLeave={() => setIsMoreOpen(false)}
                   >

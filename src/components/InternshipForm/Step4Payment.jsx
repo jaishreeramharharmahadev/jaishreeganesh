@@ -1,5 +1,6 @@
-// components/InternshipForm/Step4Payment.jsx
-import React from "react";
+import React, { useState } from "react";
+import TermsAndConditions from "../policy/TermsAndConditions";
+import RefundPolicy from "../policy/CancellationAndRefund";
 
 const Step4Payment = ({
   formData,
@@ -10,12 +11,15 @@ const Step4Payment = ({
   internshipFee,
   isSubmitting,
 }) => {
+  const [showTerms, setShowTerms] = useState(false);
+  const [showRefund, setShowRefund] = useState(false);
+
   const selectedFee = internshipFee.find(
     (option) => option.duration === formData.duration
   );
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-2xl mx-auto relative">
       <h3 className="text-xl md:text-2xl font-semibold text-center mb-2 text-gray-800">
         Payment Details
       </h3>
@@ -23,12 +27,59 @@ const Step4Payment = ({
         Complete your internship application with payment
       </p>
 
+      {showTerms && (
+        <>
+          <style>{`body { overflow: hidden; }`}</style>
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50 p-4 animate-fadeIn">
+            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl 
+            max-h-[85vh] overflow-hidden relative p-0 animate-scaleIn border border-gray-200">
+
+              <div className="flex justify-between items-center px-5 py-3 border-b bg-gray-50 sticky top-0 z-50">
+                <h2 className="text-lg font-semibold text-gray-800">Terms & Conditions</h2>
+                <button
+                  onClick={() => setShowTerms(false)}
+                  className="text-gray-600 hover:text-red-600 text-2xl font-bold leading-none"
+                >
+                  &times;
+                </button>
+              </div>
+
+              <div className="overflow-y-auto max-h-[75vh]">
+                <TermsAndConditions />
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
+      {showRefund && (
+        <>
+          <style>{`body { overflow: hidden; }`}</style>
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50 p-4 animate-fadeIn">
+            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl 
+            max-h-[85vh] overflow-hidden relative p-0 animate-scaleIn border border-gray-200">
+
+              {/* Header */}
+              <div className="flex justify-between items-center px-5 py-3 border-b bg-gray-50 sticky top-0 z-50">
+                <h2 className="text-lg font-semibold text-gray-800">Refund Policy</h2>
+                <button
+                  onClick={() => setShowRefund(false)}
+                  className="text-gray-600 hover:text-red-600 text-2xl font-bold leading-none"
+                >
+                  &times;
+                </button>
+              </div>
+
+              <div className="overflow-y-auto max-h-[75vh]">
+                <RefundPolicy />
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
       <form onSubmit={handleSubmit}>
-        {/* Order Summary */}
         <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 md:p-6 mb-6">
-          <h4 className="font-semibold text-gray-800 mb-4 text-sm md:text-base">
-            Summary
-          </h4>
           <div className="space-y-3 text-sm md:text-base">
             <div className="flex justify-between">
               <span>Internship Program ({formData.duration})</span>
@@ -45,71 +96,27 @@ const Step4Payment = ({
           </div>
         </div>
 
-        {/* Payment Policy Box */}
-        <div className="mt-4 p-3 bg-blue-50 border border-blue-100 rounded-lg">
-          <h5 className="font-semibold text-blue-800 text-sm mb-2 flex items-center gap-2">
-            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                fillRule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                clipRule="evenodd"
-              />
-            </svg>
-            Important Payment Information
-          </h5>
-          <ul className="text-xs text-blue-700 space-y-1">
-            <li className="flex items-start gap-2">
-              <span className="text-green-600 font-bold">✓</span>
-              <span>
-                This is the only fee required for the entire{" "}
-                {formData.duration.toLowerCase()} internship program
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-green-600 font-bold">✓</span>
-              <span>
-                No additional charges for certificate, mentorship, or learning
-                materials
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-orange-600 font-bold">!</span>
-              <span>
-                <strong>Non-refundable:</strong> Registration fee cannot be
-                refunded once paid
-              </span>
-            </li>
-          </ul>
-        </div>
-
-        {/* Legal Disclaimer */}
         <div className="mt-3 p-2 bg-amber-50 border border-amber-200 rounded-lg">
           <p className="text-xs text-amber-800 text-center">
-            <strong>Note:</strong> By completing this payment, you acknowledge
-            that you have read, understood, and agree to be bound by our{" "}
+            <strong>Note:</strong> By completing this payment, you agree to our{" "}
             <button
               type="button"
               className="text-amber-900 hover:text-amber-700 underline font-semibold"
-              onClick={() => {
-                /* Add terms modal or navigation */
-              }}
+              onClick={() => setShowTerms(true)}
             >
-              Terms of Service
+              Terms & Conditions
             </button>{" "}
             and{" "}
             <button
               type="button"
               className="text-amber-900 hover:text-amber-700 underline font-semibold"
-              onClick={() => {
-                /* Add refund policy modal or navigation */
-              }}
+              onClick={() => setShowRefund(true)}
             >
               Refund Policy
             </button>
           </p>
         </div>
 
-        {/* Final Confirmations */}
         <div className="space-y-4 mb-6">
           <label className="flex items-center gap-3 p-3 md:p-4 border rounded-lg bg-gray-50 hover:bg-gray-100 cursor-pointer">
             <input
@@ -124,8 +131,7 @@ const Step4Payment = ({
                 I understand the Payment
               </span>
               <p className="text-xs md:text-sm text-gray-600 mt-1">
-                I verify that all information provided is accurate and I
-                authorize this payment
+                I verify that all information provided is accurate and I authorize this payment
               </p>
             </div>
           </label>
@@ -143,11 +149,10 @@ const Step4Payment = ({
             />
             <div>
               <span className="font-medium text-gray-700 text-sm md:text-base">
-                I agree to the Terms and Conditions
+                I agree to the Terms & Conditions
               </span>
               <p className="text-xs md:text-sm text-gray-600 mt-1">
-                I have read and agree to the refund policy, program guidelines,
-                and terms of service
+                I have read and agree to the refund policy, program guidelines, and terms of service
               </p>
             </div>
           </label>
@@ -193,10 +198,7 @@ const Step4Payment = ({
                 Processing...
               </>
             ) : (
-              <>
-                Pay ₹{selectedFee?.price} Now
-                <span className="text-lg"></span>
-              </>
+              <>Pay ₹{selectedFee?.price} Now</>
             )}
           </button>
         </div>

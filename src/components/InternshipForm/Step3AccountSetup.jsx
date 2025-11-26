@@ -1,9 +1,17 @@
-// components/InternshipForm/Step3AccountSetup.jsx
-import React from 'react';
+import React, { useState } from "react";
+import TermsAndConditions from "../policy/TermsAndConditions";
 
-const Step3AccountSetup = ({ formData, errors, handleChange, handleNext, handleBack }) => {
+const Step3AccountSetup = ({
+  formData,
+  errors,
+  handleChange,
+  handleNext,
+  handleBack,
+}) => {
+  const [showTerms, setShowTerms] = useState(false);
+
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-2xl mx-auto relative">
       <h3 className="text-xl md:text-2xl font-semibold text-center mb-2 text-gray-800">
         Account Setup
       </h3>
@@ -11,7 +19,36 @@ const Step3AccountSetup = ({ formData, errors, handleChange, handleNext, handleB
         Create your account and confirm your details
       </p>
 
-      {/* User Info Review */}
+      {showTerms && (
+        <>
+          <style>{`body { overflow: hidden; }`}</style>
+
+          <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 animate-fadeIn">
+            <div
+              className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl 
+      max-h-[85vh] overflow-hidden relative transform 
+      animate-scaleIn border border-gray-200"
+            >
+              <div className="flex justify-between items-center px-5 py-3 border-b bg-gray-50 sticky top-0 z-50">
+                <h2 className="text-lg font-semibold text-gray-800">
+                  Terms & Conditions
+                </h2>
+                <button
+                  onClick={() => setShowTerms(false)}
+                  className="text-gray-600 hover:text-red-600 text-2xl leading-none font-bold"
+                >
+                  &times;
+                </button>
+              </div>
+
+              <div className="overflow-y-auto max-h-[70vh]">
+                <TermsAndConditions />
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
       <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 md:p-6 mb-6">
         <h4 className="font-semibold text-blue-800 mb-3 text-sm md:text-base">
           Please verify your information:
@@ -19,9 +56,7 @@ const Step3AccountSetup = ({ formData, errors, handleChange, handleNext, handleB
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3 text-xs md:text-sm">
           <div>
             <span className="text-gray-600">Name:</span>
-            <span className="font-semibold ml-2">
-              {formData.fullName}
-            </span>
+            <span className="font-semibold ml-2">{formData.fullName}</span>
           </div>
           <div>
             <span className="text-gray-600">Email:</span>
@@ -29,15 +64,11 @@ const Step3AccountSetup = ({ formData, errors, handleChange, handleNext, handleB
           </div>
           <div>
             <span className="text-gray-600">College:</span>
-            <span className="font-semibold ml-2">
-              {formData.college}
-            </span>
+            <span className="font-semibold ml-2">{formData.college}</span>
           </div>
           <div>
             <span className="text-gray-600">Domain:</span>
-            <span className="font-semibold ml-2">
-              {formData.domain}
-            </span>
+            <span className="font-semibold ml-2">{formData.domain}</span>
           </div>
         </div>
       </div>
@@ -49,7 +80,6 @@ const Step3AccountSetup = ({ formData, errors, handleChange, handleNext, handleB
         }}
       >
         <div className="grid gap-4 md:gap-6">
-          {/* Password */}
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">
               Password <span className="text-red-500">*</span>
@@ -68,11 +98,11 @@ const Step3AccountSetup = ({ formData, errors, handleChange, handleNext, handleB
               <p className="text-red-600 text-sm">{errors.password}</p>
             )}
             <p className="text-xs text-gray-500">
-              Must contain at least 8 characters with uppercase, lowercase letters and numbers
+              Must contain at least 8 characters with uppercase, lowercase
+              letters and numbers
             </p>
           </div>
 
-          {/* Confirm Password */}
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">
               Confirm Password <span className="text-red-500">*</span>
@@ -84,19 +114,14 @@ const Step3AccountSetup = ({ formData, errors, handleChange, handleNext, handleB
               value={formData.confirmPassword}
               onChange={handleChange}
               className={`w-full border rounded-md px-3 py-2 focus:outline-sky-300 transition text-sm md:text-base ${
-                errors.confirmPassword
-                  ? "border-red-500"
-                  : "border-gray-300"
+                errors.confirmPassword ? "border-red-500" : "border-gray-300"
               }`}
             />
             {errors.confirmPassword && (
-              <p className="text-red-600 text-sm">
-                {errors.confirmPassword}
-              </p>
+              <p className="text-red-600 text-sm">{errors.confirmPassword}</p>
             )}
           </div>
 
-          {/* Email Confirmation */}
           <div className="space-y-2 text-sm">
             <label className="flex items-center gap-3 p-3 md:p-4 border rounded-lg bg-gray-50 hover:bg-gray-100 cursor-pointer">
               <input
@@ -109,22 +134,16 @@ const Step3AccountSetup = ({ formData, errors, handleChange, handleNext, handleB
               <div>
                 <span className="font-medium text-gray-700 text-sm md:text-base">
                   I confirm that my email address{" "}
-                  <span className="text-black">({formData.email})</span>{" "}
-                  is correct
+                  <span className="text-black">({formData.email})</span> is
+                  correct
                 </span>
-                <p className="text-xs md:text-sm text-gray-600 mt-1">
-                  Important communications will be sent to this email
-                </p>
               </div>
             </label>
             {errors.emailConfirmed && (
-              <p className="text-red-600 text-sm">
-                {errors.emailConfirmed}
-              </p>
+              <p className="text-red-600 text-sm">{errors.emailConfirmed}</p>
             )}
           </div>
 
-          {/* Terms and Conditions */}
           <div className="space-y-2 text-sm">
             <label className="flex items-center gap-3 p-3 md:p-4 border rounded-lg bg-gray-50 hover:bg-gray-100 cursor-pointer">
               <input
@@ -137,13 +156,17 @@ const Step3AccountSetup = ({ formData, errors, handleChange, handleNext, handleB
               <div>
                 <span className="font-medium text-gray-700 text-sm md:text-base">
                   I agree to the{" "}
-                  <span className="text-blue-500 underline">
+                  <button
+                    type="button"
+                    onClick={() => setShowTerms(true)}
+                    className="text-blue-600 underline hover:text-blue-800"
+                  >
                     Terms and Conditions
-                  </span>
+                  </button>
                 </span>
                 <p className="text-xs md:text-sm text-gray-600 mt-1">
-                  By checking this, you agree to our internship program
-                  terms, privacy policy, and code of conduct
+                  By checking this, you agree to our internship program terms,
+                  privacy policy, and code of conduct
                 </p>
               </div>
             </label>

@@ -1,168 +1,200 @@
-// ===== File: src/pages/PrivacyPolicy.jsx =====
 import React from "react";
-import { Shield, Lock, Eye, Server, Users, Cookie } from "lucide-react";
+import { Shield, Users, Lock, Eye, Cookie } from "lucide-react";
 
-export default function PrivacyPolicy() {
+const PrivacyPolicy = () => {
   return (
-    <div className="mt-0 lg:mt-2">
-      <div className="bg-gradient-to-r from-gray-50 to-blue-50 p-4 lg:p-8 pt-7">
-        <div className="flex items-center gap-4 mb-5">
-          <div className="p-3 bg-blue-50 rounded-xl">
-            <Shield className="w-8 h-8 text-blue-600" />
-          </div>
-          <div>
-            <h1 className="text-2xl text-gray-900">Privacy Policy</h1>
-            <p className="text-gray-600 mt-1 text-sm">Last updated: 24 October 2025</p>
-          </div>
-        </div>
-
-        <div className="prose prose-lg max-w-none">
-          <p className="text-md text-gray-700 leading-relaxed">
-            At GT Technovation, we are committed to protecting your privacy and ensuring transparency 
-            about how we handle your personal information. This Privacy Policy outlines our practices 
-            regarding data collection, usage, and protection when you interact with our platform.
-          </p>
-
-          <div className="grid md:grid-cols-2 gap-6 my-8">
-            <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-              <div className="flex items-center gap-3 mb-3">
-                <Eye className="w-5 h-5 text-blue-600" />
-                <h3 className="font-semibold text-gray-900">Information Collection</h3>
-              </div>
-              <ul className="space-y-2 text-gray-700">
-                <li>• Personal identification information</li>
-                <li>• Payment and transaction data</li>
-                <li>• Usage analytics and behavior</li>
-                <li>• Technical information</li>
-              </ul>
+    <div className="w-full">
+      <div className="bg-gray-50 px-4 lg:px-8 py-8">
+        <div className="max-w-4xl mx-auto">
+          {/* Header */}
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2.5 bg-white border border-gray-200 rounded-xl">
+              <Shield className="w-7 h-7 text-gray-900" />
             </div>
-
-            <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-              <div className="flex items-center gap-3 mb-3">
-                <Server className="w-5 h-5 text-green-600" />
-                <h3 className="font-semibold text-gray-900">Data Usage</h3>
-              </div>
-              <ul className="space-y-2 text-gray-700">
-                <li>• Service delivery and improvement</li>
-                <li>• Personalized learning experience</li>
-                <li>• Secure payment processing</li>
-                <li>• Legal compliance</li>
-              </ul>
+            <div>
+              <h1 className="text-2xl font-semibold text-gray-900">
+                Privacy Policy
+              </h1>
+              <p className="text-gray-500 text-xs mt-1">
+                Last updated: 26 November 2025
+              </p>
             </div>
           </div>
 
-          <div className="space-y-8">
-            <section>
-              <h2 className="text-xl text-gray-900 mb-2">Information We Collect</h2>
-              <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
-                <p className="text-blue-800 font-medium">We collect information to provide better services to our users.</p>
-              </div>
-              <p className="text-gray-700 mb-4">
-                We may collect both personally identifiable information and non-personally identifiable information 
-                from you when you use our platform. This information may include but is not limited to:
-              </p>
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <Users className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Personal Information</h4>
-                    <p className="text-gray-700">
-                      Your name, email address, and contact information provided during account registration. 
-                      Information about your usage of the platform, including Courses taken, progress, quizzes, 
-                      and assignments completed.
+          {/* Body */}
+          <div className="bg-white border border-gray-200 rounded-2xl p-5 md:p-8">
+            <div className="space-y-8 text-sm md:text-base text-gray-700 leading-relaxed">
+              {/* Intro */}
+              <section>
+                <p>
+                  At <strong>GT Technovation</strong>, we are committed to
+                  protecting your personal information and being transparent
+                  about how we handle your data in connection with our
+                  internship programs and Platform.
+                </p>
+              </section>
+
+              {/* What we collect & how we use */}
+              <section className="grid md:grid-cols-2 gap-4">
+                <div className="border border-gray-200 rounded-lg p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Eye className="w-5 h-5 text-gray-900" />
+                    <h3 className="font-semibold text-gray-900 text-sm">
+                      Information We Collect
+                    </h3>
+                  </div>
+                  <ul className="text-xs md:text-sm space-y-1">
+                    <li>• Name and contact details (email, phone, etc.)</li>
+                    <li>• Academic/educational information and preferences</li>
+                    <li>• Internship domain and program selections</li>
+                    <li>• Payment and transaction information (via gateway)</li>
+                    <li>• Usage data such as logins, device, and browser type</li>
+                    <li>• Performance metrics and submissions during internship</li>
+                  </ul>
+                </div>
+
+                <div className="border border-gray-200 rounded-lg p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Users className="w-5 h-5 text-gray-900" />
+                    <h3 className="font-semibold text-gray-900 text-sm">
+                      How We Use Your Information
+                    </h3>
+                  </div>
+                  <ul className="text-xs md:text-sm space-y-1">
+                    <li>• To create and manage your account</li>
+                    <li>• To deliver internship tasks and communications</li>
+                    <li>• To evaluate your performance and progress</li>
+                    <li>• To generate certificates and official documents</li>
+                    <li>• To process payments via secure gateways</li>
+                    <li>• To improve our programs and user experience</li>
+                  </ul>
+                </div>
+              </section>
+
+              {/* Data details */}
+              <section>
+                <h2 className="text-lg font-semibold text-gray-900 mb-2">
+                  1. Personal &amp; Technical Data
+                </h2>
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <Users className="w-5 h-5 text-gray-900 mt-1 flex-shrink-0" />
+                    <p>
+                      We collect personal information that you provide directly,
+                      such as when you fill out forms, register for an
+                      internship, submit assignments, or contact support. We
+                      also collect performance-related information to evaluate
+                      your internship progress.
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Cookie className="w-5 h-5 text-gray-900 mt-1 flex-shrink-0" />
+                    <p>
+                      We may collect technical data, including IP addresses,
+                      browser type, device identifiers, and usage patterns using
+                      cookies or similar technologies. This helps us maintain
+                      security, improve performance, and understand how the
+                      Platform is used.
                     </p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <Cookie className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Technical & Usage Data</h4>
-                    <p className="text-gray-700">
-                      Browser information and other technical data collected automatically 
-                      when you access the platform. Feedback, reviews, and comments you submit to us regarding 
-                      Courses and the platform.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </section>
+              </section>
 
-            <section>
-              <h2 className="text-xl text-gray-900 mb-2">How We Use Your Information</h2>
-              <p className="text-gray-700 mb-4">
-                We use the information we collect for the following purposes:
-              </p>
-              <div className="grid md:grid-cols-2 gap-4 text-gray-700">
-                <div className="space-y-2">
-                  <p>• To create and manage your account on our platform</p>
-                  <p>• To communicate about your account and Course updates</p>
-                  <p>• To analyze and improve platform performance</p>
-                  <p>• To personalize your learning experience</p>
-                </div>
-                <div className="space-y-2">
-                  <p>• To respond to your inquiries and support requests</p>
-                  <p>• To enforce our Terms and Conditions</p>
-                  <p>• To protect the rights and safety of our platform</p>
-                  <p>• To suggest relevant Courses</p>
-                </div>
-              </div>
-            </section>
-
-            <section>
-              <h2 className="text-xl text-gray-900 mb-2">How We Protect Your Information</h2>
-              <div className="flex items-start gap-4 bg-slate-100 p-4 rounded-lg">
-                <Lock className="w-6 h-6 text-green-600 mt-1 flex-shrink-0" />
-                <div>
-                  <p className="text-gray-700">
-                    We implement appropriate security measures to protect your personal information from 
-                    unauthorized access, disclosure, alteration, or destruction. We use encryption, secure 
-                    socket layer technology (SSL), and regular security reviews to safeguard your data. 
-                    However, no method of transmission over the internet or electronic storage is 100% secure, 
-                    and we cannot guarantee absolute security of your information.
+              {/* Security */}
+              <section>
+                <h2 className="text-lg font-semibold text-gray-900 mb-2">
+                  2. Data Security
+                </h2>
+                <div className="flex items-start gap-3 border border-gray-200 rounded-lg p-4 bg-gray-50">
+                  <Lock className="w-5 h-5 text-gray-900 mt-1 flex-shrink-0" />
+                  <p>
+                    We use reasonable technical and organizational measures to
+                    protect your information from unauthorized access, misuse,
+                    or loss. However, no system is completely secure. You are
+                    also responsible for keeping your account credentials
+                    confidential and logging out from shared devices.
                   </p>
                 </div>
-              </div>
-            </section>
+              </section>
 
-            <section>
-              <h2 className="text-xl text-gray-900 mb-2">Sharing of Information</h2>
-              <p className="text-gray-700 mb-4">
-                We may share your personal information with trusted third-party service providers to help us 
-                operate and improve our platform, as well as to process payments and provide customer support. 
-                We do not sell, trade, or rent your personal information to third parties for their marketing purposes.
-              </p>
-            </section>
+              {/* Sharing */}
+              <section>
+                <h2 className="text-lg font-semibold text-gray-900 mb-2">
+                  3. Sharing of Information
+                </h2>
+                <p>
+                  We may share your data with trusted third-party service
+                  providers only to the extent necessary to deliver our
+                  services. This may include payment gateways, hosting providers
+                  or email service platforms. We{" "}
+                  <strong>do not sell your personal data</strong> to third
+                  parties for marketing purposes.
+                </p>
+              </section>
 
-            <section>
-              <h2 className="text-xl text-gray-900 mb-2">Third-Party Links and Services</h2>
-              <p className="text-gray-700">
-                Our platform may contain links to third-party websites or services that are not owned or 
-                controlled by us. We are not responsible for the privacy practices of these third-party 
-                websites or services. We encourage you to review the privacy policies of those third parties 
-                before providing any information to them.
-              </p>
-            </section>
+              {/* Performance data */}
+              <section>
+                <h2 className="text-lg font-semibold text-gray-900 mb-2">
+                  4. Use of Performance &amp; Outcome Data
+                </h2>
+                <p>
+                  We may use anonymized or permission-based performance data,
+                  such as successful internship completions, high performers, or
+                  testimonials, to showcase outcomes, improve program quality,
+                  or for analytical purposes. Any public use of your name,
+                  image, or testimonial will be done with appropriate consent
+                  where required.
+                </p>
+              </section>
 
-            <section>
-              <h2 className="text-xl text-gray-900 mb-2">Children's Privacy</h2>
-              <p className="text-gray-700">
-                Our platform is not intended for use by individuals under the age of 13. If you are a parent 
-                or guardian and believe that your child has provided us with personal information, please 
-                contact us immediately, and we will take steps to remove that information from our records.
-              </p>
-            </section>
+              {/* Communications */}
+              <section>
+                <h2 className="text-lg font-semibold text-gray-900 mb-2">
+                  5. Communication &amp; Notifications
+                </h2>
+                <p>
+                  By registering with GT Technovation, you agree to receive
+                  essential communications about your internship, including
+                  onboarding details, task updates, deadline reminders, and
+                  certificates. You may also receive program-related
+                  announcements or important policy updates.
+                </p>
+              </section>
 
-            <section>
-              <h2 className="text-xl text-gray-900 mb-2">Changes to the Privacy Policy</h2>
-              <p className="text-gray-700">
-                We may update this Privacy Policy from time to time to reflect changes in our practices or 
-                for other operational, legal, or regulatory reasons. We will notify you of any material changes 
-                by posting the updated policy on this page, and the changes will be effective immediately upon posting.
-              </p>
-            </section>
+              {/* Updates */}
+              <section>
+                <h2 className="text-lg font-semibold text-gray-900 mb-2">
+                  6. Changes to This Privacy Policy
+                </h2>
+                <p>
+                  We may update this Privacy Policy from time to time to reflect
+                  changes in our practices or for legal, operational, or
+                  regulatory reasons. Changes will be effective once posted on
+                  this page. Your continued use of the Platform after such
+                  changes constitutes your acceptance of the updated policy.
+                </p>
+              </section>
+
+              {/* Contact */}
+              <section>
+                <h2 className="text-lg font-semibold text-gray-900 mb-2">
+                  7. Contact Us
+                </h2>
+                <p>
+                  If you have any questions or concerns about this Privacy
+                  Policy or how your data is handled, please contact us at{" "}
+                  <span className="font-semibold">
+                    support@gttechnovation.com
+                  </span>
+                  .
+                </p>
+              </section>
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default PrivacyPolicy;

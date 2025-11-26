@@ -1,63 +1,99 @@
-// components/InternshipForm/SuccessModal.jsx
-import React from 'react';
+import React, { useState } from "react";
+import { CheckCircle, Copy, Check, LogIn, Mail, Lock } from "lucide-react";
 
 const SuccessModal = ({ showSuccess, uniqueId, handleCloseSuccess, handleLoginRedirect }) => {
+  const [copied, setCopied] = useState(false);
+
   if (!showSuccess) return null;
 
+  const handleCopy = () => {
+    navigator.clipboard.writeText(uniqueId);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl p-6 md:p-8 max-w-xl w-full mx-auto transform animate-scale-in">
-        <div className="text-center">
-          {/* Success Icon */}
-          <div className="w-16 h-16 md:w-20 md:h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6">
-            <svg className="w-8 h-8 md:w-10 md:h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-          
-          {/* Success Title */}
-          <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-4">
-            Application Submitted Successfully!
-          </h2>
-          
-          {/* Unique ID */}
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 md:p-4 mb-4 md:mb-6">
-            <p className="text-sm text-gray-600 mb-2">Your Internship ID</p>
-            <p className="font-mono font-bold text-blue-700 bg-white py-2 px-3 md:px-4 rounded-lg border tracking-widest text-sm md:text-base">
+    <div
+      className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div className="bg-white rounded-xl p-6 max-w-lg w-full shadow-xl border-t-4 border-[#0A444D] transform animate-scale-in">
+
+        <div className="flex justify-center mb-4">
+          <CheckCircle className="w-12 h-12 text-green-700" strokeWidth={1.5} />
+        </div>
+
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-700 text-center mb-3">
+          Application Successful!
+        </h2>
+
+        <p className="text-center text-gray-600 text-sm mb-6">
+          You're registered for the internship program.
+        </p>
+
+        <div className="bg-gray-50 p-4 rounded-xl border border-gray-200 mb-6">
+          <p className="text-xs font-semibold text-gray-600 mb-2">
+            Your Internship ID
+          </p>
+          <div className="flex gap-2 items-center">
+            <p className="flex-1 font-mono font-bold text-lg text-center text-[#0A444D] bg-white py-2 px-3 rounded-lg border tracking-wider">
               {uniqueId}
             </p>
-          </div>
-          
-          {/* Instructions */}
-          <div className="text-left bg-gray-50 rounded-lg p-3 md:p-4 mb-4 md:mb-6">
-            <p className="text-xs md:text-sm text-gray-700 mb-3">
-              <span className="font-semibold">📧 Email Confirmation:</span> This code has been sent to your registered email ID.
-            </p>
-            <p className="text-xs md:text-sm text-gray-700">
-              <span className="font-semibold">🔐 Dashboard Access:</span> You can now login to access your internship dashboard.
-            </p>
-          </div>
-          
-          {/* Buttons */}
-          <div className="flex flex-col sm:flex-row gap-2 md:gap-3">
+
             <button
-              onClick={handleCloseSuccess}
-              className="flex-1 px-4 md:px-6 py-2 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors text-sm md:text-base"
+              onClick={handleCopy}
+              className="px-3 py-2 bg-teal-500 text-white rounded-lg text-xs font-medium hover:bg-teal-600 transition flex items-center gap-1"
             >
-              Close
-            </button>
-            <button
-              onClick={handleLoginRedirect}
-              className="flex-1 px-4 md:px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 text-sm md:text-base"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-              </svg>
-              Login to Dashboard
+              {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              {copied ? "Copied" : ""}
             </button>
           </div>
         </div>
+
+        <div className="bg-gray-50 border border-gray-200 rounded-md p-4 space-y-2 mb-6">
+          <p className="flex items-center gap-2 text-xs text-gray-700">
+            <Mail className="w-4 h-4 text-[#0A444D]" /> This code has been sent to your registered email ID.
+          </p>
+          <p className="flex items-center gap-2 text-xs text-gray-700">
+            <Lock className="w-4 h-4 text-[#0A444D]" /> You can now login to access your internship dashboard.
+          </p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row gap-3">
+          <button
+            onClick={handleCloseSuccess}
+            className="flex-1 py-2 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-100 transition"
+          >
+            Close
+          </button>
+
+          <button
+            onClick={handleLoginRedirect}
+            className="flex-1 py-2 bg-[#0A444D] text-white rounded-lg font-semibold hover:bg-[#08363E] transition flex items-center justify-center gap-2 shadow-md"
+          >
+            <LogIn className="w-4 h-4" /> Login Dashboard
+          </button>
+        </div>
+
       </div>
+
+      <style jsx>{`
+        .animate-scale-in {
+          animation: scaleIn 0.32s ease-out;
+        }
+        @keyframes scaleIn {
+          from { transform: scale(0.8); opacity: 0; }
+          to { transform: scale(1); opacity: 1; }
+        }
+        .animate-fade-in {
+          animation: fadeIn 0.25s ease-out;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+      `}</style>
     </div>
   );
 };

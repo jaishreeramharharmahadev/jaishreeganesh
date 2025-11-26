@@ -1,112 +1,202 @@
-// ===== File: src/pages/CancellationAndRefund.jsx =====
 import React from "react";
-import { CreditCard, AlertTriangle, CheckCircle, XCircle, HelpCircle } from "lucide-react";
+import { CreditCard, AlertTriangle, CheckCircle } from "lucide-react";
 
-export default function CancellationAndRefund() {
+const CancellationAndRefund = () => {
   return (
-    <div className="mt-0 lg:mt-2">
-      <div className="bg-gradient-to-r from-gray-50 to-blue-50 p-4 lg:p-8 pt-7">
-        <div className="flex items-center gap-4 mb-8">
-          <div className="p-3 bg-red-50 rounded-xl">
-            <CreditCard className="w-6 h-6 text-red-400" />
-          </div>
-          <div>
-            <h1 className="text-2xl text-gray-900">Cancellation & Refund Policy</h1>
-            <p className="text-gray-600 mt-1">Last updated: 24 October 2025</p>
-          </div>
-        </div>
-
-        <div className="prose prose-lg max-w-none">
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
-            <div className="bg-gray-50 p-4 rounded-lg border border-green-200">
-              <div className="flex items-center gap-3 mb-2">
-                <CheckCircle className="w-6 h-6 text-green-500" />
-                <h3 className="font-semibold text-gray-900">What We Guarantee</h3>
-              </div>
-              <ul className="space-y-2 text-gray-700">
-                <li>• Course access after payment</li>
-                <li>• High-quality educational content</li>
-                <li>• Technical support for access issues</li>
-                <li>• Secure payment processing</li>
-              </ul>
+    <div className="w-full">
+      <div className="bg-gray-50 px-4 lg:px-8 py-8">
+        <div className="max-w-4xl mx-auto">
+          {/* Header */}
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2.5 bg-white border border-gray-200 rounded-xl">
+              <CreditCard className="w-7 h-7 text-gray-900" />
             </div>
-
-            <div className="bg-slate-50 p-4 rounded-lg border border-red-200">
-              <div className="flex items-center gap-3 mb-3">
-                <XCircle className="w-6 h-6 text-red-500" />
-                <h3 className="font-semibold text-gray-900">No Refund Circumstances</h3>
-              </div>
-              <ul className="space-y-2 text-gray-700">
-                <li>• Change of mind or personal circumstances</li>
-                {/* <li>• Dissatisfaction with course content</li> */}
-                <li>• Inability to complete the course</li>
-                <li>• Technical issues on user's device</li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="space-y-8">
-            <section>
-              <h2 className="text-xl text-gray-900 mb-1">Our No Refund Policy</h2>
-              <p className="text-gray-700">
-                GT Technovation operates under a strict <strong>No Refund Policy</strong> for all course 
-                enrollments and digital product purchases. This policy is designed to maintain the 
-                integrity of our educational offerings and ensure fair access for all students.
+            <div>
+              <h1 className="text-2xl font-semibold text-gray-900">
+                Cancellation &amp; Refund Policy
+              </h1>
+              <p className="text-gray-500 text-xs mt-1">
+                Last updated: 26 November 2025
               </p>
-              
-              <div className="p-3 rounded-lg mt-2">
-                <h4 className="text-gray-900 mb-2">Why We Have This Policy</h4>
-                <p className="text-gray-700">
-                  As a digital education provider, once you gain access to our course materials, 
-                  the value of the content cannot be reclaimed. This policy protects our intellectual 
-                  property and ensures we can continue providing high-quality educational resources.
-                </p>
-              </div>
-            </section>
+            </div>
+          </div>
 
-            <section>
-              <h2 className="text-xl text-gray-900 mb-2">Before You Purchase</h2>
-              <div className="flex items-start gap-4 p-3 rounded-lg">
-                <HelpCircle className="w-6 h-6 text-blue-600 mt-1 flex-shrink-0" />
-                <div>
-                  <h4 className="font-semibold text-gray-900">Make an Informed Decision</h4>
-                  <p className="text-gray-700">
-                    We encourage you to thoroughly review course descriptions, preview available materials, 
-                    and ensure the course meets your learning objectives before purchasing. Our support 
-                    team is available to answer any pre-purchase questions.
+          {/* Body */}
+          <div className="bg-white border border-gray-200 rounded-2xl p-5 md:p-8">
+            <div className="space-y-8 text-sm md:text-base text-gray-700 leading-relaxed">
+              {/* Summary */}
+              <section>
+                <p>
+                  GT Technovation invests time, resources, and digital
+                  infrastructure as soon as an intern is onboarded. For this
+                  reason, the{" "}
+                  <strong>registration/program fee is strictly non-refundable</strong>{" "}
+                  once payment is successfully completed, except in very limited
+                  cases described below.
+                </p>
+              </section>
+
+              {/* What you receive vs non-refundable info */}
+              <section className="grid md:grid-cols-2 gap-4">
+                <div className="border border-gray-200 rounded-lg p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <CheckCircle className="w-5 h-5 text-gray-900" />
+                    <h3 className="font-semibold text-gray-900 text-sm">
+                      What You Receive
+                    </h3>
+                  </div>
+                  <ul className="text-xs md:text-sm space-y-1">
+                    <li>• Access to internship tasks and learning resources</li>
+                    <li>• Guidance or mentorship as per program structure</li>
+                    <li>• Performance evaluation and feedback</li>
+                    <li>
+                      • Digital completion certificate (if program criteria are
+                      met)
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="border border-gray-200 rounded-lg p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <AlertTriangle className="w-5 h-5 text-gray-900" />
+                    <h3 className="font-semibold text-gray-900 text-sm">
+                      Non-Refundable in These Cases
+                    </h3>
+                  </div>
+                  <ul className="text-xs md:text-sm space-y-1">
+                    <li>• Change of mind or loss of interest</li>
+                    <li>• Inability to allocate time for the internship</li>
+                    <li>
+                      • Not receiving a stipend due to not meeting performance
+                      criteria
+                    </li>
+                    <li>
+                      • Technical issues related to your device, internet, or
+                      email access
+                    </li>
+                    <li>• Choosing to discontinue the internship midway</li>
+                  </ul>
+                </div>
+              </section>
+
+              {/* Strict no refund */}
+              <section>
+                <h2 className="text-lg font-semibold text-gray-900 mb-2">
+                  1. Strict No-Refund Policy
+                </h2>
+                <p>
+                  The internship registration/program fee charged by GT
+                  Technovation is{" "}
+                  <strong>strictly non-refundable and non-transferable</strong>{" "}
+                  in all normal circumstances, including but not limited to:
+                </p>
+                <ul className="list-disc ml-5 mt-2 space-y-1">
+                  <li>Failure to complete tasks or assignments</li>
+                  <li>Unsatisfactory performance as evaluated by our team</li>
+                  <li>
+                    Not being awarded any stipend due to performance below the
+                    required threshold
+                  </li>
+                  <li>
+                    Personal issues, time constraints, exam schedules, or other
+                    commitments
+                  </li>
+                  <li>
+                    Delay in starting or joining the internship after payment
+                  </li>
+                </ul>
+                <p className="mt-3">
+                  The fee primarily supports onboarding, digital tools,
+                  coordination, and resources allocated from the moment your
+                  enrollment is confirmed.
+                </p>
+              </section>
+
+              {/* Exceptions */}
+              <section>
+                <h2 className="text-lg font-semibold text-gray-900 mb-2">
+                  2. Limited Exceptions (Technical or Billing Errors Only)
+                </h2>
+                <p>
+                  Refunds will be considered <strong>only</strong> under the
+                  following verified scenarios:
+                </p>
+                <ul className="list-disc ml-5 mt-2 space-y-1">
+                  <li>
+                    <strong>Duplicate Payment:</strong> You are charged twice
+                    for the same registration due to a technical issue.
+                  </li>
+                  <li>
+                    <strong>Payment Deducted but Enrollment Not Activated:</strong>{" "}
+                    The amount is successfully deducted, but due to a confirmed
+                    system error on our side, your enrollment or access is not
+                    activated and we are unable to provide services.
+                  </li>
+                </ul>
+                <p className="mt-3">
+                  In such cases, you must contact us within{" "}
+                  <strong>7 days</strong> of the transaction, providing complete
+                  details and proof of payment for our team to review.
+                </p>
+              </section>
+
+              {/* Stipend clarification */}
+              <section>
+                <h2 className="text-lg font-semibold text-gray-900 mb-2">
+                  3. Stipend Clarification
+                </h2>
+                <p>
+                  Any stipend associated with the internship is{" "}
+                  <strong>performance-based</strong>. Not receiving a stipend
+                  because you did not meet the required performance or skill
+                  criteria does <strong>not</strong> qualify as a valid reason
+                  for a refund under any circumstance.
+                </p>
+              </section>
+
+              {/* How to contact */}
+              <section>
+                <h2 className="text-lg font-semibold text-gray-900 mb-2">
+                  4. How to Raise a Payment/Refund Query
+                </h2>
+                <p>
+                  For any genuine billing or payment-related concerns, you can
+                  reach us at:
+                </p>
+                <p className="mt-2">
+                  Email:{" "}
+                  <span className="font-semibold">
+                    support@gttechnovation.com
+                  </span>
+                </p>
+                <p className="mt-2 text-sm">
+                  Please include the following in your email:
+                </p>
+                <ul className="list-disc ml-5 mt-1 space-y-1 text-sm">
+                  <li>Registered full name</li>
+                  <li>Registered email address</li>
+                  <li>Payment ID / Transaction reference</li>
+                  <li>Screenshot of payment confirmation</li>
+                  <li>Clear description of the issue</li>
+                </ul>
+              </section>
+
+              {/* Final note */}
+              <section>
+                <div className="border border-gray-200 rounded-lg p-4 bg-gray-50 text-center">
+                  <p className="text-sm font-medium text-gray-800">
+                    By completing your payment, you acknowledge that you have
+                    read, understood, and agree to this Cancellation &amp;
+                    Refund Policy of GT Technovation.
                   </p>
                 </div>
-              </div>
-            </section>
-
-            <section>
-              <h2 className="text-xl text-gray-900 mb-2">Payment Disputes & Unauthorized Charges</h2>
-              <p className="text-gray-700">
-                If you believe a charge was made fraudulently or without your authorization, please 
-                contact us immediately at <span className="font-semibold">support@gttechnovation.com</span>. 
-                We will cooperate with payment processors and financial institutions to investigate 
-                and resolve legitimate disputes.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-xl text-gray-900 mb-2">Technical Support & Access Issues</h2>
-              <p className="text-gray-700">
-                While we don't offer refunds, we are committed to ensuring you can access your purchased 
-                courses. If you experience technical difficulties, our support team is available to help 
-                resolve access issues promptly.
-              </p>
-            </section>
-
-            <div className="bg-gray-100 p-6 rounded-lg text-center">
-              <p className="text-gray-700 font-semibold">
-                By completing your purchase, you acknowledge that you have read, understood, 
-                and agree to this Policy.
-              </p>
+              </section>
             </div>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default CancellationAndRefund;

@@ -53,7 +53,7 @@ export default function Footer() {
       title: "Policies",
       items: [
         { name: "Privacy Policy", link: "/privacy-policy" },
-        { name: "Terms of Conditions", link: "/terms-and-conditions" },
+        { name: "Terms & Conditions", link: "/terms-and-conditions" },
         { name: "Refund Policy", link: "/refund-policy" },
         { name: "Shipping and Delivery", link: "/shipping-delivery" },
         { name: "Contact Us", link: "/contact-us" },
