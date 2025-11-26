@@ -159,13 +159,13 @@ export default function Header() {
                     onClick={() => handleNav(item.path)}
                     className={`relative flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
                       isActive 
-                        ? "text-blue-600 bg-blue-50" 
-                        : "text-gray-600 hover:text-blue-600 hover:bg-blue-50"
+                        ? "text-teal-600 bg-teal-50" 
+                        : "text-gray-600 hover:text-teal-600 hover:bg-teal-50"
                     }`}
                   >
                     {Icon && (
                       <Icon className={`w-4 h-4 mr-2 ${
-                        isActive ? "text-blue-600" : "text-gray-500"
+                        isActive ? "text-teal-600" : "text-gray-500"
                       }`} />
                     )}
                     {item.name}
@@ -177,8 +177,8 @@ export default function Header() {
                 <button 
                   className={`flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
                     isMoreOpen 
-                      ? "text-blue-600 bg-blue-50" 
-                      : "text-gray-600 hover:text-blue-600 hover:bg-blue-50"
+                      ? "text-teal-600 bg-teal-50" 
+                      : "text-gray-600 hover:text-teal-600 hover:bg-teal-50"
                   }`}
                   onMouseEnter={() => setIsMoreOpen(true)}
                   onMouseLeave={() => setIsMoreOpen(false)}
@@ -205,7 +205,7 @@ export default function Header() {
                           <button
                             key={item.name}
                             onClick={() => handleNav(item.path)}
-                            className="w-full text-left flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
+                            className="w-full text-left flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
                           >
                             {Icon && (
                               <Icon className="w-4 h-4 mr-3 text-gray-400" />
@@ -224,7 +224,7 @@ export default function Header() {
               <div className="relative hidden sm:block" ref={searchRef}>
                 <div className={`flex items-center border rounded-lg px-3 py-2 transition-all duration-200 ${
                   isSearchFocused 
-                    ? "border-blue-400 bg-white shadow-sm" 
+                    ? "border-teal-400 bg-white shadow-sm" 
                     : "border-gray-300 bg-gray-50 hover:border-gray-400"
                 }`}>
                   <Search className="w-4 h-4 text-gray-500" />
@@ -252,9 +252,9 @@ export default function Header() {
                 <div className="relative" ref={userMenuRef}>
                   <button
                     onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                    className="flex items-center space-x-2 p-1.5 rounded-lg hover:bg-blue-50 transition-all duration-200"
+                    className="flex items-center space-x-2 p-1.5 rounded-lg hover:bg-teal-50 transition-all duration-200"
                   >
-                    <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white text-sm font-semibold">
+                    <div className="w-8 h-8 bg-gradient-to-r from-teal-500 to-teal-600 rounded-full flex items-center justify-center text-white text-sm font-semibold">
                       {user.name.charAt(0)}
                     </div>
                   </button>
@@ -272,7 +272,7 @@ export default function Header() {
                             <button
                               key={item.name}
                               onClick={() => handleNav(item.path)}
-                              className="w-full text-left flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
+                              className="w-full text-left flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
                             >
                               <Icon className="w-4 h-4 mr-3 text-gray-400" />
                               {item.name}
@@ -295,7 +295,7 @@ export default function Header() {
               ) : (
                 <button
                   onClick={handleLogin}
-                  className="flex items-center bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-all duration-200 shadow-sm hover:shadow-md"
+                  className="flex items-center bg-teal-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-teal-700 transition-all duration-200 shadow-sm hover:shadow-md"
                 >
                   <User className="w-4 h-4 mr-2" />
                   <span className="hidden sm:block">Login</span>
@@ -303,7 +303,7 @@ export default function Header() {
               )}
 
               <button
-                className="lg:hidden p-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-all duration-200"
+                className="lg:hidden p-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-teal-50 hover:text-teal-600 transition-all duration-200"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               >
                 {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -338,8 +338,8 @@ export default function Header() {
                       onClick={() => handleNav(item.path)}
                       className={`w-full flex items-center px-3 py-2.5 text-sm rounded-lg transition-all duration-200 mb-1 ${
                         isActive
-                          ? "text-blue-600 bg-blue-50"
-                          : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                          ? "text-teal-600 bg-teal-50"
+                          : "text-gray-700 hover:bg-teal-50 hover:text-teal-600"
                       }`}
                     >
                       {Icon && <Icon className="w-4 h-4 mr-3" />}
@@ -363,7 +363,7 @@ export default function Header() {
                       <button
                         key={item.name}
                         onClick={() => handleNav(item.path)}
-                        className="w-full flex items-center px-3 py-2.5 text-sm text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-all duration-200 mb-1"
+                        className="w-full flex items-center px-3 py-2.5 text-sm text-gray-700 rounded-lg hover:bg-teal-50 hover:text-teal-600 transition-all duration-200 mb-1"
                       >
                         {Icon && <Icon className="w-4 h-4 mr-3" />}
                         {item.name}
@@ -377,7 +377,7 @@ export default function Header() {
                 <div className="border-t border-gray-200 pt-3">
                   <button
                     onClick={handleLogin}
-                    className="w-full flex items-center justify-center bg-blue-600 text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-blue-700 transition-all duration-200"
+                    className="w-full flex items-center justify-center bg-teal-600 text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-teal-700 transition-all duration-200"
                   >
                     <User className="w-4 h-4 mr-2" />
                     Login to Your Account
