@@ -117,7 +117,7 @@ const Step4Payment = ({
           </p>
         </div>
 
-        <div className="space-y-4 mb-6">
+        <div className="space-y-4 mb-6 mt-3">
           <label className="flex items-center gap-3 p-3 md:p-4 border rounded-lg bg-gray-50 hover:bg-gray-100 cursor-pointer">
             <input
               type="checkbox"
@@ -137,27 +137,6 @@ const Step4Payment = ({
           </label>
           {errors.paymentChecked && (
             <p className="text-red-600 text-sm">{errors.paymentChecked}</p>
-          )}
-
-          <label className="flex items-center gap-3 p-3 md:p-4 border rounded-lg bg-gray-50 hover:bg-gray-100 cursor-pointer">
-            <input
-              type="checkbox"
-              name="agree"
-              checked={formData.agree}
-              onChange={handleChange}
-              className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
-            />
-            <div>
-              <span className="font-medium text-gray-700 text-sm md:text-base">
-                I agree to the Terms & Conditions
-              </span>
-              <p className="text-xs md:text-sm text-gray-600 mt-1">
-                I have read and agree to the refund policy, program guidelines, and terms of service
-              </p>
-            </div>
-          </label>
-          {errors.agree && (
-            <p className="text-red-600 text-sm">{errors.agree}</p>
           )}
         </div>
 

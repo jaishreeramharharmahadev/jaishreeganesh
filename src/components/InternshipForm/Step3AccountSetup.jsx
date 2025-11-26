@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import TermsAndConditions from "../policy/TermsAndConditions";
+import { Eye, EyeOff } from "lucide-react";
 
 const Step3AccountSetup = ({
   formData,
@@ -9,6 +10,8 @@ const Step3AccountSetup = ({
   handleBack,
 }) => {
   const [showTerms, setShowTerms] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   return (
     <div className="max-w-2xl mx-auto relative">
@@ -24,18 +27,14 @@ const Step3AccountSetup = ({
           <style>{`body { overflow: hidden; }`}</style>
 
           <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 animate-fadeIn">
-            <div
-              className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl 
-      max-h-[85vh] overflow-hidden relative transform 
-      animate-scaleIn border border-gray-200"
-            >
+            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[85vh] overflow-hidden relative animate-scaleIn border border-gray-200">
               <div className="flex justify-between items-center px-5 py-3 border-b bg-gray-50 sticky top-0 z-50">
                 <h2 className="text-lg font-semibold text-gray-800">
                   Terms & Conditions
                 </h2>
                 <button
                   onClick={() => setShowTerms(false)}
-                  className="text-gray-600 hover:text-red-600 text-2xl leading-none font-bold"
+                  className="text-gray-600 hover:text-red-600 text-2xl"
                 >
                   &times;
                 </button>
@@ -84,16 +83,29 @@ const Step3AccountSetup = ({
             <label className="block text-sm font-medium text-gray-700">
               Password <span className="text-red-500">*</span>
             </label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Enter your password (min. 8 characters)"
-              value={formData.password}
-              onChange={handleChange}
-              className={`w-full border rounded-md px-3 py-2 focus:outline-sky-300 transition text-sm md:text-base ${
-                errors.password ? "border-red-500" : "border-gray-300"
-              }`}
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Enter your password (min. 8 characters)"
+                value={formData.password}
+                onChange={handleChange}
+                className={`w-full border rounded-md px-3 py-2 pr-10 focus:outline-sky-300 transition text-sm md:text-base ${
+                  errors.password ? "border-red-500" : "border-gray-300"
+                }`}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-2.5 text-gray-600 hover:text-gray-800"
+              >
+                {showPassword ? (
+                  <EyeOff className="w-5 h-5" />
+                ) : (
+                  <Eye className="w-5 h-5" />
+                )}
+              </button>
+            </div>
             {errors.password && (
               <p className="text-red-600 text-sm">{errors.password}</p>
             )}
@@ -107,16 +119,31 @@ const Step3AccountSetup = ({
             <label className="block text-sm font-medium text-gray-700">
               Confirm Password <span className="text-red-500">*</span>
             </label>
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirm your password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              className={`w-full border rounded-md px-3 py-2 focus:outline-sky-300 transition text-sm md:text-base ${
-                errors.confirmPassword ? "border-red-500" : "border-gray-300"
-              }`}
-            />
+            <div className="relative">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                name="confirmPassword"
+                placeholder="Confirm your password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                className={`w-full border rounded-md px-3 py-2 pr-10 focus:outline-sky-300 transition text-sm md:text-base ${
+                  errors.confirmPassword ? "border-red-500" : "border-gray-300"
+                }`}
+              />
+              <button
+                type="button"
+                onClick={() =>
+                  setShowConfirmPassword(!showConfirmPassword)
+                }
+                className="absolute right-3 top-2.5 text-gray-600 hover:text-gray-800"
+              >
+                {showConfirmPassword ? (
+                  <EyeOff className="w-5 h-5" />
+                ) : (
+                  <Eye className="w-5 h-5" />
+                )}
+              </button>
+            </div>
             {errors.confirmPassword && (
               <p className="text-red-600 text-sm">{errors.confirmPassword}</p>
             )}
@@ -132,7 +159,7 @@ const Step3AccountSetup = ({
                 className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
               />
               <div>
-                <span className="font-medium text-gray-700 text-sm md:text-base">
+                <span className="font-medium text-gray-700">
                   I confirm that my email address{" "}
                   <span className="text-black">({formData.email})</span> is
                   correct
@@ -154,7 +181,7 @@ const Step3AccountSetup = ({
                 className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
               />
               <div>
-                <span className="font-medium text-gray-700 text-sm md:text-base">
+                <span className="font-medium text-gray-700">
                   I agree to the{" "}
                   <button
                     type="button"
