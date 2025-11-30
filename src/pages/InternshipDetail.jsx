@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -12,6 +11,7 @@ import {
   Rocket,
   Target,
   BookOpen,
+  Building2,
 } from "lucide-react";
 import { apiUrl } from "../utils/api";
 import PreLoader from "../components/common/PreLoader";
@@ -68,11 +68,7 @@ export default function InternshipDetail() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 text-gray-900">
-
-      {/* 🔹 HERO SECTION */}
       <div className="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
-
-        {/* Image First on Mobile */}
         <div className="lg:order-2 flex justify-center">
           <img
             src={internship?.image2}
@@ -85,7 +81,6 @@ export default function InternshipDetail() {
           />
         </div>
 
-        {/* Text Content */}
         <div className="lg:order-1 space-y-4">
           <h1 className="text-3xl md:text-4xl font-extrabold text-gray-700 leading-tight">
             {internship?.domain}
@@ -94,13 +89,12 @@ export default function InternshipDetail() {
             {internship?.description}
           </p>
 
-          {/* Stats */}
           <div className="grid grid-cols-2 gap-4">
             <Stat
               label="Stipend"
               icon={<IndianRupee />}
               value={internship?.stipend || "Not Mentioned"}
-              note="(Based on performance)"
+              note="(Performance Based)"
             />
             <Stat
               label="Location"
@@ -121,6 +115,20 @@ export default function InternshipDetail() {
             />
           </div>
 
+          <div className="bg-gradient-to-r from-green-100 to-teal-50 border border-green-300 p-4 rounded-xl shadow-md flex gap-3 items-start">
+            <div className="text-green-700">
+              <Building2 className="w-7 h-7" />
+            </div>
+            <div>
+              <h3 className="font-bold text-green-800">Work From Office Opportunity! 🏢</h3>
+              <p className="text-sm text-gray-700 leading-snug">
+                If your performance is excellent during the first & second week of remote internship,
+                we will invite you to work from office in <strong>Jaipur, Rajasthan</strong> —
+                only if you wish to! 🚀
+              </p>
+            </div>
+          </div>
+
           <button
             onClick={() => handleApplyNow(internship.domain)}
             className="bg-gradient-to-r from-sky-500 to-blue-700 text-white px-5 py-2 rounded-lg font-semibold shadow-md hover:from-blue-700 hover:to-sky-500 w-fit transition"
@@ -130,7 +138,6 @@ export default function InternshipDetail() {
         </div>
       </div>
 
-      {/* 🔹 SKILLS SECTION */}
       <Section title="Skills You'll Learn" icon={<Code2 className="text-green-700" />}>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {internship?.skills?.map((skill, i) => (
@@ -144,44 +151,31 @@ export default function InternshipDetail() {
         </div>
       </Section>
 
-      {/* 🔹 ROADMAP - TREE STYLE 🌿 */}
       <Section title="Learning Roadmap" icon={<Rocket className="text-green-700" />}>
         <div className="relative pl-10 md:pl-14">
-
-          {/* Tree Stem */}
           <div className="absolute left-4 md:left-7 top-0 bottom-0 w-[3px] bg-green-700 rounded-full"></div>
-
           <div className="space-y-8">
             {internship?.projectRoadmap?.map((step, idx) => (
               <div key={idx} className="relative flex items-start gap-4 group">
-
-                {/* Leaf Badge */}
                 <div className="absolute -left-2 md:-left-[10px] top-1.5">
                   <svg width="28" height="28" viewBox="0 0 24 24"
                     className="fill-green-600 transition-transform group-hover:scale-110 drop-shadow-md">
                     <path d="M12 2C8 2 5 5 5 9c0 2 .5 3 .5 3s-2.5 3-2.5 6c0 4 3 6 7 6s7-2 7-6c0-3-2.5-6-2.5-6S19 11 19 9c0-4-3-7-7-7z"/>
                   </svg>
                 </div>
-
-                {/* Step Number */}
                 <div className="w-10 h-10 bg-green-700 text-white flex items-center justify-center rounded-full text-sm font-bold shadow-md group-hover:scale-110 transition">
                   {step.stepNumber}
                 </div>
-
-                {/* Step Card */}
                 <div className="bg-white border border-green-200 rounded-xl shadow-sm p-4 hover:shadow-md transition w-full">
                   <h4 className="font-bold text-gray-800">{step.title}</h4>
                   <p className="text-gray-600 text-sm">{step.description}</p>
                 </div>
-
               </div>
             ))}
           </div>
-
         </div>
       </Section>
 
-      {/* 🔹 BENEFITS */}
       <Section title="Program Benefits" icon={<CheckCircle2 className="text-green-700" />}>
         <ul className="space-y-3">
           {internship?.additionalInfo?.whatYouGet?.map((item, i) => (
@@ -193,7 +187,6 @@ export default function InternshipDetail() {
         </ul>
       </Section>
 
-      {/* 🔹 REQUIREMENTS + TOOLS */}
       <div className="max-w-6xl mx-auto px-4 pb-12 grid md:grid-cols-2 gap-6">
         <SubSection
           title="Prerequisites"
@@ -207,7 +200,6 @@ export default function InternshipDetail() {
         />
       </div>
 
-      {/* 🔹 FINAL CTA */}
       <div className="bg-gradient-to-r from-gray-100 to-teal-50 text-gray-800 text-center py-8">
         <h2 className="text-2xl font-bold mb-2">Kickstart Your Career 🚀</h2>
         <p className="opacity-90 mb-3">Secure your internship position today!</p>
@@ -222,17 +214,12 @@ export default function InternshipDetail() {
   );
 }
 
-/* 🔹 REUSABLE COMPONENTS */
 function Stat({ icon, label, value, note }) {
   return (
     <div className="bg-white border border-gray-200 rounded-xl px-3 py-3 shadow-sm hover:shadow-md transition flex items-start gap-3">
-
-      {/* Icon */}
       <span className="text-teal-500 w-4 h-4 flex-shrink-0 mt-0.5">
         {icon}
       </span>
-
-      {/* Texts */}
       <div className="leading-tight">
         <p className="text-sm font-bold text-gray-900">
           {label}: <span className="text-green-700 font-bold">{value}</span>
@@ -243,7 +230,6 @@ function Stat({ icon, label, value, note }) {
           </p>
         )}
       </div>
-
     </div>
   );
 }

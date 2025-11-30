@@ -8,6 +8,7 @@ import {
   Twitter,
   ArrowRight,
   ChevronRight,
+  MapPin,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../assets/GTT1.png";
@@ -70,14 +71,10 @@ export default function Footer() {
 
   const contactInfo = [
     { icon: Phone, text: "+91 7877224655", href: "tel:+917877224655" },
-    {
-      icon: Mail,
-      text: "support@gttechnovation.com",
-      href: "mailto:support@gttechnovation.com",
-    },
+    { icon: Mail, text: "support@gttechnovation.com", href: "mailto:support@gttechnovation.com" },
+    { icon: MapPin, text: "Jaipur, Rajasthan", href: "#" },
   ];
 
-  // Centralised footer navigation handler: shows PreLoader for at least 2s
   const handleNav = (path) => {
     if (navTimerRef.current) {
       clearTimeout(navTimerRef.current);
@@ -86,12 +83,10 @@ export default function Footer() {
 
     setIsLoading(true);
 
-    // ensure minimum 2 seconds of preload before navigating
     navTimerRef.current = setTimeout(() => {
       setIsLoading(false);
       navTimerRef.current = null;
       navigate(path);
-      // scroll to top after navigation (optional)
       window.scrollTo({ top: 0, behavior: "smooth" });
     }, 300);
   };
@@ -101,7 +96,6 @@ export default function Footer() {
       {isLoading && <PreLoader text="Please Wait..." />}
 
       <footer className="relative bg-gradient-to-br from-sky-800 to-teal-800 text-gray-100 overflow-hidden">
-        {/* Background decoration */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute top-0 left-0 w-72 h-72 bg-orange-300 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
           <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-200 rounded-full translate-x-1/2 translate-y-1/2"></div>
@@ -109,9 +103,7 @@ export default function Footer() {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 py-5">
           <div className="grid lg:grid-cols-2 gap-8 mb-4">
-            {/* Left column - Brand and contact */}
             <div className="space-y-4">
-              {/* Brand section */}
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">
                   <div className="relative">
@@ -125,7 +117,6 @@ export default function Footer() {
                 </p>
               </div>
 
-              {/* Contact information */}
               <div className="space-y-3">
                 {contactInfo.map(({ icon: Icon, text, href }, i) => (
                   <a
@@ -139,7 +130,6 @@ export default function Footer() {
                 ))}
               </div>
 
-              {/* Social links */}
               <div className="flex items-center gap-4 pt-3">
                 {socialLinks.map(({ icon: Icon, color, label, href }, i) => (
                   <a
@@ -156,7 +146,6 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Right column - Links */}
             <div className="space-y-4">
               <div className="grid md:grid-cols-3 gap-4">
                 {linkSections.map(({ title, items }, i) => (
@@ -184,7 +173,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Bottom section */}
           <div className="border-t border-gray-700 pt-3 flex flex-col md:flex-row items-center justify-between text-sm text-gray-200">
             <span>© {new Date().getFullYear()} GT Technovation. All rights reserved.</span>
             <div className="flex items-center gap-2">- Design and Developed by GT Technovation team</div>
