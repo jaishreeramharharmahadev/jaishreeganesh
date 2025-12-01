@@ -68,7 +68,9 @@ export default function InternshipDetail() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 text-gray-900">
+
       <div className="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+
         <div className="lg:order-2 flex justify-center">
           <img
             src={internship?.image2}
@@ -85,7 +87,7 @@ export default function InternshipDetail() {
           <h1 className="text-3xl md:text-4xl font-extrabold text-gray-700 leading-tight">
             {internship?.domain}
           </h1>
-          <p className="text-lg text-gray-600 leading-relaxed">
+          <p className="text-md md:text-lg text-gray-600 leading-relaxed">
             {internship?.description}
           </p>
 
@@ -115,12 +117,12 @@ export default function InternshipDetail() {
             />
           </div>
 
-          <div className="bg-gradient-to-r from-green-100 to-teal-50 border border-green-300 p-4 rounded-xl shadow-md flex gap-3 items-start">
-            <div className="text-green-700">
-              <Building2 className="w-7 h-7" />
+          <div className="bg-sky-50 border border-blue-300 p-4 rounded-xl flex gap-3 items-start">
+            <div className="text-sky-500">
+              <Building2 className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="font-bold text-green-800">Work From Office Opportunity! 🏢</h3>
+              <h3 className="font-bold text-gray-700">Work From Office Opportunity!</h3>
               <p className="text-sm text-gray-700 leading-snug">
                 If your performance is excellent during the first & second week of remote internship,
                 we will invite you to work from office in <strong>Jaipur, Rajasthan</strong> —
@@ -138,7 +140,7 @@ export default function InternshipDetail() {
         </div>
       </div>
 
-      <Section title="Skills You'll Learn" icon={<Code2 className="text-green-700" />}>
+      <Section title="Skills You'll Learn" icon={<Code2 className="text-gray-700" />}>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {internship?.skills?.map((skill, i) => (
             <div
@@ -151,9 +153,9 @@ export default function InternshipDetail() {
         </div>
       </Section>
 
-      <Section title="Learning Roadmap" icon={<Rocket className="text-green-700" />}>
+      <Section title="Learning Roadmap" icon={<Rocket className="text-gray-700" />}>
         <div className="relative pl-10 md:pl-14">
-          <div className="absolute left-4 md:left-7 top-0 bottom-0 w-[3px] bg-green-700 rounded-full"></div>
+          <div className="absolute left-4 md:left-7 top-0 bottom-0 w-[3px] bg-gray-700 rounded-full"></div>
           <div className="space-y-8">
             {internship?.projectRoadmap?.map((step, idx) => (
               <div key={idx} className="relative flex items-start gap-4 group">
@@ -176,7 +178,7 @@ export default function InternshipDetail() {
         </div>
       </Section>
 
-      <Section title="Program Benefits" icon={<CheckCircle2 className="text-green-700" />}>
+      <Section title="Program Benefits" icon={<CheckCircle2 className="text-gray-700" />}>
         <ul className="space-y-3">
           {internship?.additionalInfo?.whatYouGet?.map((item, i) => (
             <li key={i} className="flex items-start gap-2 bg-white border border-green-200 p-3 rounded-lg shadow-sm">
@@ -239,7 +241,7 @@ function Section({ title, icon, children }) {
     <section className="max-w-6xl mx-auto px-4 py-8">
       <div className="flex items-center gap-2 mb-4">
         {icon}
-        <h2 className="text-lg font-extrabold text-green-800">{title}</h2>
+        <h2 className="text-lg font-extrabold text-gray-800">{title}</h2>
       </div>
       {children}
     </section>
