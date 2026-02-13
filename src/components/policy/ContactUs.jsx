@@ -53,8 +53,7 @@ const ContactUs = () => {
                     </h3>
                     <p>+91 7877224655</p>
                     <p className="text-xs text-gray-500 mt-1">
-                      Mon–Fri, 9:00 AM – 6:00 PM IST (if phone support is
-                      enabled).
+                      Mon–Fri, 9:00 AM – 6:00 PM IST
                     </p>
                   </div>
                 </div>
