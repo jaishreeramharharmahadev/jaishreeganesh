@@ -363,7 +363,7 @@ export default function FeedbackSection({
 
         <div className="bg-gray-50 p-4 rounded-xl shadow-sm">
           <label className="block text-sm font-semibold mb-2">
-            Upload Resume (Optional)
+            Upload updated Resume (Optional)
           </label>
           <input
             type="file"
@@ -374,7 +374,7 @@ export default function FeedbackSection({
           <small className="block text-gray-500">Max size: 2MB (PDF only)</small>
         </div>
 
-        <div className="bg-gray-50 p-4 rounded-xl shadow-sm">
+        {/* <div className="bg-gray-50 p-4 rounded-xl shadow-sm">
           <label className="block text-sm font-semibold mb-2">
             Upload Video Feedback (Optional)
           </label>
@@ -385,7 +385,7 @@ export default function FeedbackSection({
             className="w-full"
           />
           <small className="block text-gray-500">Max size: 10MB</small>
-        </div>
+        </div> */}
 
         <button
           type="submit"
