@@ -16,11 +16,11 @@ import {
 } from "lucide-react";
 
 import PreLoader from "../common/PreLoader";
+import { apiUrl } from "../../utils/api";
 
 export default function FeedbackSection({
   applicant,
   token,
-  apiBase = "http://localhost:5000",
   onSubmitted = () => {},
 }) {
   const [checking, setChecking] = useState(true);
@@ -66,7 +66,7 @@ export default function FeedbackSection({
     try {
       const idForApi = applicant._id || applicant.uniqueId;
       const res = await axios.get(
-        `${apiBase}/api/feedback/available/${idForApi}`,
+        apiUrl(`/api/feedback/available/${idForApi}`),
         {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
         }
@@ -182,7 +182,7 @@ export default function FeedbackSection({
     try {
       const idForApi = applicant._id || applicant.uniqueId;
       const res = await axios.post(
-        `${apiBase}/api/feedback/${idForApi}`,
+        apiUrl(`/api/feedback/${idForApi}`),
         form,
         {
           headers: {
