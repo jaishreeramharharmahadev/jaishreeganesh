@@ -73,15 +73,25 @@ export default function FeedbackSection({
       );
 
       const data = res.data || {};
-      const opensAt =
-        data.startFeedbackIST || data.tenDaysBefore || data.opensAt;
-      const endsAt = data.endDateIST || data.endDate;
+      // const opensAt =
+      //   data.startFeedbackIST || data.tenDaysBefore || data.opensAt;
+      // const endsAt = data.endDateIST || data.endDate;
+
+      const opensAt = data.startDate || data.startFeedbackIST;
+      const endsAt = data.endDateIST;
 
       setAvailable(Boolean(data.available));
+      // setWindowInfo({
+      //   opensAt,
+      //   endsAt,
+      //   feedbackSubmitted: data.feedbackSubmitted,
+      // });
+
       setWindowInfo({
         opensAt,
         endsAt,
         feedbackSubmitted: data.feedbackSubmitted,
+        startDate: data.startDate,
       });
     } catch (err) {
       setError("Unable to check feedback availability right now.");
