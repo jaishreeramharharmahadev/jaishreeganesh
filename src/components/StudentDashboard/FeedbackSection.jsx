@@ -230,7 +230,7 @@ export default function FeedbackSection({
 
         {!feedbackSubmitted && (
           <p className="text-sm text-gray-700 mb-4">
-            You can start filling feedback from:
+            Feedback becomes available once your internship starts.
           </p>
         )}
 
