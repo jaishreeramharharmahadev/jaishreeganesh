@@ -66,7 +66,7 @@ export default function FeedbackSection({
     try {
       const idForApi = applicant._id || applicant.uniqueId;
       const res = await axios.get(
-        apiUrl(`/api/feedback/available/${idForApi}`),
+        apiUrl(`/feedback/available/${idForApi}`),
         {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
         }
@@ -182,7 +182,7 @@ export default function FeedbackSection({
     try {
       const idForApi = applicant._id || applicant.uniqueId;
       const res = await axios.post(
-        apiUrl(`/api/feedback/${idForApi}`),
+        apiUrl(`/feedback/${idForApi}`),
         form,
         {
           headers: {
