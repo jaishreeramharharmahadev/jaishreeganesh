@@ -13,6 +13,7 @@ import {
   Sparkles,
   BookOpen,
   Trophy,
+  Mail,
   Zap,
 } from "lucide-react";
 import Logo from "../../assets/GTT1-r.png";
@@ -113,7 +114,7 @@ export default function Header() {
 
   const moreItems = [
     { name: "About Us", icon: Users, path: "/about-us" },
-    { name: "Contact", icon: null, path: "/contact-us" },
+    { name: "Contact", icon: Mail, path: "/contact-us" },
     { name: "Verify Certificate", icon: Trophy, path: "/verify" },
   ];
 
