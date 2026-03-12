@@ -37,16 +37,25 @@ export default function VerifyResultPage() {
       setLoading(true);
       setError(null);
       try {
-        const res = await axios.get(
-          apiUrl(
-            `/certificates/verify/${encodeURIComponent(certificateNumber)}`
-          )
-        );
-        if (!cancelled) setData(res.data);
-      } catch (err) {
-        if (!cancelled)
-          setError(err?.response?.data?.message || "Certificate not found");
-      } finally {
+  const res = await axios.get(
+    apiUrl(`/certificates/verify/${encodeURIComponent(certificateNumber)}`)
+  );
+
+  if (!cancelled) {
+    if (!res.data || !res.data.certificateNumber) {
+      setError("Invalid certificate or certificate not found");
+      setData(null);
+    } else {
+      setData(res.data);
+    }
+  }
+
+} catch {
+  if (!cancelled) {
+    setError("Invalid certificate or certificate not found");
+    setData(null);
+  }
+}finally {
         if (!cancelled) setLoading(false);
       }
     }
