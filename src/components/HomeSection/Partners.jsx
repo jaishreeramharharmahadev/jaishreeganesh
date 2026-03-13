@@ -15,18 +15,18 @@ const Partners = () => {
       name: "HCL",
       logo: "https://e7.pngegg.com/pngimages/685/961/png-clipart-logo-brand-trademark-product-design-hcl-technologies-design-blue-text.png",
     },
-    {
-      name: "Tech Mahindra",
-      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Tech_Mahindra_New_Logo.svg/2560px-Tech_Mahindra_New_Logo.svg.png",
-    },
+    // {
+    //   name: "Tech Mahindra",
+    //   logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Tech_Mahindra_New_Logo.svg/2560px-Tech_Mahindra_New_Logo.svg.png",
+    // },
     {
       name: "Accenture",
       logo: "https://www.clutch.com/wp-content/uploads/2018/04/Accenture-logo-no-background.png",
     },
-    {
-      name: "Cognizant",
-      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Cognizant_logo_2022.svg/2560px-Cognizant_logo_2022.svg.png",
-    },
+    // {
+    //   name: "Cognizant",
+    //   logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Cognizant_logo_2022.svg/2560px-Cognizant_logo_2022.svg.png",
+    // },
     {
       name: "Wipro",
       logo: "https://1000logos.net/wp-content/uploads/2021/05/Wipro-logo.png",
