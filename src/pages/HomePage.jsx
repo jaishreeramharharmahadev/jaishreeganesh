@@ -22,7 +22,7 @@ function HomePage() {
         <FloatCourse />
         <InternshipOffers />
         <Partners />
-        <SuccessStories />
+        {/* <SuccessStories /> */}
         <FAQSection />
         <JoinNetwork />
       </main>
