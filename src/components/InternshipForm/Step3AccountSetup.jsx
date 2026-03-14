@@ -150,24 +150,47 @@ const Step3AccountSetup = ({
           </div>
 
           <div className="space-y-2 text-sm">
-            <label className="flex items-center gap-3 p-3 md:p-4 border rounded-lg bg-gray-50 hover:bg-gray-100 cursor-pointer">
+            <label className="flex items-start gap-3 p-3 md:p-4 border rounded-lg bg-gray-50 hover:bg-gray-100 cursor-pointer">
               <input
                 type="checkbox"
                 name="emailConfirmed"
                 checked={formData.emailConfirmed}
                 onChange={handleChange}
-                className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+                className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500 mt-0.5"
               />
               <div>
-                <span className="font-medium text-gray-700">
-                  I confirm that my email address{" "}
-                  <span className="text-black">({formData.email})</span> is
-                  correct
-                </span>
+                <div>
+                  <span className="font-medium text-gray-700">
+                    I confirm that my email address{" "}
+                    <span className="font-semibold text-black">({formData.email})</span> is
+                    correct and currently active.
+                  </span>
+                </div>
+                
+                <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                  <div className="flex">
+                    <svg 
+                      className="h-5 w-5 text-yellow-600 flex-shrink-0 mt-0.5" 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      viewBox="0 0 20 20" 
+                      fill="currentColor"
+                    >
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                    </svg>
+                    <div className="ml-2">
+                      <p className="text-xs md:text-sm text-yellow-800">
+                        <span className="font-medium">Important:</span> Please ensure this email address has not been used for any previous internship registration with GT Technovation.
+                      </p>
+                      <p className="text-xs md:text-sm text-yellow-700 mt-1">
+                        If you have previously registered for an internship using this email, kindly use a different email address to avoid duplicate account issues. Each email can only be associated with one active internship account.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </label>
             {errors.emailConfirmed && (
-              <p className="text-red-600 text-sm">{errors.emailConfirmed}</p>
+              <p className="text-red-600 text-sm ml-8">{errors.emailConfirmed}</p>
             )}
           </div>
 
