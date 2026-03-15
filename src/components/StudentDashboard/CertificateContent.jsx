@@ -100,7 +100,7 @@ function CertificateContent({
                 disabled={!canGenerateCertificate()}
                 className="px-6 py-3 bg-[#0A444D] text-white rounded-full disabled:opacity-40 hover:bg-[#08353c]"
               >
-                Generate Certificate
+                Get Certificate
               </button>
               <p className="text-xs text-gray-500">
                 {canGenerateCertificate()
