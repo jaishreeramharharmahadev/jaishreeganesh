@@ -104,8 +104,8 @@ function CertificateContent({
               </button>
               <p className="text-xs text-gray-500">
                 {canGenerateCertificate()
-                  ? "Certificate will also auto-generate on end date."
-                  : "Complete all requirements to generate certificate."}
+                  ? "Your certificate will be automatically issued on the end date."
+                  : "Complete all requirements to get your certificate."}
               </p>
             </div>
           )}
