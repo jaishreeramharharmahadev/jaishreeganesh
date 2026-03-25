@@ -117,6 +117,12 @@ const Step4Payment = ({
           </p>
         </div>
 
+        <div className="mt-3 p-2 bg-amber-50 border border-amber-200 rounded-lg">
+          <p className="text-xs text-amber-800 text-center">
+            <strong>Note:</strong> Due to technical issues, the main banking site is down. For payment, account holder name is Prince Tiwari. For any assistance, contact us at +91 6445547674 during working hours.
+          </p>
+        </div>
+
         <div className="space-y-4 mb-6 mt-3">
           <label className="flex items-center gap-3 p-3 md:p-4 border rounded-lg bg-gray-50 hover:bg-gray-100 cursor-pointer">
             <input
